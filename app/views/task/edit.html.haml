@@ -1,0 +1,314 @@
+%form{:action => "/create-task", :method => "post", :enctype => "multipart/form-data"}
+  %input{:type => "hidden", :name => "id", :value => @task.id}
+  %section.order-info-1
+    .cont
+      %h3 РЕДАКТИРОВАНИЕ ЗАЯВКИ
+      .fomt-1
+        %select.require{:name => "cat"}
+          %option{:value => 0} Выбрать категорию
+          - @cat.each do |c|
+            - if c.id == @task.cat.to_i
+              %option{:value => c.id, :selected => "selected"}= c.name
+            - else
+              %option{:value => c.id}= c.name
+        .sub-cat-list
+          - @cat.each do |c|
+            - clazz = ""
+            - clazz = "sub-cat-show" if !params[:cat].blank? && params[:cat].to_i == c.id
+            - clazz = "sub-cat-show" if !@task.cat_sub.blank?
+            .sub-cat{:parent_id => c.id, :class => clazz}
+              - sub = Cat.where(public: true, level: 1, parent_id: c.id).order("ord asc")
+              - if !sub.blank?
+                %select.require{:name => "cat_sub"}
+                  %option{:value => 0} Выбрать подкатегорию
+                  - sub.each do |s|
+                    - if s.id == @task.cat_sub.to_i
+                      %option{:value => s.id, :selected => "selected"}= s.name
+                    - else
+                      %option{:value => s.id}= s.name
+        /
+          %select
+            %option Дополнительная подкатегория
+            %option Дополнительная подкатегория
+            %option Дополнительная подкатегория
+            %option Дополнительная подкатегория
+          %select
+            %option 2Дополнительная подкатегория
+            %option 2Дополнительная подкатегория
+            %option 2Дополнительная подкатегория
+            %option 2Дополнительная подкатегория
+        .clear
+        .textarea-left
+          %input.require{:name => "name", :type => "text", :placeholder => "Заголовок", :value => @task.name}/
+          %textarea.require{:placeholder => "Максимально подробно опишите свою заявку. Мастера смогут выставить точную цену и описать условия, только в том случае если Вы расскажете все в самым мелких деталях.", :name => "description"}= @task.description
+        %input#file{:type => "file", :name => "file_image"}
+        %label.file{:for => "file"}
+          %img.img-bg{}
+          %img{:src => "/assets/file.png"}/
+          .clear
+          .link Загрузите фотографию
+          .clear
+          %span Загрузите фотографию, если это требуется для уточнения Вашей заявки.
+          .clear
+        .questions
+          %h4 Частые вопросы
+          %a{:href => ""} Сколько предложений я получу?
+          %a{:href => ""} Обязательно выбирать исполнителя?
+          %a{:href => ""} Зачем мне указывать примерный бюджет
+          %a.btn.btn-blue{:href => "/questions"} ВСЕ ВОПРОСЫ
+        .clear
+        .alert
+          %img{:src => "/assets/check.png"}/
+          %span Пункты отмеченные галочкой - обязательны для заполнения
+          .clear
+  %section.order-info-2
+    .cont
+      %h3 БЮДЖЕТ ВАШЕЙ ЗАЯВКИ
+      .alert
+        %img{:src => "/assets/check.png"}/
+        %span Требуется заполнить один из вариантов бюджета Вашей заявки
+        .clear
+      - clazz = ""
+      - clazz = "fomt-active" if !@task.price_fix.blank?
+      .fomt-2-1{:class => clazz}
+        - if !@task.price_fix.blank?
+          %input#checkbox1{:type => "checkbox", :name => "budget_1", :checked => "checked"}/
+        - else
+          %input#checkbox1{:type => "checkbox", :name => "budget_1"}/
+        %label{:for => "checkbox1"} Фиксированный бюджет
+        .clear
+        %input{:name => "price_fix", :type => "text", :value => @task.price_fix.to_i}/
+        .clear
+        %p Фиксированный бюджет поможет отобрать конкретных исполнителей, которых полностью устроит Ваше предложение.
+      - clazz = ""
+      - clazz = "fomt-active" if !@task.price_1.blank? || !@task.price_2.blank?
+      .fomt-2-2{:class => clazz}
+        - if !@task.price_1.blank? || !@task.price_2.blank?
+          %input#checkbox2{:type => "checkbox", :checked => "checked", :name => "budget_2"}/
+        - else
+          %input#checkbox2{:type => "checkbox", :name => "budget_2"}/
+        %label{:for => "checkbox2"} Указать бюджет ОТ и ДО
+        .clear
+        %input{:name => "price_1", :placeholder => "От", :type => "text", :value => @task.price_1.to_i}/
+        %input{:name => "price_2", :placeholder => "До", :type => "text", :value => @task.price_2.to_i}/
+        .clear
+        %p В данном варианте бюджета, на Вашу заявку откликнуться большее количество исполнителей.
+      
+      .fomt-2-3
+        %input#checkbox3{:type => "checkbox", :name => "budget_3"}/
+        %label{:for => "checkbox3"} Выбрать бюджет по шкале
+        .clear
+        .my-slider
+          %input{:type => "hidden", :name => "price_range"}
+          #slider-amount
+          /
+            .line
+              .item
+              .line-full
+          .clear
+          .label МЕЛКИЙ
+          .value
+            ДО - 2000
+            %img{:src => "/assets/r-2.png"}/
+          .clear
+          %p Если вы точно не знаете, сколько может стоить исполнение Вашей заявки, укажите примерную стоимость по шкале.
+      .clear
+  %section.order-info-3
+    .cont
+      %h3 ВРЕМЕННЫЕ ИНТЕРВАЛЫ
+      .form-1
+        - if !@task.date_aktual.blank?
+          %input#checkbox4{:type => "checkbox", :name => "time_type_1", :checked => "checked"}/
+        - else
+          %input#checkbox4{:type => "checkbox", :name => "time_type_1"}/
+        %label{:for => "checkbox4"} Актуальность заказа
+        .clear
+        %input.date.datepicker{:name => "date_aktual", :placeholder => "Укажите дату актуальности", :type => "text", :value => @task.date_aktual}/
+        %span или
+        %input{:name => "date_count", :placeholder => "Введите количество дней актуальности", :type => "text", :value => @task.date_count}/
+        .clear
+        %p Выберете дату, до которой Ваша заявку будет актуальна. По умолчанию заявка активна 30 дней.
+      .form-2
+        - if !@task.date_start.blank?
+          %input#checkbox5{:type => "checkbox", :name => "time_type_2", :checked => "checked"}/
+        - else
+          %input#checkbox5{:type => "checkbox", :name => "time_type_2"}/
+        %label{:for => "checkbox5"} Время исполнения заказа
+        .clear
+        %input.datepicker.date{:name => "date_start", :placeholder => "Укажите дату начала", :type => "text", :value => @task.date_start}/
+        %input.datepicker.date{:name => "date_stop", :placeholder => "Укажите дату завершения", :type => "text", :value => @task.date_stop}/
+        .clear
+        %p Выберете дату, до которой Ваша заявку будет актуальна. По умолчанию заявка активна 30 дней.
+      .clear
+  %section.order-info-4
+    .cont
+      %h3 ПОДРОБНАЯ ИНФОРМАЦИЯ
+      - if @current_user.blank?
+        .form-1
+          .left
+            %h5 Личная информация
+            %input.require{:name => "name1", :placeholder => "Имя", :type => "text"}/
+            %input.require{:name => "phone", :placeholder => "Номер телефона", :type => "text"}/
+            %input.require{:name => "email", :placeholder => "Электронная почта", :type => "text"}/
+            %input.require{:name => "password", :placeholder => "Пароль", :type => "text"}/
+          .right
+            %a.btn.btn-enter{:href => "#"} ИЛИ ВОЙТИ ЧЕРЕЗ СОЦИАЛЬНЫЕ СЕТИ
+            %input.require{:name => "name2", :placeholder => "Фамилия", :type => "text"}/
+            %input#file2{:type => "file", :name => "file_user"}/
+            %label.file{:for => "file2"}
+              %img{:src => "/assets/file.png"}/
+              .clear
+              %a{:href => "#"} Загрузите фотографию
+              .clear
+              %span Загрузите фотографию, если это требуется для уточнения Вашей заявки.
+              .clear
+            %input.require{:name => "password2", :placeholder => "Повторить пароль", :type => "text"}/
+          .clear
+          .alert
+            %img{:src => "/assets/check.png"}/
+            %span Пункты отмеченные галочкой - обязательны для заполнения
+            .clear
+      - else
+        %input{:type => "hidden", :name => "user_id", :value => @current_user.id}
+      - style = ""
+      - style = "width: 100%;margin-left:0px;" if !@current_user.blank?
+      .form-2{:style => style}
+        .left
+          %h5 Пункт отправления
+          %input.require{:name => "city_from", :placeholder => "Город", :type => "text", :value => @task.city_from}/
+          %input.require{:name => "address_from", :placeholder => "Улица", :type => "text", :value => @task.address_from}/
+          .clear
+          %input.require.small{:name => "house_from", :placeholder => "Дом", :type => "text", :value => @task.house_from}/
+          %input.small{:name => "", :placeholder => "", :type => "text"}/
+          %input.require.small{:name => "kv_from", :placeholder => "Кв", :type => "text", :value => @task.kv_from}/
+          .clear
+        .right
+          %h5 Пункт прибытия
+          %input.require{:name => "city_to", :placeholder => "Город", :type => "text", :value => @task.city_to}/
+          %input.require{:name => "address_to", :placeholder => "Улица", :type => "text", :value => @task.address_to}/
+          .clear
+          %input.require.small{:name => "house_to", :placeholder => "Дом", :type => "text", :value => @task.house_to}/
+          %input.small{:name => "", :placeholder => "", :type => "text"}/
+          %input.require.small{:name => "kv_to", :placeholder => "Кв", :type => "text", :value => @task.kv_to}/
+          .clear
+        .clear
+        .map-block
+          %a{:href => "https://www.google.ru/maps?hl=ru&tab=wl", :target => "_blank"} Карту на весь экран
+          .clear
+          .map
+            #map
+            :javascript
+              function initialize() {
+                var myLatlng = new google.maps.LatLng(55.68852706904227,37.25565899999996);
+                var mapOptions = {
+                  zoom: 10,
+                  center: myLatlng,
+                  scrollwheel: false
+                }
+
+                var styles = [
+                  {
+                      "featureType": "administrative",
+                      "elementType": "labels.text.fill",
+                      "stylers": [
+                          {
+                              "color": "#444444"
+                          }
+                      ]
+                  },
+                  {
+                      "featureType": "administrative.country",
+                      "elementType": "geometry.fill",
+                      "stylers": [
+                          {
+                              "visibility": "on"
+                          }
+                      ]
+                  },
+                  {
+                      "featureType": "landscape",
+                      "elementType": "all",
+                      "stylers": [
+                          {
+                              "color": "#f2f2f2"
+                          }
+                      ]
+                  },
+                  {
+                      "featureType": "poi",
+                      "elementType": "all",
+                      "stylers": [
+                          {
+                              "visibility": "off"
+                          }
+                      ]
+                  },
+                  {
+                      "featureType": "road",
+                      "elementType": "all",
+                      "stylers": [
+                          {
+                              "saturation": -100
+                          },
+                          {
+                              "lightness": 45
+                          }
+                      ]
+                  },
+                  {
+                      "featureType": "road.highway",
+                      "elementType": "all",
+                      "stylers": [
+                          {
+                              "visibility": "simplified"
+                          }
+                      ]
+                  },
+                  {
+                      "featureType": "road.arterial",
+                      "elementType": "labels.icon",
+                      "stylers": [
+                          {
+                              "visibility": "off"
+                          }
+                      ]
+                  },
+                  {
+                      "featureType": "transit",
+                      "elementType": "all",
+                      "stylers": [
+                          {
+                              "visibility": "off"
+                          }
+                      ]
+                  },
+                  {
+                      "featureType": "water",
+                      "elementType": "all",
+                      "stylers": [
+                          {
+                              "color": "#4694ec"
+                          },
+                          {
+                              "visibility": "on"
+                          }
+                      ]
+                  }
+                ];
+
+                var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+                map.setOptions({styles: styles});
+                var myLatlngMarker = new google.maps.LatLng(55.68852706904227,37.25675899999996);
+                var marker = new google.maps.Marker({
+                    position: myLatlngMarker,
+                    map: map,
+                    title: '',
+                    icon: '/assets/balun.png'
+                });
+              }
+
+              google.maps.event.addDomListener(window, 'load', initialize);
+      .clear
+  %section.order-info-5
+    .cont
+      %input.btn.btn-red{:type => "submit", :value => "Сохранить"} 

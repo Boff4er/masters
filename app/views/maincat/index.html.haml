@@ -1,0 +1,24 @@
+%section.bread
+  .cont
+    .left
+      %a{:href => "/"} Главная
+      %span >
+      %span Все категории
+      .clear
+    .clear
+
+%section.main-cats
+  .cont
+    %h3 КАТЕГОРИИ
+    .item-list
+      - if !@cat.blank?
+        - @cat.each do |c|
+          .item.item1
+            .sub-cat
+              %h4= c.name
+              - subs = Cat.where(public: true, level: 1, parent_id: c.id).order("ord asc")
+              - if !subs.blank?
+                - subs.each do |s|
+                  %a{:href => "/cat/#{s.id}"}= s.name
+            %span= c.name
+      .clear

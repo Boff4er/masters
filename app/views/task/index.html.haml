@@ -1,0 +1,80 @@
+- if !@current_user.blank?
+  .popup.popup-order
+    .close
+    .title Откликнуться на заявку
+    %form{"accept-charset" => "UTF-8", :action => "/set_order", :method => "post"}
+      %input{:name => "utf8", :type => "hidden", :value => "✓"}/
+      %input{:name => "user_id", :type => "hidden", :value => @current_user.id}/
+      %input{:name => "task_id", :type => "hidden"}/
+      %input{:name => "order_id", :type => "hidden"}/
+      %input{:name => "url", :type => "hidden", :value => "/tasks"}/
+      %input{:name => "authenticity_token", :type => "hidden", :value => "/ILmNl4uphX+FGSOk4ldoj3kIf8YKnLUl/HhazQrPmg="}
+      %input{:autofocus => "autofocus", :name => "price", :type => "text", :placeholder => "Стоимость"}          
+      %input{:name => "ltime", :type => "text", :placeholder => "Срок выполнения"}          
+      %textarea{:name => "description", :placeholder => "Текст отклика"}
+      %input.btn{:name => "commit", :type => "submit", :value => "Отправить заявку"}/
+
+.master-list.obrash-list
+  %h3
+    Выбранные
+    %br>/
+    обращения
+  .select-block
+    %span
+      Сортировать
+      %br>/
+      по:
+    .select
+      %form
+        %select{:name => "sort"}
+          - if params[:sort].blank? || params[:sort] == "date"
+            %option{:value => "date", :selected => "selected"} Дате создания
+          - else
+            %option{:value => "date"} Дате создания
+          - if params[:sort] == "priceup"
+            %option{:value => "priceup", :selected => "selected"} Сначала дешевле
+          - else
+            %option{:value => "priceup"} Сначала дешевле
+          - if params[:sort] == "pricedown"
+            %option{:value => "pricedown", :selected => "selected"} Сначала дороже
+          - else
+            %option{:value => "pricedown"} Сначала дороже
+  .clear
+
+  - if !@tasks.blank?
+    - @tasks.each do |t|
+      .master.master-dark
+        .text
+          .left
+            .name-block
+              %img{:src => "/assets/mozg-#{t.cat}.jpg"}/
+              .name-left
+                = link_to "/tasks/#{t.id}", :class => "name" do
+                  %b= t.name
+                - if !t.cat.blank?
+                  - cat = Cat.find(t.cat)
+                  .who= cat.name
+              .clear
+          .right
+            .price #{t.price_fix.to_i}₽
+          .clear
+          .description
+            =raw t.description
+            .clear{:style => "height: 10px;"}
+            - if @current_user.blank?
+              %b <a href="" class="auth-small">Авторизируйтесь</a>, что бы ответить на обращение.
+          .bottom
+            .time Создан: #{date_format(t.created_at)}
+            .connect
+              - if !@current_user.blank?
+                - favtask = Favtask.where(task_id: t.id, profile_id: @current_user.id)
+                - if !favtask.blank?
+                  %a.fav.btn-add-to-favtask{:href => "#", :task_id => t.id, :type => "0"} Убрать из избранного
+                - else
+                  %a.fav.btn-add-to-favtask{:href => "#", :task_id => t.id, :type => "1"} Добавить в избранные
+                - user_id = 0
+                - user_id = @current_user.id if !@current_user.blank?
+                %a.mesage.btn-master-task{:href => "", :user_id => user_id, :task_id => t.id} Ответить
+            .clear
+        .clear
+  

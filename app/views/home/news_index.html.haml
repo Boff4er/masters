@@ -1,0 +1,44 @@
+%section.filter
+  .cont
+    .bread
+      %a{:href => "/"} Главная страница
+      %img{:src => "/assets/bread.png"}
+      %span Все новости
+    .clear
+%section.article-name
+  .cont
+    %h1 Все новости
+    .date
+    .clear
+%section.article
+  .cont
+    .description{:style => "width: 100%;"}
+      .article-list{:style => "padding-top: 20px;"}
+        - if !@all_news.blank?
+          - @all_news.each do |a|
+            .item{:style => "width: 100%;"}
+              .date= date_format(a.datepost)
+              %a{:href => "/news/#{a.id}", :style => "font-size: 16px;"}= a.name
+    .clear
+%section.top-sales.top-sales-product
+  .cont
+    %h3 СПЕЦИАЛЬНЫЕ ПРЕДЛОЖЕНИЯ
+    .clear
+  .cont
+    .list
+      .list-cont
+        - city_url = "moscow"
+        
+        - city_url = ((Translit.convert(city_url, :english)).gsub(' ', '').gsub('/', '')).downcase
+        - if !@all_products.blank?
+          - @all_products.each do |p|
+            .item
+              .price #{p.price1} Р
+              %a.image{:href => "/#{city_url}/products/#{p.id}"}
+                %img{:src => p.image1.icon.url}/
+              .text
+                %a{:href => "/#{city_url}/products/#{p.id}"} #{p.name} #{p.ploshad} м2
+                %span= p.address
+                .short
+                  Общая S2: #{p.ploshad} м²
+        .clear

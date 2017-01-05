@@ -1,0 +1,209 @@
+.popup.popup-image
+  .close
+  .title Добавить фото
+  %form{"accept-charset" => "UTF-8", :action => "/profile/add_photo", :method => "post", :enctype => "multipart/form-data"}
+    %input{:name => "utf8", :type => "hidden", :value => "✓"}/
+    %input{:name => "user_id", :type => "hidden", :value => @current_user.id}/
+    %input{:name => "authenticity_token", :type => "hidden", :value => "/ILmNl4uphX+FGSOk4ldoj3kIf8YKnLUl/HhazQrPmg="}
+    %input{:name => "image", :type => "file"}
+    %input.btn{:name => "commit", :type => "submit", :value => "Сохранить"}/
+
+.popup.popup-fake
+  .close
+  .title Внимание
+  .alert
+    
+  .btns
+    = link_to "Да", "#", :class => "btn btn-green"
+    = link_to "Нет", "#", :class => "btn btn-red"
+    .clear
+
+.popup.popup-balance
+  .close
+  .title Пополнение баланса
+  %form{"accept-charset" => "UTF-8", :action => "/profile/save", :method => "post"}
+    %input{:name => "utf8", :type => "hidden", :value => "✓"}/
+    %input{:name => "user_id", :type => "hidden", :value => @current_user.id}/
+    %input{:name => "url", :type => "hidden", :value => "/profile"}/
+    %input{:name => "authenticity_token", :type => "hidden", :value => "/ILmNl4uphX+FGSOk4ldoj3kIf8YKnLUl/HhazQrPmg="}
+    %input{:type => "text", :name => "balance", :placeholder => "Баланс"}
+    %input.btn{:name => "commit", :type => "submit", :value => "Сохранить"}/
+
+.popup.popup-edit-user
+  .close
+  .title Редактирование пользователя
+  %form{"accept-charset" => "UTF-8", :action => "/profile/save", :method => "post", :enctype => "multipart/form-data"}
+    %input{:name => "utf8", :type => "hidden", :value => "✓"}/
+    %input{:name => "user_id", :type => "hidden", :value => @current_user.id}/
+    %input{:name => "url", :type => "hidden", :value => "/profile"}/
+    %input{:name => "authenticity_token", :type => "hidden", :value => "/ILmNl4uphX+FGSOk4ldoj3kIf8YKnLUl/HhazQrPmg="}
+    %input{:type => "text", :name => "name1", :placeholder => "Имя", :value => @current_user.name1}
+    %input{:type => "text", :name => "name2", :placeholder => "Фамилия", :value => @current_user.name2}
+    %input{:type => "text", :name => "name3", :placeholder => "Коротко о себе", :value => @current_user.name3}
+    %input{:type => "text", :name => "email", :placeholder => "E-mail", :value => @current_user.email}
+    %input{:type => "text", :name => "phone1", :placeholder => "Телефон", :value => @current_user.phone1}
+    %input{:type => "text", :name => "city", :placeholder => "Город", :value => @current_user.city}
+    %textarea{:name => "description", :placeholder => "Описание"}= @current_user.description
+    .select
+      %select.select2{:multiple => "multiple", :name => "cats[]", :placeholder => "Добавить специализацию"}
+        - if !@all_cats.blank?
+          - @all_cats.each do |c|
+            - cats = []
+            - if !@current_user.cats.blank?
+              - cats = @current_user.cats.split(",")
+            - if cats.include?(String(c.id))
+              %option{:value => c.id, :selected => "selected"}= c.name
+            - else
+              %option{:value => c.id}= c.name
+    %input{:name => "image", :type => "file"}
+    %input.btn{:name => "commit", :type => "submit", :value => "Сохранить"}/
+
+.popup.popup-uarticle
+  .close
+  .title Добавить статью
+  %form{"accept-charset" => "UTF-8", :action => "/profile/add_uarticle", :method => "post", :enctype => "multipart/form-data"}
+    %input{:name => "utf8", :type => "hidden", :value => "✓"}/
+    %input{:name => "user_id", :type => "hidden", :value => @current_user.id}/
+    %input{:name => "url", :type => "hidden", :value => "/profile"}/
+    %input{:name => "authenticity_token", :type => "hidden", :value => "/ILmNl4uphX+FGSOk4ldoj3kIf8YKnLUl/HhazQrPmg="}
+    %textarea{:name => "description", :placeholder => "Текст статьи"}
+    %input.btn{:name => "commit", :type => "submit", :value => "Сохранить"}/
+
+.popup.popup-record
+  .close
+  .title Загрузите запись
+  %form{"accept-charset" => "UTF-8", :action => "/profile/add_audio", :method => "post", :enctype => "multipart/form-data"}
+    %input{:name => "utf8", :type => "hidden", :value => "✓"}/
+    %input{:name => "user_id", :type => "hidden", :value => @current_user.id}/
+    %input{:name => "url", :type => "hidden", :value => "/profile"}/
+    %input{:type => "text", :name => "name", :placeholder => "Название"}
+    %input{:name => "authenticity_token", :type => "hidden", :value => "/ILmNl4uphX+FGSOk4ldoj3kIf8YKnLUl/HhazQrPmg="}
+    %input{:name => "file", :type => "file"}
+    %input.btn{:name => "commit", :type => "submit", :value => "Сохранить"}/
+
+.master-list
+  %h3
+    Личный
+    %br>/
+    кабинет
+  .select-block
+    
+  .clear
+  .master.master-dark
+    .image
+      - if !@current_user.blank?
+        - if !@current_user.image.blank?
+          = image_tag @current_user.image.big.url
+        - else
+          - if !@current_user.photo.blank?
+            = image_tag @current_user.photo
+    .text
+      .left
+        .name-block
+          %img{:src => "/assets/mozg.png"}/
+          .name-left
+            .name
+              %b= @current_user.name2
+              = @current_user.name1
+            .who=raw @current_user.name3
+          .clear
+      .right
+        .stars
+          %img{:src => "/assets/stars.png"}/
+        .clear
+        .list-items
+          .item
+            Заказов:
+            - tasks = Task.where(userdo_id: @current_user.id)
+            %b #{tasks.size}
+          .item
+            Рейтинг:
+            %b #{@current_user.rating.to_i}
+          .item
+            Отзывы:
+            %b #{@current_user.plus.to_i}+/#{@current_user.minus.to_i}-
+          .clear
+      .clear
+      .description
+        =raw @current_user.description
+      .bottom
+        .time
+        .connect
+          %a.mesage.edit-profile-user{:href => ""} Редактировать
+        .clear
+    .clear
+.profile-blocks
+  .block{:style => "border: none;"}
+    %h3
+      Последние
+      %br>/
+      записи
+    %a.btn.btn-add.btn-add-uarticle{:href => ""} Добавить запись
+    .clear
+    .article-lisst
+      - if !@uarticle.blank?
+        - @uarticle.each do |u|
+          .item
+            .time= date_format(u.created_at)
+            .text=raw u.description
+            %a.delete{:href => "/profile/delete_uarticle/#{u.id}"} Удалить
+  .block
+    %h3
+      Аудио
+      %br>/
+      записи
+    %a.btn.btn-add.btn-add-record{:href => ""} Добавить аудио
+    .clear
+    .audio-list
+      - if !@audios.blank?
+        - @audios.each do |a|
+          .item
+            .play
+              %audio{:controls => ""}
+                %source{:src => a.file.url, :type => "audio/mp3"}
+              %img{:src => "/assets/play.png"}/
+            .audio-block
+              .time= date_format(a.created_at)
+              .text= a.name
+              %a.delete{:href => "/profile/delete_audio/#{a.id}"} Удалить
+            .clear
+  .clear
+.photos-block
+  %h3
+    Фотографии
+    %br>/
+    специалиста
+  %a.btn.btn-add.btn-add-photo{:href => "#"} Добавить фото
+  .clear
+  - if !@photos.blank?
+    - @photos.each do |p|
+      .photo
+        .img
+          %img{:src => p.image.icon.url}/
+        %a.delete{:href => "/profile/delete_image/#{p.id}"} Удалить
+  .clear
+/
+  .photos-block.videos-block
+    %h3
+      Видео
+      %br>/
+      специалиста
+    %a.btn.btn-add{:href => ""} Добавить фото
+    .clear
+    .photo
+      .img
+        %img{:src => "/assets/master1.png"}/
+      %a.delete{:href => ""} Удалить
+    .photo
+      .img
+        %img{:src => "/assets/master1.png"}/
+      %a.delete{:href => ""} Удалить
+    .photo
+      .img
+        %img{:src => "/assets/master1.png"}/
+      %a.delete{:href => ""} Удалить
+    .photo
+      .img
+        %img{:src => "/assets/master1.png"}/
+      %a.delete{:href => ""} Удалить
+    .clear

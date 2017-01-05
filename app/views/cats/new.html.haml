@@ -1,0 +1,43 @@
+/ Content Header (Page header)
+%section.content-header
+  %h1
+    Категории
+    %small Создание новой категории
+  %ol.breadcrumb
+    %li
+      %a{:href => "/admin"}
+        %i.fa.fa-dashboard
+        Главная
+    %li
+      %a{:href => "/admin/cats"} Категории
+    %li.active Новая категория
+/ Main content
+%section.content
+  .row
+    .col-xs-12
+      .box
+        .box-header
+          %h3.box-title Введите параметры
+        / /.box-header
+        .box.box-primary
+          .box-header.with-border
+            %h3.box-title Новая категорий
+          / /.box-header
+          / form start
+          %form.rails-form{:role => "form", :model => "user", :type => "new", :action => "/admin/cats/form"}
+            .box-body
+              .form-group
+                %label{:for => "exampleInputEmail1"} Название
+                %input#exampleInputEmail1.form-control{:placeholder => "Название", :type => "text", :name => "name"}
+              .form-group
+                %label{:for => "exampleInputEmail1"} Порядок
+                %input#exampleInputEmail1.form-control{:placeholder => "Порядок", :type => "text", :name => "ord"}
+              .form-group
+                %label{:for => "exampleInputEmail1"} Url
+                %input#exampleInputEmail1.form-control{:placeholder => "Url", :type => "text", :name => "url"}
+            / /.box-body
+            .box-footer
+              %button.btn.btn-primary{:type => "submit"} Создать
+        / /.box-body
+      / /.box
+/ /.content

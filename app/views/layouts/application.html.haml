@@ -1,0 +1,179 @@
+!!! 5
+%html(lang="ru")
+  %head
+    = render '/layouts/meta' 
+  %body
+    - if @url[1].blank?
+      = yield
+    - else
+      .main-cont
+        - clazz = ""
+        - if !session[:theme].blank?
+          - clazz = "ligth-theme" if session[:theme].to_i == 1
+        .left-block{:class => clazz}
+          = render '/layouts/left' 
+        .center-block
+          .center-block-line
+          = render '/layouts/header' 
+          = yield
+        .clear
+
+    %script{:charset => "UTF-8", :src => "//cdn.callbackhunter.com/cbh.js?hunter_code=c7a57de6716f4871ba0941ccfe044a4a", :type => "text/javascript"}
+
+    %noindex
+      .popup-hidden
+      .popup.popup-auth
+        .close
+        .title Войти с помощью<br>социальных сетей
+        .soc-block
+          = link_to user_omniauth_authorize_path(:facebook) do
+            = image_tag "soc-1.png"
+          = link_to user_omniauth_authorize_path(:vkontakte) do
+            = image_tag "soc-2.png"
+          /
+            = link_to user_omniauth_authorize_path(:mail_ru) do
+              = image_tag "soc-3.png"
+          = link_to user_omniauth_authorize_path(:google_oauth2) do
+            = image_tag "soc-4.png"
+        .title Войти<br>с паролем
+
+        %form#new_user.new_user{"accept-charset" => "UTF-8", :action => "/users/sign_in", :method => "post"}
+          .select-user-type
+            %input#checkbox{:name => "ismaster", :type => "radio", :id => "ismaster2", :checked => "checked", :value => 1}/
+            %label{:for => "ismaster2"} Войти как заказчик
+            .clear
+            %input#checkbox{:name => "ismaster", :type => "radio", :id => "ismaster1", :value => 0}/
+            %label{:for => "ismaster1"} Войти как мастер
+            .clear
+          %input{:name => "utf8", :type => "hidden", :value => "✓"}/
+          %input{:name => "authenticity_token", :type => "hidden", :value => "/ILmNl4uphX+FGSOk4ldoj3kIf8YKnLUl/HhazQrPmg="}/
+          %input#user_email{:autofocus => "autofocus", :name => "user[email]", :type => "email", :value => "", :placeholder => "E-mail"}          
+          %input#user_password{:autocomplete => "off", :name => "user[password]", :type => "password", :placeholder => "Пароль"}/
+          %input.btn{:name => "commit", :type => "submit", :value => "ВОЙТИ"}/
+        = link_to "Забыли пароль?", "", :class => "rember go-to-rember"
+        .clear
+        .auth-bottom
+          .title
+            Еще не с нами?
+          .clear
+          = link_to "Зарегистрируйтесь", "", :class => "go-to-reg btn"
+
+      .popup.popup-soc
+        .close
+        .title Войти через
+        .soc-block
+          = link_to user_omniauth_authorize_path(:facebook) do
+            = image_tag "soc-1.png"
+          = link_to user_omniauth_authorize_path(:vkontakte) do
+            = image_tag "soc-2.png"
+          /
+            = link_to user_omniauth_authorize_path(:mail_ru) do
+              = image_tag "soc-3.png"
+          = link_to user_omniauth_authorize_path(:google_oauth2) do
+            = image_tag "soc-4.png"
+
+      .popup.popup-reg
+        .close
+        .title Войти через социальные сети
+        .soc-block
+          = link_to user_omniauth_authorize_path(:facebook) do
+            = image_tag "soc-1.png"
+          = link_to user_omniauth_authorize_path(:vkontakte) do
+            = image_tag "soc-2.png"
+          /
+            = link_to user_omniauth_authorize_path(:mail_ru) do
+              = image_tag "soc-3.png"
+          = link_to user_omniauth_authorize_path(:google_oauth2) do
+            = image_tag "soc-4.png"
+        .title Регистрация
+
+        %form#new_user.new_user_reg{"accept-charset" => "UTF-8", :action => "/users/reg", :method => "post"}
+          .select-user-type{:style => "margin-left:31px;"}
+            %input#checkbox{:name => "ismaster", :type => "radio", :id => "ismaster2", :checked => "checked", :value => 1}/
+            %label{:for => "ismaster2"} Зарегистрироваться как заказчик
+            .clear
+            %input#checkbox{:name => "ismaster", :type => "radio", :id => "ismaster1", :value => 0}/
+            %label{:for => "ismaster1"} Зарегистрироваться как мастер
+            .clear
+          %input{:name => "utf8", :type => "hidden", :value => "✓"}/
+          %input{:name => "authenticity_token", :type => "hidden", :value => "/ILmNl4uphX+FGSOk4ldoj3kIf8YKnLUl/HhazQrPmg="}/
+          %input#user_email{:autofocus => "autofocus", :name => "email", :type => "email", :value => "", :placeholder => "E-mail"}
+          %input#user_email{:name => "phone", :type => "tel", :value => "", :placeholder => "Номер телефона"}
+          %input.btn{:name => "commit", :type => "submit", :value => "Регистрация"}/
+        .clear
+        .auth-bottom
+          .title
+            Уже зарегистрированы? 
+          .clear
+          = link_to "Авторизируйтесь", "", :class => "go-to-auth btn"
+
+      .popup.popup-rememb
+        .close
+        .title Восстановление пароля
+        %form#new_user.new_user_rememb{"accept-charset" => "UTF-8", :action => "/users/rememb", :method => "post"}
+          %input{:name => "utf8", :type => "hidden", :value => "✓"}/
+          %input{:name => "authenticity_token", :type => "hidden", :value => "/ILmNl4uphX+FGSOk4ldoj3kIf8YKnLUl/HhazQrPmg="}/
+          %input#user_email{:autofocus => "autofocus", :name => "email", :type => "email", :value => "", :placeholder => "Укажите ваш E-mail"}
+          %input.btn{:name => "commit", :type => "submit", :value => "Выслать пароль"}/
+        .clear
+        .auth-bottom
+          Уже зарегистрированы? 
+          .clear
+          = link_to "Авторизируйтесь", "", :class => "go-to-auth btn"
+
+      .popup.popup-quest
+        .close
+        .title Заголовок <br>вопроса
+        .quest-text
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+          
+
+      .popup.popup-alert
+        .close
+        .title Заголовок <br>вопроса
+        .quest-text
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+
+      .popup.popup-top-master
+        .close
+        .title Как сюда <br>попасть?
+        .quest-text
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+
+      .popup.popup-create
+        .close
+        .title Создание<br>обращения
+        .clear
+
+        %form#new_task{"accept-charset" => "UTF-8", :action => "/create-task", :method => "post", :enctype => "multipart/form-data"}
+          %input{:name => "utf8", :type => "hidden", :value => "✓"}/
+          - if !@current_user.blank?
+            %input{:type => "hidden", :name => "user_id", :value => @current_user.id}/
+          %input{:name => "authenticity_token", :type => "hidden", :value => "/ILmNl4uphX+FGSOk4ldoj3kIf8YKnLUl/HhazQrPmg="}/
+          .title Категория<br>обращения
+          .clear
+          .select-cont
+            %select{:name => "cat_id"}
+              - @all_cats.each do |c|
+                %option{:value => c.id}= c.name
+          .title Заголовок<br>обращения
+          .clear
+          %input#user_email{:autofocus => "autofocus", :name => "name", :type => "text", :value => "", :placeholder => "Введите заголовок"}
+          .title Текст<br>обращения
+          .clear
+          %textarea{:placeholder => "Введите текст обращения. Не более 3000 знаков.", :name => "description"}
+          .title Бюджет
+          .clear
+          %input#user_email{:autofocus => "autofocus", :name => "price_fix", :type => "text", :value => "", :placeholder => "Укажите бюджет"}
+          .title Город
+          .clear
+          %input#user_email{:autofocus => "autofocus", :name => "city_from", :type => "text", :value => "", :placeholder => "Город"}
+          /
+            .title Приложить<br>фотографии
+            .clear
+            %input{:name => "image", :type => "file", :id => "photo-create"}
+            %label{:for => "photo-create"} Выбрать файл
+
+          %input.btn{:name => "commit", :type => "submit", :value => "Добавить обращение"}/
+        .clear
+        

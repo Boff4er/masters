@@ -1,0 +1,59 @@
+%section.reg-etap
+  .cont
+    %h3
+      ВСЕГО
+      %b 3
+      простых шага
+    .etap-list
+      %a.etap-1{:href => ""}
+        %img{:src => "/assets/reg-1-2.jpg"}/
+      %a.etap-2{:href => ""}
+        %img{:src => "/assets/reg-2-2.jpg"}/
+      %a.etap-3{:href => ""}
+        %img{:src => "/assets/reg-3-2.jpg"}/
+      .clear
+%section.reg-form.reg-form-step
+  %form{"accept-charset" => "UTF-8", :action => "/profile/step2_5", :method => "post"}
+    .cont
+      %input{:type => "hidden", :name => "ismaster", :value => "1"}
+      %input{:type => "hidden", :name => "user_id", :value => @current_user.id}
+      %h3 Правила и вопросы по работе с сервисом Бюро Мастеров
+      .alert 
+        %span Пожалуйста, изучите несколько простых правил работы в Б М
+      .reg-text
+        .left
+          .step 4
+          .line
+          .clear
+          .description
+            %p В день окончания работ Вам необходимо зайти в Личный кабинет, в Актуальные заказы и отметить нужный заказ “ВЫПОЛНЕН”. Если же заказ сорвался, нажмите кнопку “ЗАКАЗ ОТМЕНЕН”. Вам будет предложено написать отзыв о заказчике. Мы оставляем за собой право заблокировать Ваш аккаунт за несоблюдение правил. 
+
+        .right
+          = image_tag "reg-2-2.png"
+        .clear
+
+      .clear
+    .questions
+      .cont
+        .left
+          .num
+            %b 4
+            %span ВОПРОС
+            %i из 5
+        .right
+          .alert Выбрать один из представленных ответов
+          %h2 Что делать после выполнения заказа?
+          %input{:type => "radio", :name => "quest"}
+          %label Искать новые заказы в Заявках по интересным мне категориям, либо ждать оповещения в личном кабинете.
+          .clear
+          %input{:type => "radio", :name => "quest"}
+          %label Ждать звонков от заказчиков.
+          .clear
+          %input{:type => "radio", :name => "quest"}
+          %label Зайти в Личный кабинет, выбрать выполненный заказ, нажать ВЫПОЛНЕН
+          .clear
+        .clear
+    .cont
+      %button.btn.btn-reg{:type => "submit"}
+        %b ШАГ 2:
+        ОТВЕТИТЬ И ПЕРЕЙТИ К вопросу 5

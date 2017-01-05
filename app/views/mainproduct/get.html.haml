@@ -1,0 +1,265 @@
+- city_url = "moscow"
+
+- city_url = ((Translit.convert(city_url, :english)).gsub(' ', '').gsub('/', '')).downcase
+%section.filter
+  .cont
+    .bread
+      %a{:href => "/"} Главная страница
+      %img{:src => "/assets/bread.png"}
+      - city = ""
+      
+      - if !city.blank?
+        %a{:href => "/#{city_url}/cat/"}= city
+        %img{:src => "/assets/bread.png"}
+      %a{:href => "/#{city_url}/cat/#{@cat.id}"}= @cat.name
+      %img{:src => "/assets/bread.png"}
+      - if @product.type_prod == "sdat"
+        %a{:href => "/#{city_url}/cat/#{@cat.id}?type_prod=sdat"} Аренда
+        %img{:src => "/assets/bread.png"}
+      - else
+        %a{:href => "/#{city_url}/cat/#{@cat.id}?type_prod=sold_house"} Продажа
+        %img{:src => "/assets/bread.png"}
+      - if !@product.cat.blank?
+        %a{:href => "/#{city_url}/cat/#{@cat.id}?cat=#{@product.cat}", :style => "text-transform: capitalize;"}
+          - if @cat.id == 3
+            Класс 
+          = @product.cat
+        %img{:src => "/assets/bread.png"}
+      - if !@product.vid.blank?
+        %a{:href => "/#{city_url}/cat/#{@cat.id}?vid=#{@product.vid}", :style => "text-transform: capitalize;"}= @product.vid
+        %img{:src => "/assets/bread.png"}
+      %span
+        = @product.name
+        (объявление №#{@product.id })
+    .full-search Расширенный поиск
+    .clear
+    .my-form
+      = render '/layouts/search'
+    .clear
+
+%section.product
+  .cont
+    %h3= @product.name
+    .price
+      = @product.price1
+      %span руб/мес.
+    - if !@current_user.blank?
+      - if @current_user.id == @product.user_id
+        %a{:href => "/profile/notes/#{@product.id}/edit", :style => "float: right;font-size: 14px;color: #fc7e00;text-decoration: underline;text-transform: uppercase;margin: 28px 102px 0 0px;"} Редактировать
+    .clear
+    .product-top
+      .main-image
+        .image
+          %a.left.fancybox{:href => @product.image1.url, :rel => "gal"}
+          %a.right.fancybox{:href => @product.image1.url, :rel => "gal"}
+          = image_tag @product.image1.big.url
+          %a.zoom.fancybox{:href => @product.image1.url, :rel => "gal"}
+        .product-photo
+          - if !@product.image5.blank?
+            .cont
+              .nav
+                %a.left{:href => ""}
+                %a.right{:href => ""}
+          .list
+            .list-cont
+              - if !@product.video.blank?
+                %a.fancybox{:href => @product.video, "data-rel" => "media"}
+                  = image_tag "play.jpg", :style => "width: 127px;height: auto;margin: 12px 0 0 0px;"
+                  %span.zoom
+              - if !@product.image1.blank?
+                %a.fancybox{:href => @product.image1.url, :rel => "gal"}
+                  = image_tag @product.image1.icon2.url
+                  %span.zoom
+              - if !@product.image2.blank?
+                %a.fancybox{:href => @product.image2.url, :rel => "gal"}
+                  = image_tag @product.image2.icon2.url
+                  %span.zoom
+              - if !@product.image4.blank?
+                %a.fancybox{:href => @product.image3.url, :rel => "gal"}
+                  = image_tag @product.image3.icon2.url
+                  %span.zoom
+              - if !@product.image4.blank?
+                %a.fancybox{:href => @product.image4.url, :rel => "gal"}
+                  = image_tag @product.image4.icon2.url
+                  %span.zoom
+              - if !@product.image5.blank?
+                %a.fancybox{:href => @product.image5.url, :rel => "gal"}
+                  = image_tag @product.image5.icon2.url
+                  %span.zoom
+              - if !@product.image6.blank?
+                %a.fancybox{:href => @product.image6.url, :rel => "gal"}
+                  = image_tag @product.image6.icon2.url
+                  %span.zoom
+              - if !@product.image7.blank?
+                %a.fancybox{:href => @product.image7.url, :rel => "gal"}
+                  = image_tag @product.image7.icon2.url
+                  %span.zoom
+              - if !@product.image8.blank?
+                %a.fancybox{:href => @product.image8.url, :rel => "gal"}
+                  = image_tag @product.image8.icon2.url
+                  %span.zoom
+              - if !@product.image9.blank?
+                %a.fancybox{:href => @product.image9.url, :rel => "gal"}
+                  = image_tag @product.image9.icon2.url
+                  %span.zoom
+              - if !@product.image10.blank?
+                %a.fancybox{:href => @product.image10.url, :rel => "gal"}
+                  = image_tag @product.image10.icon2.url
+                  %span.zoom
+              - if !@product.image11.blank?
+                %a.fancybox{:href => @product.image11.url, :rel => "gal"}
+                  = image_tag @product.image11.icon2.url
+                  %span.zoom
+              .clear
+      .contats
+        .phone
+          .clear{:style => "height: 10px;"}
+          %h3 Телефон:
+          .phones-list
+            .item
+              %b
+                = @product.phone1
+                /
+                  +7(123)837-38-
+                  %i **
+              %span с 8 до 23 часов
+            .item
+              %b
+                = @product.phone2
+              %span с 8 до 23 часов
+          %a.show-phone{:href => ""} ПОКАЗАТЬ ТЕЛЕФОН
+        .address
+          %h3 Адрес:
+          .text
+            = @product.city,
+            = @product.address
+        - if !@current_user.blank?
+          - if @current_user.id != @product.user_id
+            %a.write.fancybox{:href => "#write"} НАПИСАТЬ
+        %a.favorite{:href => "#", :product_id => @product.id} В избранное
+
+        .fancybox-text#write
+          %h4 Оставить сообщение
+          .descr{:style => "width: 500px;"}
+            .div{:style => "float: left;"}
+              %input{:type => "hidden", :name => "product_id", :value => @product.id}
+              %textarea{:id => "message", :style => "width: 493px; height: 100px; font-size: 14px;"}
+              = link_to "Отправить", "", :style => 'font-family: "Ubuntu", sans-serif; font-size: 13px; text-transform: uppercase; font-weight: bold; color: #fff; background: #ff9b0f; border: none; border-bottom: 5px solid #b36d0a; text-decoration: none; padding: 6px 26px; display: inline-block; margin: 10px 0 0 0px;', :class => "send-message"
+            .clear
+      .map#map
+      :javascript
+
+        $(function(){
+          add_marker('#{@product.city}', '#{@product.metro}', '#{@product.address}');
+
+        });
+
+        function initialize() {
+          
+        }
+
+        function add_marker(city, metro, address) {
+          //AIzaSyC4_TuvNEHbehOgc-lahGkQW5TjJlX6NCo
+          var key = "AIzaSyDHRb8OR3vpmDcVeBzUXWs28JaktZQl1MQ";
+          console.log(city, metro, address);
+          var address = city + " " + metro + " " + address;
+          $.post("https://maps.googleapis.com/maps/api/geocode/json?address="+address+"&key="+key, {}, function(data){
+            var myLatlng = data.results[0].geometry.location;
+            var mapOptions = {
+              zoom: 15,
+              center: myLatlng,
+              scrollwheel: false
+            }
+            var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+            var myLatlngMarker = data.results[0].geometry.location;
+            var marker = new google.maps.Marker({
+                position: myLatlngMarker,
+                icon: '/assets/metka.png',
+                map: map,
+                title: address
+            });
+          });
+        }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+      .clear
+  
+  .cont
+    .product-bottom
+      .text
+        %h3 Подробное описание
+        .description
+          =raw @product.description
+      .info
+        .number Объявление №#{@product.id}
+        %a.print{:href => ""} РАСПЕЧАТАТЬ ОБЪЯВЛЕНИЕ
+        .clear
+        .info1
+          - cat = Cat.find(@product.cat_id)
+          %span.item.item1 Тип: #{cat.name}
+          %span.item.item2 Метро: #{@product.metro}
+          %span.item.item1 Площадь: #{@product.ploshad} м²
+          %span.item.item1 Этаж: #{@product.etag} этаж
+          %span.item.item1 Площадь: 38 м²
+          %span.item.item1 Этаж: 5 этаж
+        .info2
+          %span.item.item1 Тип: Офисное
+          %span.item.item2 Метро: Ветеранов
+          %span.item.item1 Площадь: 38 м²
+          %span.item.item1 Этаж: 5 этаж
+          %span.item.item1 Площадь: 38 м²
+          %span.item.item1 Этаж: 5 этаж
+        .info3
+          %span.item.item1 Тип: Офисное
+          %span.item.item2 Метро: Ветеранов
+          %span.item.item1 Площадь: 38 м²
+          %span.item.item1 Этаж: 5 этаж
+          %span.item.item1 Площадь: 38 м²
+          %span.item.item1 Этаж: 5 этаж
+        .clear
+      .clear
+%section.top-sales.top-sales-product
+  .cont
+    %h3 Похожие предложения
+    .clear
+    .list
+      .list-cont
+        - if !@products.blank?
+          - @products.each do |p|
+            .item
+              .price #{p.price1} Р
+              .image
+                - if !p.image.blank?
+                  %a{:href => "/#{city_url}/products/#{p.id}"}
+                    %img{:src => p.image.icon.url}/
+                - if !p.image1.blank?
+                  %a{:href => "/#{city_url}/products/#{p.id}"}
+                    %img{:src => p.image1.icon.url}/
+                - if !p.image2.blank?
+                  %a{:href => "/#{city_url}/products/#{p.id}"}
+                    %img{:src => p.image2.icon.url}/
+                - if !p.image3.blank?
+                  %a{:href => "/#{city_url}/products/#{p.id}"}
+                    %img{:src => p.image3.icon.url}/
+                - if !p.image4.blank?
+                  %a{:href => "/#{city_url}/products/#{p.id}"}
+                    %img{:src => p.image4.icon.url}/
+                - if !p.image5.blank?
+                  %a{:href => "/#{city_url}/products/#{p.id}"}
+                    %img{:src => p.image5.icon.url}/
+                - if !p.image6.blank?
+                  %a{:href => "/#{city_url}/products/#{p.id}"}
+                    %img{:src => p.image6.icon.url}/
+                - if !p.image7.blank?
+                  %a{:href => "/#{city_url}/products/#{p.id}"}
+                    %img{:src => p.image7.icon.url}/
+                - if !p.image8.blank?
+                  %a{:href => "/#{city_url}/products/#{p.id}"}
+                    %img{:src => p.image8.icon.url}/
+              .text
+                %a{:href => "/#{city_url}/products/#{p.id}"} #{p.name} #{p.ploshad} м2
+                %span= p.address
+                .short
+                  Общая S2: #{p.ploshad} м²
+        
+        .clear

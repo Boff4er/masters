@@ -1,0 +1,105 @@
+- if !@current_user.blank?
+  .popup.popup-fake
+    .close
+    .title Внимание
+    .alert
+      
+    .btns
+      = link_to "Да", "#", :class => "btn btn-green"
+      = link_to "Нет", "#", :class => "btn btn-red"
+      .clear
+
+  .popup.popup-balance
+    .close
+    .title Пополнение баланса
+    %form{"accept-charset" => "UTF-8", :action => "/profile/save", :method => "post"}
+      %input{:name => "utf8", :type => "hidden", :value => "✓"}/
+      %input{:name => "user_id", :type => "hidden", :value => @current_user.id}/
+      %input{:name => "url", :type => "hidden", :value => "/profile/myorders"}/
+      %input{:name => "authenticity_token", :type => "hidden", :value => "/ILmNl4uphX+FGSOk4ldoj3kIf8YKnLUl/HhazQrPmg="}
+      %input{:type => "text", :name => "balance", :placeholder => "Баланс"}
+      %input.btn{:name => "commit", :type => "submit", :value => "Сохранить"}/
+
+  .popup.popup-create.popup-create-edit
+    .close
+    .title Редактирование<br>обращения
+    .clear
+
+    %form#new_task_2{"accept-charset" => "UTF-8", :action => "/create-task", :method => "post", :enctype => "multipart/form-data"}
+      %input{:name => "utf8", :type => "hidden", :value => "✓"}/
+      - if !@current_user.blank?
+        %input{:type => "hidden", :name => "user_id", :value => @current_user.id}/
+      %input{:type => "hidden", :name => "id"}/
+      %input{:name => "authenticity_token", :type => "hidden", :value => "/ILmNl4uphX+FGSOk4ldoj3kIf8YKnLUl/HhazQrPmg="}/
+      .title Категория<br>обращения
+      .clear
+      .select-cont
+        %select{:name => "cat_id"}
+          - @all_cats.each do |c|
+            %option{:value => c.id}= c.name
+      .title Заголовок<br>обращения
+      .clear
+      %input#user_email{:autofocus => "autofocus", :name => "name", :type => "text", :value => "", :placeholder => "Введите заголовок"}
+      .title Текст<br>обращения
+      .clear
+      %textarea{:placeholder => "Введите текст обращения. Не более 3000 знаков.", :name => "description"}
+      .title Бюджет
+      .clear
+      %input#user_email{:autofocus => "autofocus", :name => "price_fix", :type => "text", :value => "", :placeholder => "Укажите бюджет"}
+      .title Город
+      .clear
+      %input#user_email{:autofocus => "autofocus", :name => "city_from", :type => "text", :value => "", :placeholder => "Город"}
+      .title Приложить<br>фотографии
+      .clear
+      %input{:name => "image", :type => "file", :id => "photo-create"}
+      %label{:for => "photo-create"} Выбрать файл
+
+      %input.btn{:name => "commit", :type => "submit", :value => "Сохранить"}/
+    .clear
+    
+
+
+.master-list.obrash-list
+  %h3
+    Мои
+    %br>/
+    обращения
+  .select-block
+    
+  .clear
+
+  - if !@tasks.blank?
+    - @tasks.each do |t|
+      .master.master-dark
+        .text
+          .left
+            .name-block
+              %img{:src => "/assets/mozg.png"}/
+              .name-left
+                = link_to "/tasks/#{t.id}", :class => "name" do
+                  %b= t.name
+                - if !t.cat.blank?
+                  - cat = Cat.find(t.cat)
+                  .who= cat.name
+              .clear
+          .right
+            .price #{t.price_fix.to_i}₽
+          .clear
+          .description
+            =raw t.description
+          .bottom
+            .time Создан: #{date_format(t.created_at)}
+            .connect
+            .clear
+            .top-work-buttons.top-work-buttons-white
+              = link_to "Редактировать", "", :class => "btn btn-edit t-i-1", :task_id => t.id, :cat_id => t.cat, :name => t.name, :description => t.description, :price_fix => t.price_fix, :city_from => t.city_from
+              = link_to "Закрепить", "#", :class => "btn fake t-i-2", :ptype => "toped", :task_id => t.id
+              = link_to "Поднять", "#", :class => "btn fake t-i-3", :ptype => "up", :task_id => t.id
+              = link_to "Выделить", "#", :class => "btn fake t-i-4", :ptype => "color", :task_id => t.id
+              = link_to "Удалить", "#", :class => "btn delete", :style => "float:right;", :task_id => t.id
+              = link_to "В архив", "#", :class => "btn archive", :style => "float:right;", :task_id => t.id
+              .clear
+        .clear
+  - else
+    .no-message У вас нет обращенй.
+  

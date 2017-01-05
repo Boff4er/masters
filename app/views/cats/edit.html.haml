@@ -1,0 +1,45 @@
+/ Content Header (Page header)
+%section.content-header
+  %h1
+    Редактирование категории
+    %small= "#{@cat.name}"
+  %ol.breadcrumb
+    %li
+      %a{:href => "/admin"}
+        %i.fa.fa-dashboard
+        Главная
+    %li
+      %a{:href => "/admin/cats"} Категории
+    %li.active Редактирование категории
+/ Main content
+%section.content
+  .row
+    .col-xs-12
+      .box
+        .box-header
+          %h3.box-title Введите новые параметры
+        / /.box-header
+        .box.box-primary
+          .box-header.with-border
+            %h3.box-title Редактирование категории
+          / /.box-header
+          / form start
+          %form.rails-form{:role => "form", :model => "role", :type => "new", :action => "/admin/cats/form"}
+            .box-body
+              %input{:type => "hidden", :name => "id", :value => @cat.id}
+              .form-group
+                %label{:for => "exampleInputEmail1"} Название
+                %input#exampleInputEmail1.form-control{:placeholder => "Название", :type => "text", :name => "name", :value => @cat.name}
+              .form-group
+                %label{:for => "exampleInputEmail1"} Порядок
+                %input#exampleInputEmail1.form-control{:placeholder => "Порядок", :type => "text", :name => "ord", :value => @cat.ord}
+              .form-group
+                %label{:for => "exampleInputEmail1"} Url
+                %input#exampleInputEmail1.form-control{:placeholder => "Url", :type => "text", :name => "url", :value => @cat.url}
+              
+            / /.box-body
+            .box-footer
+              %button.btn.btn-primary{:type => "submit"} Сохранить
+        / /.box-body
+      / /.box
+/ /.content

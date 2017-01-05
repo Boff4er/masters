@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+  		<p><b>Заказ в магазине</b> <a href="http://stroydvor21.ru">Стройдвор21</a></p>
+  		
+  		<!--<p>В ближайшее рабочее время наш менеджер свяжется с вами для подтверждения.</p>-->
+  		
+		<p><b>Состав заказа:</b></p>
+		
+		<table>
+			<tr>
+				<td style="padding: 0 10px;"></td>
+				<td style="padding: 0 10px;">Наименование</td>
+				<td style="padding: 0 10px;">Цена, руб.</td>
+				<td style="padding: 0 10px;">Количество</td>
+			</tr>
+			<%i = 1%>
+			<%summ = 0%>
+			<% @cart.items.each do |c|%>
+				<% summ += (c.quantity.to_i * c.product.price1.to_f) %>
+				<tr>
+					<td style="padding: 0 10px;"></td>
+					<td style="padding: 0 10px;"><%=strip_tags(c.product.name)%></td>
+					<td style="padding: 0 10px;"><%=c.product.price1%></td>
+					<td style="padding: 0 10px;"><%=c.quantity%></td>
+				</tr>
+			<%end%>
+		</table>
+		
+		<% if !@order.blank? %>
+			<p><b>Фамилия</b></p>
+			<%= @order.name1 %>
+
+			<p><b>Имя</b></p>
+			<%= @order.name2 %>
+
+			<p><b>Отчество</b></p>
+			<%= @order.name3 %>
+
+			<p><b>Телефон</b></p>
+			<%= @order.phone %>
+
+			<p><b>Адрес</b></p>
+			<%= @order.address %>
+		<% end %>
+
+		<p><b>Сообщение</b></p>
+		<%= @message %>
+		
+		
+		
+		<p><b>Итого по заказу: <%=summ%> руб.</b></p>
+		
+  </body>
+</html>

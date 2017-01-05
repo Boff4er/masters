@@ -1,0 +1,40 @@
+.header-top
+  %header
+    = render '/layouts/header_nav'
+  .main-form
+    .mouse-block
+      = image_tag "mouse.png"
+    .cont
+      .left
+        %h1 ЕСТЬ ДЕЛО?
+        %h2 У НАС ЕСТЬ РЕШЕНИЕ!
+        %p От сантехника до репетитора химии здесь вы подберете лучшего!
+        %form
+          %input#autocomplete{:name => "search-val", :placeholder => "Привет, я умный поиск! Начните вводить задание и я предложу варианты!", :type => "text"}/
+          %input{:type => "submit", :value => "Подобрать мастеров"}/
+          .clear
+      .right
+        %form{:action => "/create", :method => "get"}
+          %h3 КАКОЕ ЗАДАНИЕ?
+          %select{:name => "cat"}
+            %option Выберите категорию
+            - @cat.each do |c|
+              %option{:value => c.id}= c.name
+          %textarea{:placeholder => "Опишите свою заявку", :name => "description"}
+          %input.btn{:type => "submit", :value => "СОЗДАТЬ ЗАЯВКУ"}/
+          %input#checkbox{:name => "", :type => "checkbox"}/
+          %label
+            %a{:href => "/soglashenie"} Соглашение с правилами сервиса
+      .clear
+      .values
+        .item
+          %b{:id => "item1", :item => "1"} 780
+          %span ЗАКАЗОВ В СУТКИ
+        .item
+          %b{:id => "item2", :item => "2"} 2345
+          %span ПРОВЕРЕННЫХ МАСТЕРОВ
+        .item
+          %b{:id => "item3", :item => "3"} 1738
+          %span ВЫПОЛНЕННЫХ ЗАКАЗА
+        .clear
+      .clear

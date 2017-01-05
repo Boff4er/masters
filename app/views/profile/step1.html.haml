@@ -1,0 +1,347 @@
+%section.reg-etap
+  .cont
+    %h3
+      ВСЕГО
+      %b 2
+      простых шага
+    .etap-list
+      %a.etap-1{:href => ""}
+        %img{:src => "/assets/reg-1.jpg"}/
+      %a.etap-2{:href => ""}
+        %img{:src => "/assets/reg-2.jpg"}/
+      .clear
+%section.reg-form
+  %form.cont{"accept-charset" => "UTF-8", :action => "/profile/step_3", :method => "post", :enctype => "multipart/form-data"}
+    %input{:type => "hidden", :name => "ismaster", :value => "1"}
+    %input{:type => "hidden", :name => "user_id", :value => @current_user.id}
+    %h3 РЕГИСТРАЦИЯ МАСТЕРА
+    .reg-from-1
+      %h4.photo Ваша фотография
+      %input#photo{:type => "file", :name => "image"}/
+      %label{:for => "photo"}
+        = image_tag "", :class => "img-bg"
+      .photo-short
+        Фото Вашего лица крупным планом. Цветное, без посторонних предметов, желательно на белом фоне, без головного убора. Улыбочку, люди это любят!
+      %h4.status Статус профиля
+      %input#status-1{:type => "radio", :name => "status_1", :value => "Частное лицо"}/
+      %label{:for => "status-1"} Частное лицо
+      %input#status-1{:type => "radio", :name => "status_2", :value => "Работаете один(-а)"}/
+      %label{:for => "status-1"} Работаете один(-а)
+      .clear
+      %input#status-1{:type => "radio", :name => "status_3", :value => "Компания"}/
+      %label{:for => "status-1"} Компания
+      %input#status-1{:type => "radio", :name => "status_4", :value => "С бригадой"}/
+      %label{:for => "status-1"} С бригадой
+      .clear
+      %h4.photo-2 Контактная информация
+      %input{:name => "phone", :placeholder => "Номер телефона", :type => "text"}/
+      .clear
+      %input.short{:name => "sms", :placeholder => "Код из SMS", :type => "text"}/
+      %input.btn.btn-blue.btn-send{:type => "submit", :value => "Выслать SMS"}/
+      .clear
+      %input{:name => "skype", :placeholder => "Интернет мессенджер", :type => "text"}/
+      .clear
+      %input{:name => "email", :placeholder => "Электронная почта", :type => "text"}/
+      .clear
+      %input{:name => "www", :placeholder => "Веб-сайт", :type => "text"}/
+      .clear
+      %input.btn.btn-blue.add-soc{:type => "submit", :value => "Добавить аккаунт соцсети"}/
+      .accaunt-message
+        Аккаунт соцсети не виден заказчикам, это для сверки введенных Вами данных. Можете пропустить этот пункт, но это уменьшает шансы на получение статуса Мастера.
+      %h4.molot Специализации мастера
+      .spec-short
+        Отметьте подкатегории, на которые Вы хотите подписаться и получать заказы и по которым будете отображаться в каталоге.
+      - if !@cats.blank?
+        %ul
+          - @cats.each do |c|
+            %li
+              %input{:type => "checkbox", :id => "spec-#{c.id}", :name => "cats[]"}/
+              %label{:for => "spec-#{c.id}"}= c.name
+              .clear
+    .reg-from-2
+      .reg-from-2-1
+        %h4.info Информация о Вас
+        %input{:name => "name1", :placeholder => "Фамилия", :type => "text"}/
+        .clear
+        %input{:name => "name2", :placeholder => "Имя", :type => "text"}/
+        .clear
+        %input{:name => "name3", :placeholder => "Отчество", :type => "text"}/
+        .clear
+        %h4.date Дата рождения
+        %select.small{:name => "b_date"}
+          - date = 1..31
+          - date.each do |d|
+            %option= d
+        %select.small{:name => "b_month"}
+          %option{:value => "1"} Январь
+          %option{:value => "2"} Февраль
+          %option{:value => "3"} Март
+          %option{:value => "4"} Апрель
+          %option{:value => "5"} Май
+          %option{:value => "6"} Июнь
+          %option{:value => "7"} Июль
+          %option{:value => "8"} Август
+          %option{:value => "9"} Сентябрь
+          %option{:value => "10"} Октябрь
+          %option{:value => "11"} Ноябрь
+          %option{:value => "12"} Декабрь
+        %select.small{:name => "b_year"}
+          - years = 1930..2006
+          - years.each do |y|
+            %option= y
+        .clear
+        %input#info-1{:name => "is-garant", :type => "checkbox"}/
+        %label.garant{:for => "info-1"} Гарантии на работы
+        %input{:name => "garant", :placeholder => "Если есть гарантии на Ваши работы - опишите их", :type => "text"}/
+        .clear
+        %h4.pay Способы оплаты
+        %input#pay-1{:type => "checkbox", :name => "pays_1"}/
+        %label{:for => "status-1"} Наличными
+        %input#pay-2{:type => "checkbox", :name => "pays_2"}/
+        %label{:for => "status-2"} Электронные деньги
+        .clear
+        %input#pay-3{:type => "checkbox", :name => "pays_3"}/
+        %label{:for => "status-3"} На карты мастера
+        %input#pay-4{:type => "checkbox", :name => "pays_4"}/
+        %label{:for => "status-4"} Другое
+        .clear
+        %h4.local Локация
+        %input{:name => "city", :placeholder => "Город", :type => "text"}/
+        .clear
+        %input{:name => "metro", :placeholder => "Станция метро (если есть)", :type => "text"}/
+        .clear
+        %input{:name => "address", :placeholder => "Адрес", :type => "text"}/
+        .clear
+        .map-block
+          #map
+          :javascript
+            var styles = [
+              {
+                  "featureType": "administrative",
+                  "elementType": "labels.text.fill",
+                  "stylers": [
+                      {
+                          "color": "#444444"
+                      }
+                  ]
+              },
+              {
+                  "featureType": "administrative.country",
+                  "elementType": "geometry.fill",
+                  "stylers": [
+                      {
+                          "visibility": "on"
+                      }
+                  ]
+              },
+              {
+                  "featureType": "landscape",
+                  "elementType": "all",
+                  "stylers": [
+                      {
+                          "color": "#f2f2f2"
+                      }
+                  ]
+              },
+              {
+                  "featureType": "poi",
+                  "elementType": "all",
+                  "stylers": [
+                      {
+                          "visibility": "off"
+                      }
+                  ]
+              },
+              {
+                  "featureType": "road",
+                  "elementType": "all",
+                  "stylers": [
+                      {
+                          "saturation": -100
+                      },
+                      {
+                          "lightness": 45
+                      }
+                  ]
+              },
+              {
+                  "featureType": "road.highway",
+                  "elementType": "all",
+                  "stylers": [
+                      {
+                          "visibility": "simplified"
+                      }
+                  ]
+              },
+              {
+                  "featureType": "road.arterial",
+                  "elementType": "labels.icon",
+                  "stylers": [
+                      {
+                          "visibility": "off"
+                      }
+                  ]
+              },
+              {
+                  "featureType": "transit",
+                  "elementType": "all",
+                  "stylers": [
+                      {
+                          "visibility": "off"
+                      }
+                  ]
+              },
+              {
+                  "featureType": "water",
+                  "elementType": "all",
+                  "stylers": [
+                      {
+                          "color": "#4694ec"
+                      },
+                      {
+                          "visibility": "on"
+                      }
+                  ]
+              }
+            ];
+            function initialize() {
+              var myLatlng = new google.maps.LatLng(55.68852706904227,37.25565899999996);
+              var mapOptions = {
+                zoom: 10,
+                center: myLatlng,
+                scrollwheel: false
+              }
+
+              var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+              map.setOptions({styles: styles});
+              var myLatlngMarker = new google.maps.LatLng(55.68852706904227,37.25675899999996);
+              var marker = new google.maps.Marker({
+                  position: myLatlngMarker,
+                  map: map,
+                  title: ''
+              });
+
+            }
+            var bounds = new google.maps.LatLngBounds();
+
+              
+              function add_marker(city) {
+                //AIzaSyC4_TuvNEHbehOgc-lahGkQW5TjJlX6NCo
+
+                var key = "AIzaSyBulkdDQB38z4ztdhb9po9D9Lcj2Be3WIc";
+                var address = city;
+                $.post("https://maps.googleapis.com/maps/api/geocode/json?address="+address+"&key="+key, {}, function(data){
+                  var myLatlng = data.results[0].geometry.location;
+                  var mapOptions = {
+                    zoom: 15,
+                    center: myLatlng,
+                    scrollwheel: false
+                  }
+                  var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+                  map.setOptions({styles: styles});
+                  var myLatlngMarker = data.results[0].geometry.location;
+                  var marker = new google.maps.Marker({
+                      position: myLatlngMarker,
+                      map: map,
+                      title: address
+                  });
+                  bounds.extend(myLatlngMarker);
+
+                  map.fitBounds(bounds);
+
+                  //var zoom = map.getZoom();
+                  //setTimeout(function(){
+                  //  map.setZoom(10);
+                  //}, 500);
+
+                });
+              }
+
+              google.maps.event.addDomListener(window, 'load', initialize);
+
+              $('.reg-form .reg-from-2-1 input[name="city"]').change(function(){
+                var from1 = $('.reg-form .reg-from-2-1 input[name="city"]').val();
+                var from2 = $('.reg-form .reg-from-2-1 input[name="metro"]').val();
+                var from3 = $('.reg-form .reg-from-2-1 input[name="address"]').val();
+                var from = from1 + from2 + from3;
+                add_marker(from);
+              });
+              $('.reg-form .reg-from-2-1 input[name="metro"]').change(function(){
+                var from1 = $('.reg-form .reg-from-2-1 input[name="city"]').val();
+                var from2 = $('.reg-form .reg-from-2-1 input[name="metro"]').val();
+                var from3 = $('.reg-form .reg-from-2-1 input[name="address"]').val();
+                var from = from1 + from2 + from3;
+                add_marker(from);
+              });
+              $('.reg-form .reg-from-2-1 input[name="address"]').change(function(){
+                var from1 = $('.reg-form .reg-from-2-1 input[name="city"]').val();
+                var from2 = $('.reg-form .reg-from-2-1 input[name="metro"]').val();
+                var from3 = $('.reg-form .reg-from-2-1 input[name="address"]').val();
+                var from = from1 + from2 + from3;
+                add_marker(from);
+              });
+
+              google.maps.event.addDomListener(window, 'load', initialize);
+      .reg-from-2-2
+        %h4.pay Минимальная сумма заказа
+        %input.price-input{:name => "price1", :placeholder => "Введите сумму, ниже которой Вы не хотели бы брать заказы", :type => "text"}/
+        %h4.price Ваш прайс-лист
+        .price-list
+          .item
+            %input.usluga-name{:name => "usluga_name[]", :placeholder => "Наименование услуги", :type => "text"}/
+            %input.usluga-price{:name => "usluga_price[]", :placeholder => "Стоимость", :type => "text"}/
+            .clear
+        %a.btn.btn-blue.add-price{:href => ""} Добавить услугу
+        .clear
+        %h4.about Коротко о себе
+        %textarea.about-text{:name => "description", :placeholder => "Не более 1100 знаков с пробелами"}
+        %h4.learn Образование
+        %input.vuz{:name => "learn1", :placeholder => "Учреждение профильного образования", :type => "text"}/
+        %input.vuz-year{:name => "learn2", :placeholder => "Год окончания", :type => "text"}/
+        .clear
+        %input.kvalif{:name => "learn2", :placeholder => "Разряд/квалификация", :type => "text"}/
+        .clear
+        %input.opit{:name => "opyt", :placeholder => "Опыт работы по специальности", :type => "text"}/
+        .clear
+        %h4.car Автомобиль
+        %input#car-1{:type => "checkbox", :name => "auto1"}/
+        %label{:for => "car-1"} Легковой автомобиль
+        %input#car-2{:type => "checkbox", :name => "auto2"}/
+        %label{:for => "car-2"} Грузовой автомобиль
+        %input#car-3{:type => "checkbox", :name => "auto3"}/
+        %label{:for => "car-3"} Нет автомобиля
+        .clear
+        %h4.raion Районы выезда
+        .raion-list
+          .item
+            %input.raion-item{:name => "rayon[]", :placeholder => "Введите название района", :type => "text"}/
+            .clear
+        %a.btn.btn-blue.raion-btn{:href => ""} Добавить  район
+        .clear
+      .clear
+      .aur-service
+        %h4.aur-service-title Наш сервис
+        %select.our-service
+          %option Откуда Вы узнали о нас?
+          %option Откуда Вы узнали о нас?
+          %option Откуда Вы узнали о нас?
+        .clear
+        .our-li
+          %input#our-1{:type => "checkbox"}/
+          %label{:for => "our-1"} Подтверждаю, что я регистрируюсь в Бюро Мастеров впервые
+          .clear
+          %input#our-2{:type => "checkbox"}/
+          %label{:for => "our-2"} Подтверждаю, что я указал свои личные данные достоверно
+          .clear
+          %input#our-3{:type => "checkbox"}/
+          %label{:for => "our-3"}
+            Подтверждаю ознакомление и согласие с условиями
+            = succeed "," do
+              %a{:href => ""} Публичной оферты
+            %a{:href => ""} Условиями использования
+            в полном объёме
+          .clear
+    .clear
+    %button.btn.btn-reg{:type => "submit"}
+      %b ШАГ 2:
+      ПЕРЕЙТИ к загрузке документов

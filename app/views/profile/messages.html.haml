@@ -1,0 +1,66 @@
+.popup.popup-message
+  .close
+  .title Написать сообщение
+  %form{"accept-charset" => "UTF-8", :action => "/profile/message", :method => "post"}
+    %input{:name => "utf8", :type => "hidden", :value => "✓"}/
+    %input{:name => "user_id", :type => "hidden"}/
+    %input{:name => "from_messages_id", :type => "hidden", :value => "1"}/
+    %input{:name => "authenticity_token", :type => "hidden", :value => "/ILmNl4uphX+FGSOk4ldoj3kIf8YKnLUl/HhazQrPmg="}
+    %textarea{:name => "description", :placeholder => "Введите текст сообщения"}
+    %input.btn{:name => "commit", :type => "submit", :value => "Отправить"}/
+
+.master-list
+  %h3
+    Список
+    %br>/
+    диалогов
+  .select-block
+    
+  .clear
+  - if @dialogs.blank?
+    .no-message У вас нет сообщений
+  - else
+    - i = 0
+    - @dialogs.each do |t|
+      - messages = Message.where(dialog_id: t.id)
+      - messages_read = Message.where(dialog_id: t.id, read: false)
+      - if t.user1_id != @current_user.id
+        - user = User.where(id: t.user1_id)
+      - else
+        - user = User.where(id: t.user2_id)
+      - style_1 = ""
+      - style_1 = "margin-bottom: 0px;" if @dialogs.size == 1
+      - i += 1
+      - clazz = ""
+      - clazz = "master-dark" if i % 2 == 0
+      .master
+        .image
+          - if !user.blank?
+            - if !user.first.image.blank?
+              = image_tag user.first.image.big.url
+            - elsif
+              - if !user.first.photo.blank?
+                = image_tag user.first.photo
+            - else
+              = image_tag "noimage.png"
+        .text
+          .left
+            .name-block
+              .name-left
+                = link_to "/#{user.url}", :class => "name" do
+                  %b= user.name2
+                  = user.name1
+                .who=raw user.name3
+              .clear
+          .right
+          .clear
+          .description
+            Всего #{messages.size} сообщений. Всего непрочитанных #{messages_read.size} сообщений.
+          .bottom
+            - if !user.blank?
+              .time Был на сайте: #{date_format_time(user.first.last_seen)}
+            .connect
+              %a.mesage{:href => "/profile/messages/#{t.id}"} Перейти к диалогу
+            .clear
+        .clear
+  

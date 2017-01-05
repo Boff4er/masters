@@ -1,0 +1,652 @@
+.popup.popup-contacts
+  .close
+  .title Редактирование контактов
+  %form{"accept-charset" => "UTF-8", :action => "/profile/save", :method => "post"}
+    %input{:name => "utf8", :type => "hidden", :value => "✓"}/
+    %input{:name => "user_id", :type => "hidden", :value => @current_user.id}/
+    %input{:name => "authenticity_token", :type => "hidden", :value => "/ILmNl4uphX+FGSOk4ldoj3kIf8YKnLUl/HhazQrPmg="}
+    %input{:autofocus => "autofocus", :name => "phone1", :type => "text", :placeholder => "Телефон 1", :value => @current_user.phone1}          
+    %input{:name => "phone2", :type => "text", :placeholder => "Телефон 2", :value => @current_user.phone2}
+    %input{:name => "skype", :type => "text", :placeholder => "Skype", :value => @current_user.skype}
+    %input{:name => "email", :type => "text", :placeholder => "email", :value => @current_user.email}
+    %input{:name => "www", :type => "text", :placeholder => "www", :value => @current_user.www}
+    %input.btn{:name => "commit", :type => "submit", :value => "Сохранить"}/
+
+.popup.popup-learn
+  .close
+  .title Редактирование образования
+  %form{"accept-charset" => "UTF-8", :action => "/profile/save", :method => "post"}
+    %input{:name => "utf8", :type => "hidden", :value => "✓"}/
+    %input{:name => "user_id", :type => "hidden", :value => @current_user.id}/
+    %input{:name => "authenticity_token", :type => "hidden", :value => "/ILmNl4uphX+FGSOk4ldoj3kIf8YKnLUl/HhazQrPmg="}
+    %input{:autofocus => "autofocus", :name => "learn1", :type => "text", :placeholder => "Учреждение", :value => @current_user.learn1}          
+    %input{:name => "learn2", :type => "text", :placeholder => "Разряд", :value => @current_user.learn2}
+    %input{:name => "learn3", :type => "text", :placeholder => "Квалификация", :value => @current_user.learn3}
+    %input.btn{:name => "commit", :type => "submit", :value => "Сохранить"}/
+
+.popup.popup-garant
+  .close
+  .title Редактирование гарантий
+  %form{"accept-charset" => "UTF-8", :action => "/profile/save", :method => "post"}
+    %input{:name => "utf8", :type => "hidden", :value => "✓"}/
+    %input{:name => "user_id", :type => "hidden", :value => @current_user.id}/
+    %input{:name => "authenticity_token", :type => "hidden", :value => "/ILmNl4uphX+FGSOk4ldoj3kIf8YKnLUl/HhazQrPmg="}
+    %input{:autofocus => "autofocus", :name => "garant1", :type => "text", :placeholder => "Монтаж", :value => @current_user.garant1}          
+    %input{:name => "garant2", :type => "text", :placeholder => "Ремонт", :value => @current_user.garant2}
+    %input.btn{:name => "commit", :type => "submit", :value => "Сохранить"}/
+
+.popup.popup-pays
+  .close
+  .title Редактирование варианты работы
+  %form{"accept-charset" => "UTF-8", :action => "/profile/save", :method => "post"}
+    %input{:name => "utf8", :type => "hidden", :value => "✓"}/
+    %input{:name => "user_id", :type => "hidden", :value => @current_user.id}/
+    %input{:name => "authenticity_token", :type => "hidden", :value => "/ILmNl4uphX+FGSOk4ldoj3kIf8YKnLUl/HhazQrPmg="}
+    %input{:autofocus => "autofocus", :name => "pays", :type => "text", :placeholder => "Варианты работы через запятую", :value => @current_user.pays}          
+    %input.btn{:name => "commit", :type => "submit", :value => "Сохранить"}/
+
+.popup.popup-other
+  .close
+  .title Редактирование дополнительные
+  %form{"accept-charset" => "UTF-8", :action => "/profile/save", :method => "post"}
+    %input{:name => "utf8", :type => "hidden", :value => "✓"}/
+    %input{:name => "user_id", :type => "hidden", :value => @current_user.id}/
+    %input{:name => "authenticity_token", :type => "hidden", :value => "/ILmNl4uphX+FGSOk4ldoj3kIf8YKnLUl/HhazQrPmg="}
+    %input{:autofocus => "autofocus", :name => "opyt", :type => "text", :placeholder => "Опыт", :value => @current_user.opyt}          
+    %input{:autofocus => "autofocus", :name => "auto", :type => "text", :placeholder => "Автомобиль", :value => @current_user.auto}          
+    %input{:autofocus => "autofocus", :name => "location", :type => "text", :placeholder => "Локация", :value => @current_user.location}          
+    %input.btn{:name => "commit", :type => "submit", :value => "Сохранить"}/
+
+.popup.popup-spec
+  .close
+  .title Редактирование специализации
+  %form{"accept-charset" => "UTF-8", :action => "/profile/save", :method => "post"}
+    %input{:name => "utf8", :type => "hidden", :value => "✓"}/
+    %input{:name => "user_id", :type => "hidden", :value => @current_user.id}/
+    %input{:name => "authenticity_token", :type => "hidden", :value => "/ILmNl4uphX+FGSOk4ldoj3kIf8YKnLUl/HhazQrPmg="}
+    %select{:name => "cats[]", :multiple => "multiple", :style => "width: 100%;height: 140px;margin-bottom: 15px;"}
+      - @cats.each do |c|
+        %option{:value => c.id}= c.name
+    %input.btn{:name => "commit", :type => "submit", :value => "Сохранить"}/
+
+.popup.popup-image
+  .close
+  .title Редактирование фото
+  %form{"accept-charset" => "UTF-8", :action => "/profile/save", :method => "post", :enctype => "multipart/form-data"}
+    %input{:name => "utf8", :type => "hidden", :value => "✓"}/
+    %input{:name => "user_id", :type => "hidden", :value => @current_user.id}/
+    %input{:name => "authenticity_token", :type => "hidden", :value => "/ILmNl4uphX+FGSOk4ldoj3kIf8YKnLUl/HhazQrPmg="}
+    %input{:name => "image", :type => "file"}
+    %input.btn{:name => "commit", :type => "submit", :value => "Сохранить"}/
+
+
+%section.bread
+  .cont
+    .left
+      %a{:href => "/"} Главная
+      %span >
+      %span Личный кабинет
+      .clear
+    .center-lk
+      = link_to "Профиль заказчика", "/profile"
+      = link_to "Профиль Мастера", "/profile/master", :class => "active"      
+      .clear
+    .right
+      .soc-block
+        .settings
+          = link_to "Настройки", "/profile/settings"
+        .ords
+          .count #{@order_top.size}
+          = link_to "Заявки", "/profile/orders"
+          .clear
+        .message
+          .count #{@message_top.size}
+          = link_to "Сообщения", "/profile/messages"
+          .clear
+        .clear
+    .clear
+%section.profile
+  .cont
+    .profile-left
+      .user
+        .rating= @current_user.rating.to_i
+        - if !@current_user.blank?
+          .edit-link.edit-image
+            Редактировать фото
+        .img
+          - if !@current_user.image.blank?
+            = image_tag @current_user.image.big.url
+          - else
+            - if !@current_user.photo.blank?
+              = image_tag @current_user.photo
+        .likes
+          %span= @likes.size
+          %img{:src => "/assets/plus.png", :user_id => @current_user.id}/
+      - if !@current_user.blank?
+        .edit-link.edit-spec
+          Редактировать специализацию
+      .spec-list
+        .title.molot Специализации мастера
+        - if !@current_user.cats.blank?
+          - cats = @current_user.cats.split(",")
+          %ul
+            - cats.each do |c|
+              %li
+                - cat = Cat.find(c)
+                %a{:href => "/cat/#{c}"}= cat.name
+      .question-list
+        .title Частые вопросы
+        %ul
+          %li
+            %a{:href => ""} Сколько предложений я получу?
+          %li
+            %a{:href => ""} Обязательно выбирать исполнителя?
+          %li
+            %a{:href => ""} Зачем мне указывать примерный бюджет
+          %li
+            %a{:href => ""} Обязательно выбирать исполнителя?
+        %a.btn.btn-blue{:href => "/questions"} ВСЕ ВОПРОСЫ
+    .profile-center
+      .center-left
+        = link_to "Сделать профилем по умолчанию", "#", :class => "btn btn-green btn-set-user-type", :user_type => "master"
+        %span{:style => "font-size:10px;padding-left:10px;"} Выбранный профиль будет открываться по умолчанию.
+        .clear{:style => "height: 10px;"}
+        .name
+          %a{:href => "#"}= "#{@current_user.name1} #{@current_user.name2}"
+          .ico.ico-checked
+          .ico.ico-favorite
+          .clear
+          .under-top
+            %span ЧАСТНОЕ ЛИЦО
+            %span РАБОТАЕТ С БРИГАДОЙ
+            %span #{@tasks.size} заЯВОК
+            %span.rating
+              = "+#{@current_user.plus.to_i}/"
+              %i= "-#{@current_user.minus.to_i}"
+        .price
+          %b от #{@current_user.price.to_i}
+          %img{:src => "/assets/r-6.png"}/
+        .clear
+        .description
+          =raw @current_user.description
+        .profile-task
+          .task-sort-block
+            = link_to "/profile/master" do
+              %span #{@tasks.size}
+              Новые заявки
+            = link_to "/profile/master/answer", :class => "active" do
+              %span #{@task_answer.size}
+              Мои ответы
+            = link_to "/profile/master/inwork" do
+              %span #{@task_inwork.size}
+              Актуальные заявки
+            = link_to "/profile/master/finish" do
+              %span #{@task_done.size}
+              Выполненные заявки
+            = link_to "/profile/master/achive", :class => "last" do
+              %span #{@task_finish.size}
+              Архив
+            .clear
+          .clear
+          .task-list
+            - @tasks.each do |t|
+              - if !@current_user.blank?
+                - order = Order.where(task_id: t.id, userdo_id: @current_user.id, :status => "yes")
+              - clazz = ""
+              - clazz = "task-item-green" if !order.blank?
+              - if !@current_user.blank?
+                - order2 = Order.where(task_id: t.id, userdo_id: @current_user.id, :status => "no")
+              - clazz2 = ""
+              - clazz2 = "task-item-red" if !order2.blank?
+              .task-item{:onclick => 'document.location.href = "/tasks/'+String(t.id)+'"', :class => "#{clazz} #{clazz2}"}
+                - if !order.blank?
+                  .top-work-buttons-sel
+                    %span Вы назначены исполнителем
+                    .clear
+                - if !order2.blank?
+                  .top-work-buttons-sel-2
+                    %span К сожалению заказчик отказал Вам
+                    .clear
+                .top
+                  .ico.ico-fav
+                  .ico.ico-alert
+                  %a.name{:href => "/tasks/#{t.id}"}=raw t.name
+                  .price
+                    - if !t.price_fix.blank?
+                      .price1
+                        %span от
+                        = t.price_fix.to_i
+                        %img{:src => "/assets/r-4.png"}/
+                    - else
+                      .price1
+                        %span от
+                        = t.price_1.to_i
+                        %img{:src => "/assets/r-4.png"}/
+                      .price2
+                        %span до
+                        = t.price_2.to_i
+                        %img{:src => "/assets/r-5.png"}/
+                    .clear
+                  .clear
+                  - if !t.city_from.blank? && !t.address_from.blank?
+                    .line-1
+                      .left
+                        %span ОТ:
+                        #{t.city_from}, #{t.address_from}, #{t.house_from}, #{t.kv_from}
+                      .right
+                        %span НАЧАТЬ:
+                        #{t.date_start}
+                      .clear
+                  - if !t.city_to.blank? && !t.address_to.blank?
+                    .line-2
+                      .left
+                        %span ДО:
+                        #{t.city_to}, #{t.address_to}, #{t.house_to}, #{t.kv_to}
+                      .right
+                        %span ЗАКОНЧИТЬ:
+                        #{t.date_stop}
+                      .clear
+                  .text
+                    =raw t.description
+                  .status
+                    .time
+                      #{t.view.to_i} ПРОСМОТРА
+                    .answer
+                      0  ОТВЕТА
+                    .view
+                      /Создано 19 мин. назад
+                      Создано #{date_format(t.created_at)}
+                    .stat
+                      АКТУАЛЬНО #{t.date_count} суток
+                    .clear
+          /
+            .pagination
+              %span.current 1
+              %a{:href => ""} 2
+              %a{:href => ""} 3
+              %a{:href => ""} 4
+              %a{:href => ""} 5
+              %a{:href => ""} 6
+              %a{:href => ""} 7
+              %span .............................
+              %a{:href => ""} 89
+            .clear
+        .works
+          %h3 ПРИМЕРЫ РАБОТ
+          %a{:href => "/assets/work.png", :rel => "works"}
+            %img{:src => "/assets/work.png"}/
+          %a{:href => "/assets/work.png", :rel => "works"}
+            %img{:src => "/assets/work.png"}/
+          %a{:href => "/assets/work.png", :rel => "works"}
+            %img{:src => "/assets/work.png"}/
+          %a{:href => "/assets/work.png", :rel => "works"}
+            %img{:src => "/assets/work.png"}/
+          %a{:href => "/assets/work.png", :rel => "works"}
+            %img{:src => "/assets/work.png"}/
+          %a{:href => "/assets/work.png", :rel => "works"}
+            %img{:src => "/assets/work.png"}/
+          %a{:href => "/assets/work.png", :rel => "works"}
+            %img{:src => "/assets/work.png"}/
+          %a{:href => "/assets/work.png", :rel => "works"}
+            %img{:src => "/assets/work.png"}/
+          %a{:href => "/assets/work.png", :rel => "works"}
+            %img{:src => "/assets/work.png"}/
+          %a{:href => "/assets/work.png", :rel => "works"}
+            %img{:src => "/assets/work.png"}/
+          .clear
+        .sertif
+          %h3 лицензии и сертификаты
+          %a{:href => "/assets/sertif.png", :rel => "sertif"}
+            %img{:src => "/assets/sertif.png"}/
+          %a{:href => "/assets/sertif.png", :rel => "sertif"}
+            %img{:src => "/assets/sertif.png"}/
+          %a{:href => "/assets/sertif.png", :rel => "sertif"}
+            %img{:src => "/assets/sertif.png"}/
+          .clear
+      .clear
+    .profile-right
+      - if !@current_user.ismaster
+        .master-full
+          = link_to "АКТИВАЦИЯ ПРОФИЛЯ", "/profile/step1", :class => "btn btn-red"
+          %span Для того, что бы Ваш аккаунт появился в каталоге мастеров, что бы Вы могли отвечать на заявки и получать больше заказов необходимо активировать Ваш профиль. Максимально подробно заполните свой профиль, пройдя всего 3 шага активации. 
+      /%a.btn.btn-green{:href => ""} СВЯЗАТЬСЯ С МАСТЕРОМ
+      .clear{:style => "height: 30px;"}
+      
+      - if !@current_user.blank?
+        .edit-link.edit-contacts
+          Редактировать контакты
+      .right-block
+        .title.contacts Контакты мастера
+        - if !@current_user.phone1.blank?
+          .line
+            %b Тел.:
+            = @current_user.phone1
+        - if !@current_user.phone2.blank?
+          .line
+            %b Тел.:
+            = @current_user.phone2
+        - if !@current_user.skype.blank?
+          .line
+            %b Skype:
+            = @current_user.skype
+        - if !@current_user.email.blank?
+          .line
+            %b Почта:
+            = @current_user.email
+        - if !@current_user.www.blank?
+          .line
+            %b WWW:
+            = @current_user.www
+
+      - if !@current_user.blank?
+        .edit-link.edit-learn
+          Редактировать образование
+      .right-block
+        .title.education Образование
+        - if !@current_user.learn1.blank?
+          .line
+            %b Учреждение:
+            = @current_user.learn1
+        - if !@current_user.learn2.blank?
+          .line
+            %b Разряд:
+            = @current_user.learn2
+        - if !@current_user.learn3.blank?
+          .line
+            %b Квалификация:
+            = @current_user.learn3
+      - if !@current_user.blank?
+        .edit-link.edit-garant
+          Редактировать гарантий
+      .right-block
+        .title.garant Гарантии на работы
+        - if !@current_user.garant1.blank?
+          .line
+            %b Монтаж:
+            = @current_user.garant1
+        - if !@current_user.garant2.blank?
+          .line
+            %b Ремонт:
+            = @current_user.garant2
+      - if !@current_user.blank?
+        .edit-link.edit-pays
+          Редактировать варианты оплаты
+      .right-block
+        .title.pay Варианты оплаты
+        - if !@current_user.pays.blank?
+          - @current_user.pays.split(",").each do |p|
+            .line
+              %b= p
+      - if !@current_user.blank?
+        .edit-link.edit-other
+          Редактировать допольнительное
+      .right-block
+        .title.dop Дополнительно
+        - if !@current_user.opyt.blank?
+          .line
+            %b Опыт работы:
+            = @current_user.opyt
+        - if !@current_user.auto.blank?
+          .line
+            %b Автомобиль:
+            = @current_user.auto
+        - if !@current_user.location.blank?
+          .line
+            %b Локация:
+            = @current_user.location
+      %a.full-map{:href => ""} Карту на весь экран
+      .map-block
+        #map
+        :javascript
+          function initialize() {
+            var myLatlng = new google.maps.LatLng(55.68852706904227,37.25565899999996);
+            var mapOptions = {
+              zoom: 10,
+              center: myLatlng,
+              scrollwheel: false
+            }
+
+            var styles = [
+              {
+                  "featureType": "administrative",
+                  "elementType": "labels.text.fill",
+                  "stylers": [
+                      {
+                          "color": "#444444"
+                      }
+                  ]
+              },
+              {
+                  "featureType": "administrative.country",
+                  "elementType": "geometry.fill",
+                  "stylers": [
+                      {
+                          "visibility": "on"
+                      }
+                  ]
+              },
+              {
+                  "featureType": "landscape",
+                  "elementType": "all",
+                  "stylers": [
+                      {
+                          "color": "#f2f2f2"
+                      }
+                  ]
+              },
+              {
+                  "featureType": "poi",
+                  "elementType": "all",
+                  "stylers": [
+                      {
+                          "visibility": "off"
+                      }
+                  ]
+              },
+              {
+                  "featureType": "road",
+                  "elementType": "all",
+                  "stylers": [
+                      {
+                          "saturation": -100
+                      },
+                      {
+                          "lightness": 45
+                      }
+                  ]
+              },
+              {
+                  "featureType": "road.highway",
+                  "elementType": "all",
+                  "stylers": [
+                      {
+                          "visibility": "simplified"
+                      }
+                  ]
+              },
+              {
+                  "featureType": "road.arterial",
+                  "elementType": "labels.icon",
+                  "stylers": [
+                      {
+                          "visibility": "off"
+                      }
+                  ]
+              },
+              {
+                  "featureType": "transit",
+                  "elementType": "all",
+                  "stylers": [
+                      {
+                          "visibility": "off"
+                      }
+                  ]
+              },
+              {
+                  "featureType": "water",
+                  "elementType": "all",
+                  "stylers": [
+                      {
+                          "color": "#4694ec"
+                      },
+                      {
+                          "visibility": "on"
+                      }
+                  ]
+              }
+            ];
+
+            var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+            map.setOptions({styles: styles});
+            var myLatlngMarker = new google.maps.LatLng(55.68852706904227,37.25675899999996);
+            var marker = new google.maps.Marker({
+                position: myLatlngMarker,
+                map: map,
+                title: '',
+                icon: '/assets/balun.png'
+            });
+          }
+
+          google.maps.event.addDomListener(window, 'load', initialize);
+      .right-block
+        .title.rayon Районы выезда
+        - if !@current_user.raions.blank?
+          - @current_user.raions.split(",").each do |p|
+            .line
+              = p
+    .clear
+    /
+      .comment-profile
+        %h3 ОТЗЫВЫ О МАСТЕРЕ
+        .comment-item
+          .comment-user
+            .user
+              .rating 10
+              .img
+                %img{:src => "/assets/user-ava.png"}/
+              %a.name{:href => ""} Игорь Юрьевич
+            .info
+              .counts
+                %span 12 заЯВОК
+                .plus +35/
+                .minus -3
+                .clear
+              .clear
+          .comemnt-text
+            .body
+              .text
+                Пушкин в своем творчестве, являющемся художественной энциклопедией российской действительности, не только поддержал некоторые идеи декабристов, но и затронул коренные общественные проблемы своего времени: самодержавие и народ, личность и государство, трагическое одиночество передовой дворянской интеллигенции Золотого века.
+                %br/
+                Ещё при жизни Пушкина сложилась его репутация величайшего национального русского поэта[7][8]. Пушкин рассматривается как
+              .clear
+            .btns
+              %a.cancle{:href => ""} Отменить
+              %a.btn.btn-blue{:href => ""} ОТВЕТИТЬ
+              .clear
+          .clear
+        .comment-item.comment-sub
+          .comment-user
+            .user
+              .rating 10
+              .img
+                %img{:src => "/assets/user-ava.png"}/
+              %a.name{:href => ""} Игорь Юрьевич
+            .info
+              .counts
+                %span 12 заЯВОК
+                .plus +35/
+                .minus -3
+                .clear
+              .clear
+          .comemnt-text
+            .body
+              .text
+                Пушкин в своем творчестве, являющемся художественной энциклопедией российской действительности, не только поддержал некоторые идеи декабристов, но и затронул коренные общественные проблемы своего времени: самодержавие и народ, личность и государство, трагическое одиночество передовой дворянской интеллигенции Золотого века.
+                %br/
+                Ещё при жизни Пушкина сложилась его репутация величайшего национального русского поэта[7][8]. Пушкин рассматривается как
+              .clear
+            .btns
+              %a.cancle{:href => ""} Отменить
+              %a.btn.btn-blue{:href => ""} ОТВЕТИТЬ
+              .clear
+          .clear
+        .comment-item
+          .comment-user
+            .user
+              .rating 10
+              .img
+                %img{:src => "/assets/user-ava.png"}/
+              %a.name{:href => ""} Игорь Юрьевич
+            .info
+              .counts
+                %span 12 заЯВОК
+                .plus +35/
+                .minus -3
+                .clear
+              .clear
+          .comemnt-text
+            .body
+              .text
+                Пушкин в своем творчестве, являющемся художественной энциклопедией российской действительности, не только поддержал некоторые идеи декабристов, но и затронул коренные общественные проблемы своего времени: самодержавие и народ, личность и государство, трагическое одиночество передовой дворянской интеллигенции Золотого века.
+                %br/
+                Ещё при жизни Пушкина сложилась его репутация величайшего национального русского поэта[7][8]. Пушкин рассматривается как
+              .clear
+            .btns
+              %a.cancle{:href => ""} Отменить
+              %a.btn.btn-blue{:href => ""} ОТВЕТИТЬ
+              .clear
+          .clear
+        .comment-item.comment-sub
+          .comment-user
+            .user
+              .rating 10
+              .img
+                %img{:src => "/assets/user-ava.png"}/
+              %a.name{:href => ""} Игорь Юрьевич
+            .info
+              .counts
+                %span 12 заЯВОК
+                .plus +35/
+                .minus -3
+                .clear
+              .clear
+          .comemnt-text
+            .body
+              .text
+                Пушкин в своем творчестве, являющемся художественной энциклопедией российской действительности, не только поддержал некоторые идеи декабристов, но и затронул коренные общественные проблемы своего времени: самодержавие и народ, личность и государство, трагическое одиночество передовой дворянской интеллигенции Золотого века.
+                %br/
+                Ещё при жизни Пушкина сложилась его репутация величайшего национального русского поэта[7][8]. Пушкин рассматривается как
+              .clear
+            .btns
+              %a.cancle{:href => ""} Отменить
+              %a.btn.btn-blue{:href => ""} ОТВЕТИТЬ
+              .clear
+          .clear
+        .comment-item.comment-sub
+          .comment-user
+            .user
+              .rating 10
+              .img
+                %img{:src => "/assets/user-ava.png"}/
+              %a.name{:href => ""} Игорь Юрьевич
+            .info
+              .counts
+                %span 12 заЯВОК
+                .plus +35/
+                .minus -3
+                .clear
+              .clear
+          .comemnt-text
+            .body
+              .text
+                Пушкин в своем творчестве, являющемся художественной энциклопедией российской действительности, не только поддержал некоторые идеи декабристов, но и затронул коренные общественные проблемы своего времени: самодержавие и народ, личность и государство, трагическое одиночество передовой дворянской интеллигенции Золотого века.
+                %br/
+                Ещё при жизни Пушкина сложилась его репутация величайшего национального русского поэта[7][8]. Пушкин рассматривается как
+              .clear
+            .btns
+              %a.cancle{:href => ""} Отменить
+              %a.btn.btn-blue{:href => ""} ОТВЕТИТЬ
+              .clear
+          .clear
+
+= render '/profile/top_master'

@@ -1,0 +1,277 @@
+- city_url = "moscow"
+
+- city_url = ((Translit.convert(city_url, :english)).gsub(' ', '').gsub('/', '')).downcase
+- url = "/search"
+- url = "/#{city_url}/#{@cat.url}" if !@cat.blank?
+%form{:method => "get", :action => url}
+  - if !@cat.blank?
+    - if @cat.id != 7 && @cat.id != 8
+      %select{:name => "type_prod"}
+        %option{:value => ""} Все
+        - if params[:type_prod] == "sdat"
+          %option{:value => "sdat", :selected => "selected"} Аренда
+        - else
+          %option{:value => "sdat"} Аренда
+        - if params[:type_prod] == "sold_house"
+          %option{:value => "sold_house", :selected => "selected"} Продажа
+        - else
+          %option{:value => "sold_house"} Продажа
+  - else
+    %select{:name => "type_prod"}
+      %option{:value => ""} Все
+      - if params[:type_prod] == "sdat"
+        %option{:value => "sdat", :selected => "selected"} Аренда
+      - else
+        %option{:value => "sdat"} Аренда
+      - if params[:type_prod] == "sold_house"
+        %option{:value => "sold_house", :selected => "selected"} Продажа
+      - else
+        %option{:value => "sold_house"} Продажа
+  - if !@cat.blank?
+    - if @cat.id == 1 || @cat.id == 3
+      %select{:name => "cat"}
+        %option{:value => ""} Класс здания
+        - if params[:cat] == "Не показывать"
+          %option{:value => "Не показывать", :selected => "selected"} Не показывать
+        - else
+          %option{:value => "Не показывать"} Не показывать
+        - if params[:cat] == "А"
+          %option{:value => "А", :selected => "selected"} А
+        - else
+          %option{:value => "A"} A
+        - if params[:cat] == "B"
+          %option{:value => "B", :selected => "selected"} B
+        - else
+          %option{:value => "B"} B
+        - if params[:cat] == "C"
+          %option{:value => "C", :selected => "selected"} C
+        - else
+          %option{:value => "C"} C
+        - if params[:cat] == "C"
+          %option{:value => "C", :selected => "selected"} C
+        - else
+          %option{:value => "C"} C
+    - if @cat.id == 5
+      %select{:name => "cat"}
+        %option{:value => ""} КАТЕГОРИЯ
+        - if params[:cat] == "сельскохозяйственного назначения"
+          %option{:value => "сельскохозяйственного назначения", :selected => "selected"} сельскохозяйственного назначения
+        - else
+          %option{:value => "сельскохозяйственного назначения"} сельскохозяйственного назначения
+        - if params[:cat] == "поселений"
+          %option{:value => "поселений", :selected => "selected"} поселений
+        - else
+          %option{:value => "поселений"} поселений
+        - if params[:cat] == "промышленного и иного специального назначения"
+          %option{:value => "промышленного и иного специального назначения", :selected => "selected"} промышленного и иного специального назначения
+        - else
+          %option{:value => "промышленного и иного специального назначения"} промышленного и иного специального назначения
+        - if params[:cat] == "особо охраняемых территорий и объектов"
+          %option{:value => "особо охраняемых территорий и объектов", :selected => "selected"} особо охраняемых территорий и объектов
+        - else
+          %option{:value => "особо охраняемых территорий и объектов"} особо охраняемых территорий и объектов
+        - if params[:cat] == "лесного фонда"
+          %option{:value => "лесного фонда", :selected => "selected"} лесного фонда
+        - else
+          %option{:value => "лесного фонда"} лесного фонда
+        - if params[:cat] == "водного фонда"
+          %option{:value => "водного фонда", :selected => "selected"} водного фонда
+        - else
+          %option{:value => "водного фонда"} водного фонда
+        - if params[:cat] == "запаса"
+          %option{:value => "запаса", :selected => "selected"} запаса
+        - else
+          %option{:value => "запаса"} запаса
+      %select{:name => "vid", :style => "width: 290px; font-size: 10px;"}
+        %option{:value => ""} ВИД РАЗРЕШЕННОГО ИСПОЛЬЗОВАНИЯ:
+        - if params[:vid] == "индивидуальное жилищное строительство - ИЖС"
+          %option{:value => "индивидуальное жилищное строительство - ИЖС", :selected => "selected"} индивидуальное жилищное строительство - ИЖС
+        - else
+          %option{:value => "сельскохозяйственного назначения"} сельскохозяйственного назначения
+        - if params[:vid] == "личное подсобное хозяйство - ЛПХ"
+          %option{:value => "личное подсобное хозяйство - ЛПХ", :selected => "selected"} личное подсобное хозяйство - ЛПХ
+        - else
+          %option{:value => "личное подсобное хозяйство - ЛПХ"} личное подсобное хозяйство - ЛПХ
+        - if params[:vid] == "дачное строительство"
+          %option{:value => "дачное строительство", :selected => "selected"} дачное строительство
+        - else
+          %option{:value => "дачное строительство"} дачное строительство
+        - if params[:vid] == "дачное хозяйство"
+          %option{:value => "дачное хозяйство", :selected => "selected"} дачное хозяйство
+        - else
+          %option{:value => "дачное хозяйство"} дачное хозяйство
+        - if params[:vid] == "сельскохозяйственное производство"
+          %option{:value => "сельскохозяйственное производство", :selected => "selected"} сельскохозяйственное производство
+        - else
+          %option{:value => "сельскохозяйственное производство"} сельскохозяйственное производство
+        - if params[:vid] == "фермерское хозяйство"
+          %option{:value => "фермерское хозяйство", :selected => "selected"} фермерское хозяйство
+        - else
+          %option{:value => "фермерское хозяйство"} фермерское хозяйство
+        - if params[:vid] == "крестьянско-фермерское хозяйство"
+          %option{:value => "крестьянско-фермерское хозяйство", :selected => "selected"} крестьянско-фермерское хозяйство
+        - else
+          %option{:value => "крестьянско-фермерское хозяйство"} крестьянско-фермерское хозяйство
+        - if params[:vid] == "сельское хозяйство"
+          %option{:value => "сельское хозяйство", :selected => "selected"} сельское хозяйство
+        - else
+          %option{:value => "сельское хозяйство"} сельское хозяйство
+        - if params[:vid] == "малоэтажное жилищное строительство"
+          %option{:value => "малоэтажное жилищное строительство", :selected => "selected"} малоэтажное жилищное строительство
+        - else
+          %option{:value => "малоэтажное жилищное строительство"} малоэтажное жилищное строительство
+        - if params[:vid] == "сельскохозяйственное использование"
+          %option{:value => "сельскохозяйственное использование", :selected => "selected"} сельскохозяйственное использование
+        - else
+          %option{:value => "сельскохозяйственное использование"} сельскохозяйственное использование
+        - if params[:vid] == "жилищное строительство"
+          %option{:value => "жилищное строительство", :selected => "selected"} жилищное строительство
+        - else
+          %option{:value => "жилищное строительство"} жилищное строительство
+        - if params[:vid] == "жилая и коммерческая застройка"
+          %option{:value => "жилая и коммерческая застройка", :selected => "selected"} жилая и коммерческая застройка
+        - else
+          %option{:value => "жилая и коммерческая застройка"} жилая и коммерческая застройка
+    - if @cat.id == 7
+      %select{:name => "cat"}
+        %option{:value => ""} КАТЕГОРИЯ БИЗНЕСА
+        - if params[:cat] == "Авто"
+          %option{:value => "Авто", :selected => "selected"} Авто
+        - else
+          %option{:value => "Авто"} Авто
+        - if params[:cat] == "Гостиницы"
+          %option{:value => "Гостиницы", :selected => "selected"} Гостиницы
+        - else
+          %option{:value => "Гостиницы"} Гостиницы
+        - if params[:cat] == "Добыча полезных ископаемых"
+          %option{:value => "Добыча полезных ископаемых", :selected => "selected"} Добыча полезных ископаемых
+        - else
+          %option{:value => "Добыча полезных ископаемых"} Добыча полезных ископаемых
+        - if params[:cat] == "ЖКХ"
+          %option{:value => "ЖКХ", :selected => "selected"} ЖКХ
+        - else
+          %option{:value => "ЖКХ"} ЖКХ
+        - if params[:cat] == "Здоровье и красота"
+          %option{:value => "Здоровье и красота", :selected => "selected"} Здоровье и красота
+        - else
+          %option{:value => "Здоровье и красота"} Здоровье и красота
+        - if params[:cat] == "Интернет и ИТ"
+          %option{:value => "Интернет и ИТ", :selected => "selected"} Интернет и ИТ
+        - else
+          %option{:value => "Интернет и ИТ"} Интернет и ИТ
+        - if params[:cat] == "Кафе, рестораны"
+          %option{:value => "Кафе, рестораны", :selected => "selected"} Кафе, рестораны
+        - else
+          %option{:value => "Кафе, рестораны"} Кафе, рестораны
+        - if params[:cat] == "Обучение и образование"
+          %option{:value => "Обучение и образование", :selected => "selected"} Обучение и образование
+        - else
+          %option{:value => "Обучение и образование"} Обучение и образование
+        - if params[:cat] == "Отдых и развлечение"
+          %option{:value => "Отдых и развлечение", :selected => "selected"} Отдых и развлечение
+        - else
+          %option{:value => "Отдых и развлечение"} Отдых и развлечение
+        - if params[:cat] == "Продажа оборудования"
+          %option{:value => "Продажа оборудования", :selected => "selected"} Продажа оборудования
+        - else
+          %option{:value => "Продажа оборудования"} Продажа оборудования
+        - if params[:cat] == "Промышленность"
+          %option{:value => "Промышленность", :selected => "selected"} Промышленность
+        - else
+          %option{:value => "Промышленность"} Промышленность
+        - if params[:cat] == "Розничная торговля"
+          %option{:value => "Розничная торговля", :selected => "selected"} Розничная торговля
+        - else
+          %option{:value => "Розничная торговля"} Розничная торговля
+        - if params[:cat] == "Сельское хозяйство"
+          %option{:value => "Сельское хозяйство", :selected => "selected"} Сельское хозяйство
+        - else
+          %option{:value => "Сельское хозяйство"} Сельское хозяйство
+        - if params[:cat] == "СМИ"
+          %option{:value => "СМИ", :selected => "selected"} СМИ
+        - else
+          %option{:value => "СМИ"} СМИ
+        - if params[:cat] == "Строительство"
+          %option{:value => "Строительство", :selected => "selected"} Строительство
+        - else
+          %option{:value => "Строительство"} Строительство
+        - if params[:cat] == "Телекоммуникации"
+          %option{:value => "Телекоммуникации", :selected => "selected"} Телекоммуникации
+        - else
+          %option{:value => "Телекоммуникации"} Телекоммуникации
+        - if params[:cat] == "Товары и услуги для детей"
+          %option{:value => "Товары и услуги для детей", :selected => "selected"} Товары и услуги для детей
+        - else
+          %option{:value => "Товары и услуги для детей"} Товары и услуги для детей
+        - if params[:cat] == "Транспортные услуги"
+          %option{:value => "Транспортные услуги", :selected => "selected"} Транспортные услуги
+        - else
+          %option{:value => "Транспортные услуги"} Транспортные услуги
+        - if params[:cat] == "Услуги для бизнеса"
+          %option{:value => "Услуги для бизнеса", :selected => "selected"} Услуги для бизнеса
+        - else
+          %option{:value => "Услуги для бизнеса"} Услуги для бизнеса
+        - if params[:cat] == "Услуги для населения"
+          %option{:value => "Услуги для населения", :selected => "selected"} Услуги для населения
+        - else
+          %option{:value => "Услуги для населения"} Услуги для населения
+        - if params[:cat] == "Финансовые услуги"
+          %option{:value => "Финансовые услуги", :selected => "selected"} Финансовые услуги
+        - else
+          %option{:value => "Финансовые услуги"} Финансовые услуги
+        - if params[:cat] == "Другое"
+          %option{:value => "Другое", :selected => "selected"} Другое
+        - else
+          %option{:value => "Другое"} Другое
+    .clear{:style => "height: 10px;"}
+  %label S2 от:
+  %input.small{:type => "text", :name => "s1", :value => params[:s1]}
+  %label до
+  %input.small{:type => "text", :name => "s2", :value => params[:s2]}
+  %label М2
+  %label.main Цена от:
+  %input.medium{:type => "text", :name => "price1", :value => params[:price1]}
+  %label до
+  %input.medium{:type => "text", :name => "price2", :value => params[:price2]}
+  %label т.руб
+  - display = ""
+  - display = "display: block;" if !params[:city].blank? || !params[:metro].blank? || !params[:address].blank?
+  .search-bottom{:style => display}
+    .clear
+    %label Город
+    - city_current = ""
+   
+    %input.medium#Address{:type => "text", :name => "city", :value => city_current, :style => "width: 217px;"}
+    %label Метро/Район
+    %input.medium#Metro{:type => "text", :name => "metro", :value => params[:metro], :style => "width: 217px;"}
+    %label Адрес
+    %input.medium#Home{:type => "text", :name => "address", :value => params[:address], :style => "width: 217px;"}
+  %input{:type => "submit", :value => "ПОКАЗАТЬ ОБЪЯВЛЕНИЯ"}
+  .clear
+
+  :javascript
+
+    function initialize10() {
+      var options = {
+        types: ['(cities)'],
+        componentRestrictions: {country: "ru"}
+       };
+
+       var options2 = {
+        types: ['geocode'],
+        componentRestrictions: {country: "ru"}
+       };
+
+       var options3 = {
+        types: ['address'],
+        componentRestrictions: {country: "ru"}
+       };
+
+     var input = document.getElementById('Address');
+     var autocomplete = new google.maps.places.Autocomplete(input, options);
+     var input2 = document.getElementById('Metro');
+     var autocomplete2 = new google.maps.places.Autocomplete(input2, options2);
+     var input3 = document.getElementById('Home');
+     var autocomplete3 = new google.maps.places.Autocomplete(input3, options3);
+    }
+    google.maps.event.addDomListener(window, 'load', initialize10);

@@ -1,0 +1,682 @@
+- city_url = "moscow"
+
+- city_url = ((Translit.convert(city_url, :english)).gsub(' ', '').gsub('/', '')).downcase
+%section.filter
+  .cont
+    .bread
+      %a{:href => "/"} Главная страница
+      %img{:src => "/assets/bread.png"}
+      %span Поиск
+    .full-search Расширенный поиск
+    .clear
+    .my-form
+      = render '/layouts/search'
+%section.top-sales.top-sales-sub
+  .result
+    .cont
+      .sort
+        - clazz = ""
+        - clazz = "active" if params[:sort].blank? || params[:sort] == "popular"
+        %a{:href => "?sort=popular", :class => clazz} Популярные
+        %span.line
+        - clazz = ""
+        - clazz = "active" if params[:sort] == "price"
+        %a{:href => "?sort=price", :class => clazz} Самые дешевые
+        %span.line
+        - clazz = ""
+        - clazz = "active" if params[:sort] == "isnew"
+        %a{:href => "?sort=isnew", :class => clazz} Самые новые
+        .clear
+      .h1 Результаты поиска
+      .view-type
+        = link_to :view => "type1", :type_prod => params[:type_prod], :word => params[:word] do
+          = image_tag "v1.png"
+          %span Плитками
+        = link_to :view => "type2", :type_prod => params[:type_prod], :word => params[:word] do
+          = image_tag "v2.png"
+          %span Списком
+        = link_to :view => "type3", :type_prod => params[:type_prod], :word => params[:word] do
+          = image_tag "v3.png"
+          %span На карте
+        .clear
+      .clear
+    .list
+      .cont
+        .list-cont
+          - if params[:view] == "type1" || params[:view].blank?
+            .list-cont
+              - if !@products.blank?
+                - @products.each do |p|
+                  .item
+                    .image
+                      - if !p.image.blank?
+                        %a{:href => "/#{city_url}/products/#{p.id}"}
+                          %img{:src => p.image.icon.url}/
+                      - if !p.image1.blank?
+                        %a{:href => "/#{city_url}/products/#{p.id}"}
+                          %img{:src => p.image1.icon.url}/
+                      - if !p.image2.blank?
+                        %a{:href => "/#{city_url}/products/#{p.id}"}
+                          %img{:src => p.image2.icon.url}/
+                      - if !p.image3.blank?
+                        %a{:href => "/#{city_url}/products/#{p.id}"}
+                          %img{:src => p.image3.icon.url}/
+                      - if !p.image4.blank?
+                        %a{:href => "/#{city_url}/products/#{p.id}"}
+                          %img{:src => p.image4.icon.url}/
+                      - if !p.image5.blank?
+                        %a{:href => "/#{city_url}/products/#{p.id}"}
+                          %img{:src => p.image5.icon.url}/
+                      - if !p.image6.blank?
+                        %a{:href => "/#{city_url}/products/#{p.id}"}
+                          %img{:src => p.image6.icon.url}/
+                      - if !p.image7.blank?
+                        %a{:href => "/#{city_url}/products/#{p.id}"}
+                          %img{:src => p.image7.icon.url}/
+                      - if !p.image8.blank?
+                        %a{:href => "/#{city_url}/products/#{p.id}"}
+                          %img{:src => p.image8.icon.url}/
+                    .price #{p.price1} Р
+                    .text
+                      %a{:href => "/#{city_url}/products/#{p.id}"} Офис #{p.ploshad} м2
+                      %span= p.address
+                      .short
+                        Общая S2: #{p.ploshad} м²
+              .clear
+          - if params[:view] == "type2"
+            .profile
+              .cont
+                .my-list{:style => "width: 100%;"}
+                  .tabs-content
+                    - i = 0
+                    - if !@products.blank?
+                      - @products.each do |p|
+                        - product = Product.where(id: p.id)
+                        - if !product.blank?
+                          - product = product.first
+                          - i += 1
+                          - k = i % 2
+                          - clazz = ""
+                          - clazz = "dark" if k == 1
+                          .item{:class => clazz, :style => "width: 100%;"}
+                            .left
+                              .image
+                                - if !p.image.blank?
+                                  %a{:href => "/#{city_url}/products/#{p.id}"}
+                                    %img{:src => p.image.icon.url}/
+                                - if !p.image1.blank?
+                                  %a{:href => "/#{city_url}/products/#{p.id}"}
+                                    %img{:src => p.image1.icon.url}/
+                                - if !p.image2.blank?
+                                  %a{:href => "/#{city_url}/products/#{p.id}"}
+                                    %img{:src => p.image2.icon.url}/
+                                - if !p.image3.blank?
+                                  %a{:href => "/#{city_url}/products/#{p.id}"}
+                                    %img{:src => p.image3.icon.url}/
+                                - if !p.image4.blank?
+                                  %a{:href => "/#{city_url}/products/#{p.id}"}
+                                    %img{:src => p.image4.icon.url}/
+                                - if !p.image5.blank?
+                                  %a{:href => "/#{city_url}/products/#{p.id}"}
+                                    %img{:src => p.image5.icon.url}/
+                                - if !p.image6.blank?
+                                  %a{:href => "/#{city_url}/products/#{p.id}"}
+                                    %img{:src => p.image6.icon.url}/
+                                - if !p.image7.blank?
+                                  %a{:href => "/#{city_url}/products/#{p.id}"}
+                                    %img{:src => p.image7.icon.url}/
+                                - if !p.image8.blank?
+                                  %a{:href => "/#{city_url}/products/#{p.id}"}
+                                    %img{:src => p.image8.icon.url}/
+                            .right{:style => "width: 937px;"}
+                              .top
+                                .type{:style => "width: 397px;"}
+                                  = product.name
+                                  %span
+                                    - if !product.city.blank?
+                                      = "#{product.city}, "
+                                    - if !product.metro.blank?
+                                      = "#{product.metro}, "
+                                    - if !product.address.blank?
+                                      = "#{product.address}"
+                                .info
+                                  %span Общая S2: #{product.ploshad} м²
+                                  %span #{product.etag2}-этажное здание
+                                .date-end
+                                  .string
+                                .viwes
+                                  Просмотров: #{product.view.to_i}
+                                .clear
+                              .description
+                                =raw product.description
+                              .price-block
+                                .price{:style => "color: #000!important; background: none!important;"} #{product.price1} Р
+                                .clear
+                            .clear
+                .clear
+          - if params[:view] == "type3"
+            .map.map-search{:style => "background: none;"}
+              .map-bg
+                .full На весь экран
+                .small Уменьшить
+                #map{:style => "height: 500px;"}
+
+
+              :javascript
+                var bounds = new google.maps.LatLngBounds();
+                var geocoder = new google.maps.Geocoder();
+                var infowindow = new google.maps.InfoWindow();   
+                function InfoBox(opts) {
+                  google.maps.OverlayView.call(this);
+                  this.latlng_ = opts.latlng;
+                  this.map_ = opts.map;
+                  this.data_ = opts.data;
+                  this.offsetVertical_ = -112;
+                  this.offsetHorizontal_ = -172;
+                  this.height_ = 143;
+                  this.width_ = 380;
+
+                  var me = this;
+                  this.boundsChangedListener_ =
+                    google.maps.event.addListener(this.map_, "bounds_changed", function() {
+                      return me.panMap.apply(me);
+                    });
+
+                  // Once the properties of this OverlayView are initialized, set its map so
+                  // that we can display it.  This will trigger calls to panes_changed and
+                  // draw.
+                  this.setMap(this.map_);
+                }
+
+                /* InfoBox extends GOverlay class from the Google Maps API
+                 */
+                InfoBox.prototype = new google.maps.OverlayView();
+
+                /* Creates the DIV representing this InfoBox
+                 */
+                InfoBox.prototype.remove = function() {
+                  if (this.div_) {
+                    this.div_.parentNode.removeChild(this.div_);
+                    this.div_ = null;
+                  }
+                };
+
+                /* Redraw the Bar based on the current projection and zoom level
+                 */
+                InfoBox.prototype.draw = function() {
+                  // Creates the element if it doesn't exist already.
+                  this.createElement();
+                  if (!this.div_) return;
+
+                  // Calculate the DIV coordinates of two opposite corners of our bounds to
+                  // get the size and position of our Bar
+                  var pixPosition = this.getProjection().fromLatLngToDivPixel(this.latlng_);
+                  if (!pixPosition) return;
+
+                  // Now position our DIV based on the DIV coordinates of our bounds
+                  this.div_.className = "baloon";
+                  this.div_.style.width = this.width_ + "px";
+                  this.div_.style.left = (pixPosition.x + this.offsetHorizontal_) + "px";
+                  this.div_.style.height = this.height_ + "px";
+                  this.div_.style.top = (pixPosition.y + this.offsetVertical_) + "px";
+                  this.div_.style.display = 'block';
+                };
+
+                /* Creates the DIV representing this InfoBox in the floatPane.  If the panes
+                 * object, retrieved by calling getPanes, is null, remove the element from the
+                 * DOM.  If the div exists, but its parent is not the floatPane, move the div
+                 * to the new pane.
+                 * Called from within draw.  Alternatively, this can be called specifically on
+                 * a panes_changed event.
+                 */
+                InfoBox.prototype.createElement = function() {
+                  var panes = this.getPanes();
+                  var div = this.div_;
+                  if (!div) {
+                    // This does not handle changing panes.  You can set the map to be null and
+                    // then reset the map to move the div.
+                    div = this.div_ = document.createElement("div");
+                    div.style.border = "0px none";
+                    div.style.position = "absolute";
+                    div.style.zIndex = "1000";
+                    div.style.background = "url('/assets/bg-m.png')";
+                    div.style.width = this.width_ + "px";
+                    div.style.height = this.height_ + "px";
+                    var contentDiv = document.createElement("div");
+                    contentDiv.style.textAlign = "left"
+                    contentDiv.innerHTML = this.data_;
+
+                    var topDiv = document.createElement("div");
+                    topDiv.style.textAlign = "right";
+                    topDiv.style.marginBottom = "-17px";
+                    var closeImg = document.createElement("img");
+                    closeImg.style.width = "15px";
+                    closeImg.style.height = "15px";
+                    closeImg.style.marginTop = "15px";
+                    closeImg.style.marginRight = "15px";
+                    closeImg.style.cursor = "pointer";
+                    closeImg.src = "/assets/close.png";
+                    topDiv.appendChild(closeImg);
+
+                    function removeInfoBox(ib) {
+                      return function() {
+                        ib.setMap(null);
+                      };
+                    }
+
+                    google.maps.event.addDomListener(closeImg, 'click', removeInfoBox(this));
+
+                    div.appendChild(topDiv);
+                    div.appendChild(contentDiv);
+                    div.style.display = 'none';
+                    panes.floatPane.appendChild(div);
+                    this.panMap();
+                  } else if (div.parentNode != panes.floatPane) {
+                    // The panes have changed.  Move the div.
+                    div.parentNode.removeChild(div);
+                    panes.floatPane.appendChild(div);
+                  } else {
+                    // The panes have not changed, so no need to create or move the div.
+                  }
+                }
+
+                /* Pan the map to fit the InfoBox.
+                 */
+                InfoBox.prototype.panMap = function() {
+                  // if we go beyond map, pan map
+                  var map = this.map_;
+                  var bounds = map.getBounds();
+                  if (!bounds) return;
+
+                  // The position of the infowindow
+                  var position = this.latlng_;
+
+                  // The dimension of the infowindow
+                  var iwWidth = this.width_;
+                  var iwHeight = this.height_;
+
+                  // The offset position of the infowindow
+                  var iwOffsetX = this.offsetHorizontal_;
+                  var iwOffsetY = this.offsetVertical_;
+
+                  // Padding on the infowindow
+                  var padX = 40;
+                  var padY = 40;
+
+                  // The degrees per pixel
+                  var mapDiv = map.getDiv();
+                  var mapWidth = mapDiv.offsetWidth;
+                  var mapHeight = mapDiv.offsetHeight;
+                  var boundsSpan = bounds.toSpan();
+                  var longSpan = boundsSpan.lng();
+                  var latSpan = boundsSpan.lat();
+                  var degPixelX = longSpan / mapWidth;
+                  var degPixelY = latSpan / mapHeight;
+
+                  // The bounds of the map
+                  var mapWestLng = bounds.getSouthWest().lng();
+                  var mapEastLng = bounds.getNorthEast().lng();
+                  var mapNorthLat = bounds.getNorthEast().lat();
+                  var mapSouthLat = bounds.getSouthWest().lat();
+
+                  // The bounds of the infowindow
+                  var iwWestLng = position.lng() + (iwOffsetX - padX) * degPixelX;
+                  var iwEastLng = position.lng() + (iwOffsetX + iwWidth + padX) * degPixelX;
+                  var iwNorthLat = position.lat() - (iwOffsetY - padY) * degPixelY;
+                  var iwSouthLat = position.lat() - (iwOffsetY + iwHeight + padY) * degPixelY;
+
+                  // calculate center shift
+                  var shiftLng =
+                      (iwWestLng < mapWestLng ? mapWestLng - iwWestLng : 0) +
+                      (iwEastLng > mapEastLng ? mapEastLng - iwEastLng : 0);
+                  var shiftLat =
+                      (iwNorthLat > mapNorthLat ? mapNorthLat - iwNorthLat : 0) +
+                      (iwSouthLat < mapSouthLat ? mapSouthLat - iwSouthLat : 0);
+
+                  // The center of the map
+                  var center = map.getCenter();
+
+                  // The new map center
+                  var centerX = center.lng() - shiftLng;
+                  var centerY = center.lat() - shiftLat;
+
+                  // center the map to the new shifted center
+                  map.setCenter(new google.maps.LatLng(centerY, centerX));
+
+                  // Remove the listener after panning is complete.
+                  google.maps.event.removeListener(this.boundsChangedListener_);
+                  this.boundsChangedListener_ = null;
+                };
+              :javascript
+                var GoogleMap;
+                google.maps.event.trigger('map', 'resize')
+
+                var Map = {
+                    id : 'map',
+                    initialized : {
+                        map : false
+                    },
+
+                    markers : [],
+
+                    map_icons : {
+                        star : {
+                            _default: {
+                                url: '/assets/flag-office.png',
+                                size: [38, 57],
+                                scaledSize: [38, 57],
+                                origin: [0, 0],
+                                anchor: [0, 24]
+                            },
+                            hover : {
+                                url: '/assets/flag-office.png',
+                                size: [38, 57],
+                                scaledSize: [38, 57],
+                                origin: [0, 0],
+                                anchor: [0, 24]
+                            },
+                            change : {
+                                url: '/assets/flag-office.png',
+                                size: [38, 57],
+                                scaledSize: [38, 57],
+                                origin: [0, 0],
+                                anchor: [0, 24]
+                            }
+                        },
+                        home : {
+                            _default: {
+                                url: '/assets/flag-sklad.png',
+                                size: [43, 31],
+                                scaledSize: [43, 31],
+                                origin: [0, 0],
+                                anchor: [0, 24]
+                            },
+
+                            hover : {
+                                url: '/assets/flag-sklad.png',
+                                size: [43, 31],
+                                scaledSize: [43, 31],
+                                origin: [0, 0],
+                                anchor: [0, 24]
+                            },
+
+                            change : {
+                                url: '/assets/flag-sklad.png',
+                                size: [43, 31],
+                                scaledSize: [43, 31],
+                                origin: [0, 0],
+                                anchor: [0, 24]
+                            }
+                        },
+                        plane : {
+                            _default: {
+                                url: '/assets/flag-filial.png',
+                                size: [43, 31],
+                                scaledSize: [43, 31],
+                                origin: [0, 0],
+                                anchor: [0, 24]
+                            },
+
+                            hover : {
+                                url: '/assets/flag-filial.png',
+                                size: [43, 31],
+                                scaledSize: [43, 31],
+                                origin: [0, 0],
+                                anchor: [0, 24]
+                            },
+
+                            change : {
+                                url: '/assets/flag-filial.png',
+                                size: [43, 31],
+                                scaledSize: [43, 31],
+                                origin: [0, 0],
+                                anchor: [0, 24]
+                            }
+                        }
+                    },
+
+                    defaultMapOptions : {
+                        zoom : 13,
+                        scrollwheel: false,
+                        mapTypeId: 'roadmap'
+                    },
+
+                    getIcon : function(name) {
+                        //console.info("Map.getIcon", name);
+
+                        var data = this.map_icons[name];
+
+                        if (typeof data === 'undefined')
+                            return false;
+
+                        var icon = {};
+
+                        $.each(data, function(index, obj) {
+                            icon[index] = {
+                                url: data._default.url,
+                                size: new google.maps.Size(obj.size[0], obj.size[1]),
+                                scaledSize: new google.maps.Size(obj.scaledSize[0], obj.scaledSize[1]),
+                                origin: new google.maps.Point(obj.origin[0],obj.origin[1]),
+                                anchor: new google.maps.Point(obj.anchor[0],obj.anchor[1])
+                            };
+                        });
+
+                        return icon;
+                    },
+
+                    /**
+                     * Меняем размеры контейнера в котором находится карта
+                     * @param trg
+                     */
+                    calculate_height : function(trg) {
+                        //console.debug('Map.calculate_height', trg);
+
+                        var header_height = $('header').height();
+                        var window_height = $(window).height();
+                        var height = window_height - header_height;
+
+                        $(trg).css("height", height);
+                    },
+
+
+                    /**
+                     * https://developers.google.com/maps/documentation/javascript/reference?csw=1#Marker
+                     * https://developers.google.com/maps/documentation/javascript/reference?csw=1#MarkerOptions
+                     *
+                     * Добавляем маркер
+                     * @param {Object} params ->
+                     *    {
+                     *      position: new google.maps.LatLng(56.1321341,47.2459649),
+                     *      icon: Map.getIcon('star'),
+                     *      animation: google.maps.Animation.DROP,  // BOUNCE|DROP
+                     *      title: 'Hello',
+                     *      click: function(marker) {...}
+                     *    }
+                     */
+                    add_marker: function (params, callback, isklaster) {
+                        //console.info("Map.add_marker", params);
+
+                        if ( typeof(params) !== "object") {
+                            console.error("wrong variable type [params]");
+                            return false;
+                        }
+
+                        if ( typeof (params.position) === 'undefined') {
+                            console.error('marker position is empty');
+                            return false;
+                        }
+
+                        if (typeof(params.icon) == 'object') {
+                            var icon = params.icon;
+                            params.icon = icon._default;
+                        }
+
+                        params.map = params.map || GoogleMap;
+                        params.animation = params.animation || google.maps.Animation.DROP;
+                        params.zIndex = params.zIndex || 1;
+
+                        var marker = new google.maps.Marker(params);
+
+                        bounds.extend(marker.position);
+
+                        if (typeof(params.icon) == 'object') {
+                            google.maps.event.addListener(marker, 'mouseover', function() {
+                                marker.setIcon(icon.hover);
+                            });
+
+                            google.maps.event.addListener(marker, 'mouseout', function() {
+                                marker.setIcon(icon._default);
+                            });
+
+                            google.maps.event.addListener(marker, 'mousedown', function() {
+                              $(".baloon").remove();
+                              //GoogleMap.setZoom(7);
+                              $.post("/get_map_item", {map: marker.id}, function(data) {
+                                var infoBox = new InfoBox({latlng: marker.getPosition(), map: params.map, data: data});
+                                Map.focus_on_marker(marker);
+                              });
+                            });
+
+                            /*google.maps.event.addListener(marker, 'mouseup', function() {
+                                marker.setIcon(icon._default);
+                            });*/
+                        }
+
+                        if (focus === true) {
+                            this.focus_on_marker(marker);
+                        }
+
+                        this.markers.push(marker);
+
+                        if ( typeof (callback) === 'function') {
+                            callback.apply(Map, [marker]);
+                        }
+                        if (isklaster == true)
+                          console.log("Здесь кластер должен быть");
+                          //new MarkerClusterer(GoogleMap, this.markers);
+                        return marker;
+                    },
+                    
+                    createClaster: function () {
+                      
+                    },
+
+                    /**
+                     * @param float x
+                     * @param float y
+                     * @returns {LatLng}
+                     */
+                    makeLocate: function (x, y) {
+                        //console.info("Map.makeLocate", x, y);
+                        return new google.maps.LatLng(x,y);
+                    },
+
+                    /**
+                     * Инициализируем объект
+                     */
+                    initialize : function(callback) {
+                        //console.info("Map.initialize");
+
+                        var that = this;
+                        // events
+                        $(window).on("resize", this.initialize_map);
+                        var locate = that.makeLocate(56.135403, 47.23596);
+                        this.defaultMapOptions.center = locate;
+                        // call functions
+                        this.initialize_map();
+
+                        if (typeof(callback) === 'function') {
+                            callback.apply(that);
+                        }
+
+                        //new MarkerClusterer(GoogleMap, this.markers);
+                    },
+
+
+                    /**
+                     * Инициализируем Google Map
+                     * @returns {boolean}
+                     */
+                    initialize_map : function() {
+                        //console.info('Map.initialize_map');
+
+                        var id = Map.id;
+                        //Map.calculate_height("#"+id);
+
+                        // Если сама карта уже была отрисована - выходим
+                        if ( Map.initialized.map === true) {
+                            return false;
+                        }
+
+                        //console.debug('Map.initialize_map -> start initializing google map');
+                        GoogleMap = new google.maps.Map(document.getElementById(id), Map.defaultMapOptions);
+                        Map.initialized.map = true;
+                        return true;
+                    },
+
+                    /**
+                     * https://developers.google.com/maps/documentation/flash/reference?csw=1#Map.panTo
+                     *
+                     * Сфокусировать карту на маркере
+                     * @param marker
+                     */
+                    focus_on_marker: function(marker, callback) {
+                        var map = GoogleMap;
+                        //console.info("Map.focus_on_marker", marker, map)
+
+                        map.panTo(marker.getPosition());
+
+                        if (typeof (callback) === 'function')
+                            google.maps.event.addListenerOnce(map, 'idle', callback);
+                    },
+
+
+                    /**
+                     * Убираем метки
+                     * @param markers
+                     */
+                    destroy_markers : function(markers) {
+                        markers = markers || this.markers;
+                        //console.info("Map.destroy_markers", markers)
+
+                        if (typeof (markers) === "object") {
+                            $.each(markers, function(index, marker) {
+                                marker.setMap(null);
+                            });
+
+                            markers.length = 0;
+                            console.debug(markers);
+                        }
+                    }
+                };
+                Map.initialize();
+
+              - count = 0
+              - @products.each do |p|
+                - count += 1
+                - metka = "star"
+
+                :javascript
+                  var coords = "";
+
+                  var key = "AIzaSyDHRb8OR3vpmDcVeBzUXWs28JaktZQl1MQ";
+                  var address = '#{p.city}' + " " + '#{p.metro}' + " " + '#{p.address}';
+                  $.post("https://maps.googleapis.com/maps/api/geocode/json?address="+address+"&key="+key, {}, function(data){
+                    if (data.results[0] && data.results[0] != undefined) {
+                      var myLatlng = data.results[0].geometry.location;
+                    
+                      Map.add_marker({
+                          position: Map.makeLocate(myLatlng.lat, myLatlng.lng),
+                          icon: Map.getIcon('#{metka}'),
+                          id : '#{p.id}'
+                      },function(marker) {
+                          this.focus_on_marker(marker);
+                          GoogleMap.fitBounds(bounds);
+                      });
+                    }
+                  });
+          .clear
+    /
+      .paggination
+        .cont
+          %a{:href => ""} Предыдущая страница

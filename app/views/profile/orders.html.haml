@@ -1,0 +1,56 @@
+.master-list.obrash-list
+  %h3
+    Ответы на 
+    %br>/
+    обращения
+  .select-block
+    
+  .clear
+
+  - if !@tasks.blank?
+    - @tasks.each do |t|
+      .master.master-dark
+        .text
+          .left
+            .name-block
+              %img{:src => "/assets/mozg.png"}/
+              .name-left
+                = link_to "/tasks/#{t.id}", :class => "name" do
+                  %b= t.name
+                - if !t.cat.blank?
+                  - cat = Cat.find(t.cat)
+                  .who= cat.name
+              .clear
+          .right
+            .price #{t.price_fix.to_i}₽
+          .clear
+          .description
+            .status-task
+              - if t.finish
+                %span Заявка завершена
+                .clear
+              - else
+                - if t.done
+                  %span Заявка выполнена
+                  .clear
+                - else
+                  - if t.inwork
+                    %span Заявка в работе
+                    .clear
+              - message = Message.where(task_id: t.id)
+              - message_noread = Message.where(task_id: t.id, read: false, to_user: @current_user.id)
+              %span Сообщений (#{message_noread.size}/#{message.size})
+          .bottom
+            .time Создан: #{date_format(t.created_at)}
+            .connect
+              - favtask = Favtask.where(task_id: t.id, profile_id: @current_user.id)
+              - if !favtask.blank?
+                %a.fav.btn-add-to-favtask{:href => "#", :task_id => t.id, :type => "0"} Убрать из избранного
+              - else
+                %a.fav.btn-add-to-favtask{:href => "#", :task_id => t.id, :type => "1"} Добавить в избранные
+              - user_id = 0
+              - user_id = @current_user.id if !@current_user.blank?
+              %a.mesage{:href => "/tasks/#{t.id}"} Перейти
+            .clear
+        .clear
+  

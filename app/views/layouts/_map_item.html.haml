@@ -1,0 +1,22 @@
+- city_url = "moscow"
+
+- city_url = ((Translit.convert(city_url, :english)).gsub(' ', '').gsub('/', '')).downcase
+
+.map-cont
+  = link_to "/#{city_url}/products/#{@map_item.id}", :class => "image" do
+    = image_tag @map_item.image.icon.url
+  .other-text
+    = link_to @map_item.name, "/#{city_url}/products/#{@map_item.id}", :class => "name" 
+    .price
+      Цена: 
+      =raw @map_item.price1
+    .city
+      Город:
+      =raw @map_item.city
+    .metro
+      Метро:
+      =raw @map_item.metro
+    .address
+      Адрес:
+      =raw @map_item.address
+  .clear

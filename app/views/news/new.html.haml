@@ -1,0 +1,67 @@
+/ Content Header (Page header)
+%section.content-header
+  %h1
+    Новости
+    %small Создание новой новости
+  %ol.breadcrumb
+    %li
+      %a{:href => "/admin"}
+        %i.fa.fa-dashboard
+        Главная
+    %li
+      %a{:href => "/admin/news"} Новости
+    %li.active Новая новость
+/ Main content
+%section.content
+  .row
+    .col-xs-12
+      .box
+        .box-header
+          %h3.box-title Введите параметры
+        / /.box-header
+        .box.box-primary
+          .box-header.with-border
+            %h3.box-title Новая новость
+          / /.box-header
+          / form start
+          %form.rails-form{:role => "form", :model => "user", :type => "new", :action => "/admin/news/form", :enctype => "multipart/form-data", :method => "post"}
+            .box-body
+              .form-group
+                %label{:for => "exampleInputEmail1"} Название
+                %input#exampleInputEmail1.form-control{:placeholder => "Название", :type => "text", :name => "name"}
+              .form-group
+                %label{:for => "exampleInputEmail1"} Фото
+                %input{:placeholder => "Фото", :type => "file", :name => "image"}
+              .form-group
+                %label{:for => "exampleInputEmail1"} Порядок
+                %input#exampleInputEmail1.form-control{:placeholder => "Порядок", :type => "text", :name => "ord"}
+              .form-group
+                %label{:for => "exampleInputEmail1"} Короткий текст
+                %textarea.form-control{:placeholder => "Короткий текст", :type => "text", :name => "short"}
+              .form-group
+                %label{:for => "exampleInputEmail1"} Полный текст
+                %textarea.form-control{:placeholder => "Полный текст", :type => "text", :name => "description"}
+              .form-group
+                %label{:for => "exampleInputEmail1"} Дата
+                %input#exampleInputEmail1.form-control{:placeholder => "Дата", :type => "date", :name => "datepost"}
+              .checkbox
+                %label
+                  %input{:type => "checkbox", :name => "public"}
+                    Активна
+
+              .form-group
+                %label{:for => "exampleInputEmail1"} Meta title
+                %input#exampleInputEmail1.form-control{:placeholder => "Meta title", :type => "text", :name => "meta_title"}
+              .form-group
+                %label{:for => "exampleInputEmail1"} Meta keywords
+                %input#exampleInputEmail1.form-control{:placeholder => "Meta keywords", :type => "text", :name => "meta_keywords"}
+              .form-group
+                %label{:for => "exampleInputEmail1"} Meta description
+                %textarea.form-control{:placeholder => "Полный текст", :type => "text", :name => "meta_description"}
+
+            / /.box-body
+            .box-footer
+              %button.btn.btn-primary{:type => "submit"} Создать
+        / /.box-body
+      / /.box
+/ /.content

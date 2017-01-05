@@ -1,0 +1,196 @@
+%header
+  .cont
+    %a.logo{:href => "/"}
+      - if !@url[1].blank?
+        %img.hover{:src => "/assets/dark-logo.png"}/
+        %img.normal{:src => "/assets/logo-2.png"}/
+      - else
+        %img.hover{:src => "/assets/light-logo.png"}/
+        %img.normal{:src => "/assets/logo.png"}/
+    - if !@current_user.blank?
+      %a.btn.btn-enter.btn-message{:href => "/profile/messages"} 
+        %span #{@message_top.size}
+    - if @current_user.blank?
+      .enter-block{:style => "width:80px;"}
+        %a.btn.btn-enter.popup-enter{:href => "#"} Войти
+    - else
+      .enter-block.enter-block-master
+        .sub-menu-list
+          = link_to "/profile/master", :class => "item" do
+            .image= image_tag "profile-b.png"
+            %span Профиль
+            .clear
+          /
+            = link_to "/profile/master/messages", :class => "message-g item" do
+              .image #{@message_top_2.size}
+              %span Сообщения
+              .clear
+          = link_to "/profile/master/orders", :class => "order-g item" do
+            .image #{@order_top_2.size + @order_top_2_t.size}
+            %span Ответы
+            .clear
+          = link_to "/profile/master/balance", :class => "item" do
+            .image= image_tag "balance-b.png"
+            %span Кошелек
+            .clear
+          = link_to "/profile/master/settings", :class => "item" do
+            .image= image_tag "setting-b.png"
+            %span Настройки
+            .clear
+          = link_to destroy_user_session_path, :method => :delete, :class => "item" do
+            .image= image_tag "exit-b.png"
+            %span Выйти
+            .clear
+        %a.btn.btn-blue.btn-enter{:href => "#"} 
+          .name{:style => "padding-right: 7px;padding-left: 3px;"} Мастер
+          .orders-w.order_top_2 #{@order_top_2.size + @order_top_2_t.size}
+          /.message-w.message_top_2 #{@message_top_2.size}
+          .clear
+      .enter-block
+        .sub-menu-list
+          = link_to "/profile", :class => "item" do
+            .image= image_tag "profile-b.png"
+            %span Профиль
+            .clear
+          /
+            = link_to "/profile/messages", :class => "message-g item" do
+              .image #{@message_top.size}
+              %span Сообщения
+              .clear
+          = link_to "/profile/orders", :class => "order-g item" do
+            .image #{@order_top.size + @order_top_t.size}
+            %span Задания
+            .clear
+          = link_to "/profile/balance", :class => "item" do
+            .image= image_tag "balance-b.png"
+            %span Кошелек
+            .clear
+          = link_to "/profile/settings", :class => "item" do
+            .image= image_tag "setting-b.png"
+            %span Настройки
+            .clear
+          = link_to destroy_user_session_path, :method => :delete, :class => "item" do
+            .image= image_tag "exit-b.png"
+            %span Выйти
+            .clear
+        %a.btn.btn-green.btn-enter{:href => "#"} 
+          .name Заказчик
+          .orders-w.order_top #{@order_top.size + @order_top_t.size}
+          /.message-w.message_top #{@message_top.size}
+          .clear
+    .nav
+      %a.item.item-create{:href => "/create"} Создать заявку
+    - style = "margin-right:50px;"
+    - if @current_user.blank?
+      - style = "margin-right:120px;"
+    %nav{:style => style}
+      - clazz = ""
+      - clazz = "active" if @url[1] == "users"
+      %a.item{:href => "/users", :class => clazz} Мастера
+      - clazz = ""
+      - clazz = "active" if @url[1] == "tasks"
+      %a.item{:href => "/tasks", :class => clazz} Задания
+      - clazz = ""
+      - clazz = "active" if @url[1] == "status"
+      %a.item{:href => "/status", :class => clazz} Статус мастера
+      - clazz = ""
+      - clazz = "active" if @url[1] == "kak-eto-rabotaet"
+      %a.item{:href => "/kak-eto-rabotaet", :class => clazz} Как это работает?
+      /%a.item{:href => "/artice"} О проекте
+    .clear
+
+.header-fixed
+  .cont
+    %a.logo{:href => "/"}
+      %img{:src => "/assets/logo-2.png"}/
+    - if !@current_user.blank?
+      %a.btn.btn-enter.btn-message{:href => "/profile/messages"} 
+        %span #{@message_top.size}
+    - if @current_user.blank?
+      .enter-block{:style => "width:80px;"}
+        %a.btn.btn-enter.popup-enter{:href => "#"} Войти
+    - else
+      .enter-block.enter-block-master
+        .sub-menu-list
+          = link_to "/profile/master", :class => "item" do
+            .image= image_tag "profile-b.png"
+            %span Профиль
+            .clear
+          /
+            = link_to "/profile/master/messages", :class => "message-g item" do
+              .image #{@message_top_2.size}
+              %span Сообщения
+              .clear
+          = link_to "/profile/master/orders", :class => "order-g item" do
+            .image #{@order_top_2.size + @order_top_2_t.size}
+            %span Ответы
+            .clear
+          = link_to "/profile/master/balance", :class => "item" do
+            .image= image_tag "balance-b.png"
+            %span Кошелек
+            .clear
+          = link_to "/profile/master/settings", :class => "item" do
+            .image= image_tag "setting-b.png"
+            %span Настройки
+            .clear
+          = link_to destroy_user_session_path, :method => :delete, :class => "item" do
+            .image= image_tag "exit-b.png"
+            %span Выйти
+            .clear
+        %a.btn.btn-blue.btn-enter{:href => "#"} 
+          .name{:style => "padding-right: 7px;padding-left: 3px;"} Мастер
+          .orders-w.order_top_2 #{@order_top_2.size + @order_top_2_t.size}
+          / .message-w.message_top_2 #{@message_top_2.size}
+          .clear
+      .enter-block
+        .sub-menu-list
+          = link_to "/profile", :class => "item" do
+            .image= image_tag "profile-b.png"
+            %span Профиль
+            .clear
+          /
+            = link_to "/profile/messages", :class => "message-g item" do
+              .image #{@message_top.size}
+              %span Сообщения
+              .clear
+          = link_to "/profile/orders", :class => "order-g item" do
+            .image #{@order_top.size + @order_top_t.size}
+            %span Заказы
+            .clear
+          = link_to "/profile/balance", :class => "item" do
+            .image= image_tag "balance-b.png"
+            %span Кошелек
+            .clear
+          = link_to "/profile/settings", :class => "item" do
+            .image= image_tag "setting-b.png"
+            %span Настройки
+            .clear
+          = link_to destroy_user_session_path, :method => :delete, :class => "item" do
+            .image= image_tag "exit-b.png"
+            %span Выйти
+            .clear
+        %a.btn.btn-green.btn-enter{:href => "#"} 
+          .name Заказчик
+          .orders-w.order_top #{@order_top.size + @order_top_t.size}
+          /.message-w.message_top #{@message_top.size}
+          .clear
+    .nav
+      %a.item.item-create{:href => "/create"} Создать заявку
+    - style = "margin-right:50px;"
+    - if @current_user.blank?
+      - style = "margin-right:120px;"
+    %nav{:style => style}
+      - clazz = ""
+      - clazz = "active" if @url[1] == "users"
+      %a.item{:href => "/users", :class => clazz} Мастера
+      - clazz = ""
+      - clazz = "active" if @url[1] == "tasks"
+      %a.item{:href => "/tasks", :class => clazz} Задания
+      - clazz = ""
+      - clazz = "active" if @url[1] == "status"
+      %a.item{:href => "/status", :class => clazz} Статус мастера
+      - clazz = ""
+      - clazz = "active" if @url[1] == "kak-eto-rabotaet"
+      %a.item{:href => "/kak-eto-rabotaet", :class => clazz} Как это работает?
+      /%a.item{:href => "/artice"} О проекте
+    .clear

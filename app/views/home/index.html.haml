@@ -1,0 +1,158 @@
+%script{:src => "/assets/cubeTransition.js?body=1"}
+%script{:src => "/assets/jquery.touchSwipe.js?body=1"}
+%script{:src => "/assets/mousewheel.js?body=1"}
+.main-cont{:style => "overflow: hidden;position: relative;background:#000;"}
+  %video.fillWidth{:autoplay => "", :loop => ""}
+    / %source{:src => "/assets/519824312_1.webm", :type => "video/webm"}
+    %source{:src => "/videoplayback2.mp4"}
+  #bullets-cont
+    %ul#bullets
+  %header
+    .logo
+      %img{:src => "/assets/logo-main.png"}/
+    %nav
+      .item
+        %a{:href => "/"} Главная
+        .line
+        %span Чем мы можем быть полезны для Вас?
+      .item
+        %a{:href => "/users"} Специалисты
+        .line
+        %span Знаете какой специалист Вам нужен?
+      .item
+        %a{:href => "/tasks"} Обращения
+        .line
+        %span Ваши обращения для наших специалистов.
+      /
+        .item
+          %a{:href => ""} Как это работает
+          .line
+          %span Краткие инструкции по нашему сервису.
+        .item
+          %a{:href => ""} Для специалистов
+          .line
+          %span Преимущества работы на нашем сервисе;
+      .clear
+    .add-block
+      - clazz = "btn-create"
+      - clazz = "btn-login" if @current_user.blank?
+      %a.btn{:href => "#", :class => clazz} Создать обращение
+      .clear
+      .line
+      .clear
+      .alert-block
+        .alert-links
+          - if @current_user.blank?
+            
+          - else
+            %a{:href => "/profile"} Личный кабинет
+            = link_to "Выход", destroy_user_session_path, :method => :delete
+          .clear
+        .clear
+        - if !@current_user.blank?
+          .info-block
+            %a.tasks{:href => "/profile/myorders"} #{@tasks_all.size}
+            %a.message{:href => "/profile/messages"} #{@message_top.size}
+            %a.sound{:href => "/profile/audiomessages"} #{@audio_top.size}
+            /%a.video{:href => ""} 5
+        .clear
+      .clear
+      %span Войдите с помощью социальных сетей и создайте свое первое обращение, всего в несколько кликов.
+      .clear
+  #cubeTransition.main-page
+    .page1
+      %h1
+        Обрести
+        %br/
+        %i Спокойствие
+      .center-text
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+      .scroll
+        %img{:src => "/assets/mouse.png"}/
+      %a.btn.btn-big-btn{:href => "/users"} Каких специалистов можно у нас найти?
+    .page2
+      .column-1
+        .item
+          .text
+            %a{:href => "/users?cats=1"} ЭЗОТЕРИКА
+            %span Специалисты по эзотерике
+          .image
+            %img{:src => "/assets/icon-1.png"}/
+          .clear
+        .item
+          .text
+            %a{:href => "/users?cats=17"} КОУЧИНГ
+            %span Профессиональный коучинг
+          .image
+            %img{:src => "/assets/icon-2.png"}/
+          .clear
+        .item
+          .text
+            %a{:href => "/users?cats=2"} ТРЕНЕРСТВО
+            %span Лучшие тренеры России
+          .image
+            %img{:src => "/assets/icon-3.png"}/
+          .clear
+        .item
+          .text
+            %a{:href => "/users?cats=3"} БИЗНЕС
+            %span Бизнес специалисты помогут в изнесе
+          .image
+            %img{:src => "/assets/icon-4.png"}/
+          .clear
+        .item
+          .text
+            %a{:href => "/users?cats=4"} ДЕТИ
+            %span Специалисты по Воспитанию
+          .image
+            %img{:src => "/assets/icon-5.png"}/
+          .clear
+      .column-center
+        %img{:src => "/assets/column-center.png"}/
+      .column-2
+        .item
+          .text
+            %a{:href => "/users?cats=5"} АСТРОЛОГИЯ
+            %span Астрологи прфессионалы
+          .image
+            %img{:src => "/assets/icon-6.png"}/
+          .clear
+        .item
+          .text
+            %a{:href => "/users?cats=6"} МЕДИЦИНА
+            %span Специалисты по медицине
+          .image
+            %img{:src => "/assets/icon-7.png"}/
+          .clear
+        .item
+          .text
+            %a{:href => "/users?cats=7"} ПСИХОЛОГИЯ
+            %span Помощь психологов
+          .image
+            %img{:src => "/assets/icon-8.png"}/
+          .clear
+        .item
+          .text
+            %a{:href => "/users?cats=8"} СЕМЬЯ
+            %span Специалисты по семейным отнгошениям
+          .image
+            %img{:src => "/assets/icon-9.png"}/
+          .clear
+        .item
+          .text
+            %a{:href => "/users?cats=9"} ОТНОШЕНИЯ
+            %span Специалисты по семейным отнгошениям
+          .image
+            %img{:src => "/assets/icon-10.png"}/
+          .clear
+      .clear
+      .scroll
+        %img{:src => "/assets/mouse.png"}/
+      %a.btn.btn-big-btn{:href => "/users"} Перейти к поиску специалистов
+    .page3
+      %form.form-main
+        %input#autocomplete{:name => "search", :placeholder => "Введите направление. Например:Гороскоп, Тренинг, Семейный проблемы...", :type => "text"}/
+        %input.btn{:type => "submit", :value => "Найти обращения"}/
+        .clear
+      
+      /%a.btn.btn-big-btn{:href => ""} Узнать как это работает

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+  		<p><b>Вы зарегистрировались на сайте </b> <a href="http://delorub.ru">delorub.ru</a></p>
+  		
+		
+		<% if !@email.blank? %>
+			<p><b>E-mail:</b></p>
+			<%= @email %>
+		<% end %>
+		<% if !@password.blank? %>
+			<p><b>Пароль</b></p>
+			<%= @password %>
+		<% end %>
+		
+		
+  </body>
+</html>

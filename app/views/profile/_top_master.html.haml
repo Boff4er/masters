@@ -1,0 +1,26 @@
+%section.tops
+  .cont
+    %h4 ЛУЧШИЕ МАСТЕРА
+    %a.question{:href => "/how-master-list"} Как сюда попасть?
+    .tops-line
+      - if !@top_master.blank?
+        - @top_master.each do |m|
+          .item{:onclick => "document.location.href='/users/#{m.id}';"}
+            .user
+              .rating #{m.rating.to_i}
+              .img
+                - if !m.image.blank?
+                  = image_tag m.image.big.url
+                - else
+                  - if !m.photo.blank?
+                    = image_tag m.photo
+              %a.name{:href => "/users/#{m.id}"} #{m.name1} #{m.name2}
+            .info
+              - task = Task.where(userdo_id: m.id, finish: true)
+              %span #{task.size} #{order_count(task.size)}
+              .counts
+                .plus +#{m.plus.to_i}/
+                .minus -#{m.minus.to_i}
+                .clear
+              .clear
+      .clear

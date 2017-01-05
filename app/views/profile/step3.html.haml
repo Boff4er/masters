@@ -1,0 +1,47 @@
+%section.reg-etap
+  .cont
+    %h3
+      ВСЕГО
+      %b 2
+      простых шага
+    .etap-list
+      %a.etap-1{:href => ""}
+        %img{:src => "/assets/reg-1-2.jpg"}/
+      %a.etap-2{:href => ""}
+        %img{:src => "/assets/reg-2-2.jpg"}/
+      .clear
+%section.reg-form.reg-form-step
+  %form{"accept-charset" => "UTF-8", :action => "/profile/save", :method => "post"}
+    .cont
+      %input{:type => "hidden", :name => "ismaster", :value => "1"}
+      %input{:type => "hidden", :name => "user_id", :value => @current_user.id}
+      %h3 Подтвердите вашу личность копиями документов
+      .alert 
+        %span Пожалуйста, изучите несколько простых правил работы в Б М
+      .reg-text
+        .profile-task
+          .task-list
+            %h2.task-title Документы
+            .clear
+            .doc-item{:style => "padding-top:25px;"}
+              .name{:style => "float: left; width: 200px; margin: 0 0 15px 0;"} Сертификат
+              %input{:type => "file", :name => "doc[]", :id => "doc1", :style => "display: none;"}
+              %label.btn.btn-blue{:for => "doc1"} Выбрать файл
+              .clear
+            .doc-item{:style => "padding-top:10px;"}
+              .name{:style => "float: left; width: 200px; margin: 0 0 15px 0;"} Диплом
+              %input{:type => "file", :name => "doc[]", :id => "doc2", :style => "display: none;"}
+              %label.btn.btn-blue{:for => "doc2"} Выбрать файл
+              .clear
+            .doc-item{:style => "padding-top:10px;"}
+              .name{:style => "float: left; width: 200px; margin: 0 0 15px 0;"} ИНН
+              %input{:type => "file", :name => "doc[]", :id => "doc3", :style => "display: none;"}
+              %label.btn.btn-blue{:for => "doc3"} Выбрать файл
+              .clear
+        .clear{:style => "height: 30px;"}
+
+      .clear
+    
+    .cont
+      %button.btn.btn-reg{:type => "submit"}
+        Загрузить документы

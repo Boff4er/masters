@@ -1,0 +1,63 @@
+
+.popup.popup-message
+  .close
+  .title Написать сообщение
+  %form{"accept-charset" => "UTF-8", :action => "/profile/message", :method => "post"}
+    %input{:name => "utf8", :type => "hidden", :value => "✓"}/
+    %input{:name => "user_id", :type => "hidden"}/
+    %input{:name => "from_messages_id", :type => "hidden", :value => "1"}/
+    %input{:name => "authenticity_token", :type => "hidden", :value => "/ILmNl4uphX+FGSOk4ldoj3kIf8YKnLUl/HhazQrPmg="}
+    %textarea{:name => "description", :placeholder => "Введите текст сообщения"}
+    %input.btn{:name => "commit", :type => "submit", :value => "Отправить"}/
+
+.master-list
+  %h3
+    Текстовые
+    %br>/
+    сообщения
+  .select-block
+    
+  .clear
+  - if @message.blank?
+    .no-message У вас нет сообщений
+  - else
+    - i = 0
+    - @message.each do |t|
+      - if !t.from_user.blank?
+        - user = User.where(id: t.from_user)
+      - clazz = ""
+      - clazz = "master-dark" if !user.blank? && user.first.id != @current_user.id
+      .master{:class => clazz}
+        .image
+          - if !user.blank?
+            - if !user.first.image.blank?
+              = image_tag user.first.image.big.url
+            - elsif
+              - if !user.first.photo.blank?
+                = image_tag user.first.photo
+            - else
+              = image_tag "noimage.png"
+        .text
+          .left
+            - if !user.blank? && user.first.id != @current_user.id
+              .name-block
+                .name-left
+                  .name
+                    - if !user.blank?
+                      %b= user.first.name2
+                      = user.first.name1
+                      .who=raw user.first.name3
+                .clear
+          .right
+          .clear
+          .description
+            =raw t.description
+          .bottom
+            - if !user.blank? && user.first.id != @current_user.id
+              .time Был на сайте: #{date_format_time(user.first.last_seen)}
+            .connect
+              %a.fav.delete-message{:href => "#"} Удалить
+              - if !user.blank? && user.first.id != @current_user.id
+                %a.mesage.btn-answer{:href => "#", :to_user_id => user.first.id} Ответить
+            .clear
+        .clear

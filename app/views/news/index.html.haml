@@ -1,0 +1,53 @@
+/ Content Header (Page header)
+%section.content-header
+  %h1
+    Новости
+    %small Таблица новости
+  %ol.breadcrumb
+    %li
+      %a{:href => "/admin"}
+        %i.fa.fa-dashboard
+        Главная
+    %li.active Новости
+/ Main content
+%section.content
+  .row
+    .col-xs-12
+      .box
+        .box-header
+          %h3.box-title Список новостей
+          .box-tools{:style => "width: 240px;"}
+            /
+              .input-group{:style => "width: 150px; float:right;"}
+                %input.form-control.input-sm.pull-right{:name => "table_search", :placeholder => "Поиск", :type => "text"}
+                  .input-group-btn
+                    %button.btn.btn-sm.btn-default
+                      %i.fa.fa-search
+            %button.btn.btn-block.btn-primary.btn-sm{:style => "width: 80px; float:right; margin-right: 10px;", :onclick => "document.location.href='/admin/news/new'"} Новая
+        / /.box-header
+        .box-body.table-responsive.no-padding
+          %table.table.table-hover
+            %tbody
+              %tr
+                %th ID
+                %th Название
+                %th Порядок
+                %th Дата
+                %th Фото
+                %th
+              - if !@news.blank?
+                - @news.each do |r|
+                  %tr
+                    %td= r.id
+                    %td= r.name
+                    %td= r.ord
+                    %td= r.datepost
+                    %td
+                      - if !r.image.blank?
+                        = image_tag r.image.icon.url
+                    %td.right-td
+                      = link_to "/admin/news/edit/#{r.id}" do
+                        %i.fa.fa-fw.fa-edit
+                      = link_to "/admin/news/delete/#{r.id}" do
+                        %i.fa.fa-fw.fa-remove
+                    

@@ -1,0 +1,367 @@
+.popup.popup-message
+  .close
+  .title Написать сообщение
+  %form{"accept-charset" => "UTF-8", :action => "/profile/message", :method => "post"}
+    %input{:name => "utf8", :type => "hidden", :value => "✓"}/
+    %input{:name => "user_id", :type => "hidden"}/
+    %input{:name => "from_messages_id", :type => "hidden", :value => "1"}/
+    %input{:name => "authenticity_token", :type => "hidden", :value => "/ILmNl4uphX+FGSOk4ldoj3kIf8YKnLUl/HhazQrPmg="}
+    %textarea{:name => "description", :placeholder => "Введите текст сообщения"}
+    %input.btn{:name => "commit", :type => "submit", :value => "Отправить"}/
+
+%section.bread.bread-master
+  .cont
+    .left
+      %a{:href => "/"} Главная
+      %span >
+      %a{:href => "/profile"} Личный кабинет
+      %span >
+      %span Сообщения
+      .clear
+    .center-lk{:style => "margin-left:52px;"}
+      %b Профиль мастера
+      .clear
+    .right
+      .soc-block
+        .settings
+          = link_to "Настройки", "/profile/master/settings"
+        .balance
+          = link_to "Баланс: #{@current_user.balance.to_i}", "/profile/master/balance"
+          .clear
+        .ords
+          .count #{@order_top.size}
+          = link_to "Заявки", "/profile/master/orders"
+          .clear
+        .message.active
+          .count #{@message_top.size}
+          = link_to "Сообщения", "/profile/master/messages"
+          .clear
+        .clear
+    .clear
+%section.profile
+  .cont
+    .profile-left
+      .user
+        .rating= @current_user.rating.to_i
+        .img
+          - if !@current_user.image.blank?
+            = image_tag @current_user.image.big.url
+          - else
+            - if !@current_user.photo.blank?
+              = image_tag @current_user.photo
+        .likes
+          %span= @likes.size
+          %img{:src => "/assets/plus.png", :user_id => @current_user.id}/
+
+      .question-list
+        .title Частые вопросы
+        %ul
+          %li
+            %a{:href => ""} Сколько предложений я получу?
+          %li
+            %a{:href => ""} Обязательно выбирать исполнителя?
+          %li
+            %a{:href => ""} Зачем мне указывать примерный бюджет
+          %li
+            %a{:href => ""} Обязательно выбирать исполнителя?
+        %a.btn.btn-blue{:href => "/questions"} ВСЕ ВОПРОСЫ
+    .profile-center{:style => "width:77%;"}
+      .comment-profile{:style => "margin:24px 0 0 0px;"}
+        %h3 Сообщения
+        .profile-task
+          - if @dialogs.blank?
+            У вас нет сообщений
+          - else
+            - @dialogs.each do |t|
+              - messages = Message.where(dialog_id: t.id)
+              - messages_read = Message.where(dialog_id: t.id, read: false)
+              - if t.user1_id != @current_user.id
+                - user = User.where(id: t.user1_id)
+              - else
+                - user = User.where(id: t.user2_id)
+              - style_1 = ""
+              - style_1 = "margin-bottom: 0px;" if @dialogs.size == 1
+              .comment-item.comment-item-message{:style => style_1}
+                - if !user.blank?
+                  .comment-user
+                    .user
+                      .rating= user.first.rating.to_i
+                      .img
+                        - if !user.first.image.blank?
+                          = image_tag user.first.image.big.url
+                        - else
+                          - if !user.first.photo.blank?
+                            = image_tag user.first.photo
+                      %a.name{:href => "/users/#{user.first.id}"} #{user.first.name1} #{user.first.name2}
+                    .info
+                      .counts
+                        %span #{user.first.tasks.to_i} заЯВОК
+                        .plus +#{user.first.plus.to_i}/
+                        .minus -#{user.first.minus.to_i}
+                        .clear
+                      .clear
+                - style = "width:662px;"
+                .comemnt-text{:style => style}
+                  .body
+                    .text
+                      Всего #{messages.size} сообщений. Всего непрочитанных #{messages_read.size} сообщений.
+                    .clear
+                  .btns
+                    /%a.cancle{:href => ""} Отменить
+                    - if !user.blank?
+                      %a.btn.btn-blue{:href => "/profile/master/messages/#{t.id}"} Перейти к диалогу
+                    .clear
+                .clear
+
+        /
+          .works
+            %h3 ПРИМЕРЫ РАБОТ
+            %a{:href => ""}
+              %img{:src => "/assets/work.png"}/
+            %a{:href => ""}
+              %img{:src => "/assets/work.png"}/
+            %a{:href => ""}
+              %img{:src => "/assets/work.png"}/
+            %a{:href => ""}
+              %img{:src => "/assets/work.png"}/
+            %a{:href => ""}
+              %img{:src => "/assets/work.png"}/
+            %a{:href => ""}
+              %img{:src => "/assets/work.png"}/
+            %a{:href => ""}
+              %img{:src => "/assets/work.png"}/
+            %a{:href => ""}
+              %img{:src => "/assets/work.png"}/
+            %a{:href => ""}
+              %img{:src => "/assets/work.png"}/
+            %a{:href => ""}
+              %img{:src => "/assets/work.png"}/
+            .clear
+          .sertif
+            %h3 лицензии и сертификаты
+            %a{:href => ""}
+              %img{:src => "/assets/sertif.png"}/
+            %a{:href => ""}
+              %img{:src => "/assets/sertif.png"}/
+            %a{:href => ""}
+              %img{:src => "/assets/sertif.png"}/
+            .clear
+      .clear
+    .profile-right
+      /
+        %a.btn.btn-green{:href => ""} СВЯЗАТЬСЯ С МАСТЕРОМ
+        .right-block
+          .title.contacts Контакты мастера
+          .line
+            %b Тел.:
+            +7 (999) 222-44-55
+          .line
+            %b Тел.:
+            +7 (999) 222-44-55
+          .line
+            %b Skype:
+            Master
+          .line
+            %b Почта:
+            MasterSpb@gmail.com
+          .line
+            %b WWW:
+            www.masterspb.com
+
+        .right-block
+          .title.education Образование
+          .line
+            %b Учреждение:
+            СПбГУП 2000-2005
+          .line
+            %b Разряд:
+            Руководитель Государства
+          .line
+            %b Квалификация:
+            Стабилизация курсов валют
+        .right-block
+          .title.garant Гарантии на работы
+          .line
+            %b Монтаж:
+            2 года
+          .line
+            %b Ремонт:
+            1 год
+        .right-block
+          .title.pay Варианты оплаты
+          .line
+            %b Наличные
+          .line
+            %b На карту мастера
+          .line
+            %b На расчетный счет
+          .line
+            %b QIWI
+          .line
+            %b Yandex Деньги
+          .line
+            %b WebMoney
+        .right-block
+          .title.dop Дополнительно
+          .line
+            %b Опыт работы:
+            23 года
+          .line
+            %b Автомобиль:
+            Грузовой
+          .line
+            %b Локация:
+            г. Москва, м. Тверская
+        %a.full-map{:href => ""} Карту на весь экран
+        .map-block
+          %script{:async => "", :charset => "utf-8", :src => "https://api-maps.yandex.ru/services/constructor/1.0/js/?sid=D2Ak5e7lxmcy9B-9Fec1xMMYMno72vcv&width=100%&height=240&lang=ru_RU&sourceType=constructor&scroll=true", :type => "text/javascript"}
+        .right-block
+          .title.rayon Районы выезда
+          .line
+            %b г. Москва
+          .line Беговой
+          .line Бескудниковский
+          .line Бибирево
+          .line Бирюлёво Восточное
+          .line Бирюлёво Западное
+          .line Богородское
+          .line Братеево
+          .line Бутово Северное
+          .line Бутово Южное
+          .line Бутырский
+    .clear
+    .comment-profile
+      /
+        %h3 ОТЗЫВЫ О МАСТЕРЕ
+        .comment-item
+          .comment-user
+            .user
+              .rating 10
+              .img
+                %img{:src => "/assets/user-ava.png"}/
+              %a.name{:href => ""} Игорь Юрьевич
+            .info
+              .counts
+                %span 12 заЯВОК
+                .plus +35/
+                .minus -3
+                .clear
+              .clear
+          .comemnt-text
+            .body
+              .text
+                Пушкин в своем творчестве, являющемся художественной энциклопедией российской действительности, не только поддержал некоторые идеи декабристов, но и затронул коренные общественные проблемы своего времени: самодержавие и народ, личность и государство, трагическое одиночество передовой дворянской интеллигенции Золотого века.
+                %br/
+                Ещё при жизни Пушкина сложилась его репутация величайшего национального русского поэта[7][8]. Пушкин рассматривается как
+              .clear
+            .btns
+              %a.cancle{:href => ""} Отменить
+              %a.btn.btn-blue{:href => ""} ОТВЕТИТЬ
+              .clear
+          .clear
+        .comment-item.comment-sub
+          .comment-user
+            .user
+              .rating 10
+              .img
+                %img{:src => "/assets/user-ava.png"}/
+              %a.name{:href => ""} Игорь Юрьевич
+            .info
+              .counts
+                %span 12 заЯВОК
+                .plus +35/
+                .minus -3
+                .clear
+              .clear
+          .comemnt-text
+            .body
+              .text
+                Пушкин в своем творчестве, являющемся художественной энциклопедией российской действительности, не только поддержал некоторые идеи декабристов, но и затронул коренные общественные проблемы своего времени: самодержавие и народ, личность и государство, трагическое одиночество передовой дворянской интеллигенции Золотого века.
+                %br/
+                Ещё при жизни Пушкина сложилась его репутация величайшего национального русского поэта[7][8]. Пушкин рассматривается как
+              .clear
+            .btns
+              %a.cancle{:href => ""} Отменить
+              %a.btn.btn-blue{:href => ""} ОТВЕТИТЬ
+              .clear
+          .clear
+        .comment-item
+          .comment-user
+            .user
+              .rating 10
+              .img
+                %img{:src => "/assets/user-ava.png"}/
+              %a.name{:href => ""} Игорь Юрьевич
+            .info
+              .counts
+                %span 12 заЯВОК
+                .plus +35/
+                .minus -3
+                .clear
+              .clear
+          .comemnt-text
+            .body
+              .text
+                Пушкин в своем творчестве, являющемся художественной энциклопедией российской действительности, не только поддержал некоторые идеи декабристов, но и затронул коренные общественные проблемы своего времени: самодержавие и народ, личность и государство, трагическое одиночество передовой дворянской интеллигенции Золотого века.
+                %br/
+                Ещё при жизни Пушкина сложилась его репутация величайшего национального русского поэта[7][8]. Пушкин рассматривается как
+              .clear
+            .btns
+              %a.cancle{:href => ""} Отменить
+              %a.btn.btn-blue{:href => ""} ОТВЕТИТЬ
+              .clear
+          .clear
+        .comment-item.comment-sub
+          .comment-user
+            .user
+              .rating 10
+              .img
+                %img{:src => "/assets/user-ava.png"}/
+              %a.name{:href => ""} Игорь Юрьевич
+            .info
+              .counts
+                %span 12 заЯВОК
+                .plus +35/
+                .minus -3
+                .clear
+              .clear
+          .comemnt-text
+            .body
+              .text
+                Пушкин в своем творчестве, являющемся художественной энциклопедией российской действительности, не только поддержал некоторые идеи декабристов, но и затронул коренные общественные проблемы своего времени: самодержавие и народ, личность и государство, трагическое одиночество передовой дворянской интеллигенции Золотого века.
+                %br/
+                Ещё при жизни Пушкина сложилась его репутация величайшего национального русского поэта[7][8]. Пушкин рассматривается как
+              .clear
+            .btns
+              %a.cancle{:href => ""} Отменить
+              %a.btn.btn-blue{:href => ""} ОТВЕТИТЬ
+              .clear
+          .clear
+        .comment-item.comment-sub
+          .comment-user
+            .user
+              .rating 10
+              .img
+                %img{:src => "/assets/user-ava.png"}/
+              %a.name{:href => ""} Игорь Юрьевич
+            .info
+              .counts
+                %span 12 заЯВОК
+                .plus +35/
+                .minus -3
+                .clear
+              .clear
+          .comemnt-text
+            .body
+              .text
+                Пушкин в своем творчестве, являющемся художественной энциклопедией российской действительности, не только поддержал некоторые идеи декабристов, но и затронул коренные общественные проблемы своего времени: самодержавие и народ, личность и государство, трагическое одиночество передовой дворянской интеллигенции Золотого века.
+                %br/
+                Ещё при жизни Пушкина сложилась его репутация величайшего национального русского поэта[7][8]. Пушкин рассматривается как
+              .clear
+            .btns
+              %a.cancle{:href => ""} Отменить
+              %a.btn.btn-blue{:href => ""} ОТВЕТИТЬ
+              .clear
+          .clear
+
+= render '/profile/top_master'

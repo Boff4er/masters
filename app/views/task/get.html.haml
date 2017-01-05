@@ -1,0 +1,247 @@
+- if !@current_user.blank?
+  .popup.popup-order
+    .close
+    .title Откликнуться на обращение
+    %form{"accept-charset" => "UTF-8", :action => "/set_order", :method => "post"}
+      %input{:name => "utf8", :type => "hidden", :value => "✓"}/
+      %input{:name => "user_id", :type => "hidden", :value => @current_user.id}/
+      %input{:name => "task_id", :type => "hidden", :value => @task.id}/
+      %input{:name => "order_id", :type => "hidden"}/
+      %input{:name => "authenticity_token", :type => "hidden", :value => "/ILmNl4uphX+FGSOk4ldoj3kIf8YKnLUl/HhazQrPmg="}
+      %input{:autofocus => "autofocus", :name => "price", :type => "text", :placeholder => "Стоимость"}          
+      %input{:name => "ltime", :type => "text", :placeholder => "Срок выполнения"}          
+      %textarea{:name => "description", :placeholder => "Текст отклика"}
+      %input.btn{:name => "commit", :type => "submit", :value => "Отправить заявку"}/
+
+  .popup.popup-answer
+    .close
+    .title Написать ответ
+    %form{"accept-charset" => "UTF-8", :action => "/profile/message_order", :method => "post"}
+      %input{:name => "utf8", :type => "hidden", :value => "✓"}/
+      %input{:name => "task_id", :type => "hidden", :value => @task.id}/
+      %input{:name => "order_id", :type => "hidden"}/
+      %input{:name => "to_user", :type => "hidden"}/
+      %input{:name => "from_user", :type => "hidden"}/
+      %input{:name => "authenticity_token", :type => "hidden", :value => "/ILmNl4uphX+FGSOk4ldoj3kIf8YKnLUl/HhazQrPmg="}
+      %textarea{:name => "description", :placeholder => "Текст сообщения"}
+      %input.btn{:name => "commit", :type => "submit", :value => "Отправить сообщение"}/
+
+  .popup.popup-answer-yes
+    .close
+    .title Внимание
+    %form{"accept-charset" => "UTF-8", :action => "#", :method => "post"}
+      .quest-text{:style => "padding-top:25px;"}
+        «<span class='name'></span>» назначен исполнителем на Вашу заявку «#{@task.name}». Когда <span class='name'></span> выполнит поставленную задачу, обязательно в личном кабинете оцените результат работы и напишите отзыв»
+
+  .popup.popup-recall
+    .close
+    .title Напишите отзыв о мастере
+    %form{"accept-charset" => "UTF-8", :action => "/profile/recall", :method => "post"}
+      %input{:name => "utf8", :type => "hidden", :value => "✓"}/
+      %input{:name => "task_id", :type => "hidden", :value => @task.id}/
+      %input{:name => "from_user_id", :type => "hidden", :value => @current_user.id}/
+      %input{:name => "authenticity_token", :type => "hidden", :value => "/ILmNl4uphX+FGSOk4ldoj3kIf8YKnLUl/HhazQrPmg="}
+      %textarea{:name => "description", :placeholder => "Напишите отзыв"}
+      .rating
+        Ваша оценка:
+        %span 10
+      .clear
+      .line
+        %input{:type => "checkbox", :checked => "checked", :id => "question1", :name => "question1"}
+        %label{:for => "question1"} Специалиста можно назвать знатоком своего дела?
+        .clear
+      .line
+        %input{:type => "checkbox", :checked => "checked", :id => "question2", :name => "question2"}
+        %label{:for => "question2"} Специалист был вежлив?
+        .clear
+      .line
+        %input{:type => "checkbox", :checked => "checked", :id => "question3", :name => "question3"}
+        %label{:for => "question3"} Специалист приступил к работе во время?
+        .clear 
+      .line
+        %input{:type => "checkbox", :checked => "checked", :id => "question4", :name => "question4"}
+        %label{:for => "question4"} Специалист уложился в сроки выполнения заказа?
+        .clear
+      .line
+        %input{:type => "checkbox", :checked => "checked", :id => "question5", :name => "question5"}
+        %label{:for => "question5"} Специалист был опрятен?
+        .clear 
+      .line
+        %input{:type => "checkbox", :checked => "checked", :id => "question6", :name => "question6"}
+        %label{:for => "question6"} Вы заплатили оправданную цену за выполнение заказа?
+        .clear
+      .line
+        %input{:type => "checkbox", :checked => "checked", :id => "question7", :name => "question7"}
+        %label{:for => "question7"} Информация на странице мастера соответствует действительности?
+        .clear
+      .line
+        %input{:type => "checkbox", :checked => "checked", :id => "question8", :name => "question8"}
+        %label{:for => "question8"} Комментарий написаный специалистом по Вашей заявке соответствует действительности?
+        .clear
+      .line
+        %input{:type => "checkbox", :checked => "checked", :id => "question9", :name => "question9"}
+        %label{:for => "question9"} Вы довольны выполненной работой?
+        .clear
+      .line
+        %input{:type => "checkbox", :checked => "checked", :id => "question10", :name => "question10"}
+        %label{:for => "question10"} Вы бы рекомендовали этого специалиста своим друзьям?
+        .clear
+      %input.btn{:name => "commit", :type => "submit", :value => "Оставить отзыв"}/
+
+
+.master-list.obrash-list
+  %h3
+    Страница
+    %br>/
+    обращения
+  .select-block
+    
+  .clear
+
+  - if !@task.blank?
+    .master.master-dark
+      .text
+        .left
+          .name-block
+            %img{:src => "/assets/mozg.png"}/
+            .name-left
+              = link_to "/tasks/#{@task.id}", :class => "name" do
+                %b= @task.name
+              - if !@task.cat.blank?
+                - cat = Cat.find(@task.cat)
+                .who= cat.name
+            .clear
+        .right
+          .price #{@task.price_fix.to_i}₽
+        .clear
+        .description
+          =raw @task.description
+        .bottom
+          .time Создан: #{date_format(@task.created_at)}
+          .connect
+            - if !@current_user.blank?
+              - user_id = 0
+              - user_id = @current_user.id if !@current_user.blank?
+              - order = Order.where(userdo_id: @current_user.id, task_id: @task.id)
+              - if order.blank?
+                - if @current_user.id != @task.user_id
+                  %a.mesage.btn-master-task{:href => "", :user_id => user_id, :task_id => @task.id} Ответить
+          .clear
+        .task-works
+          - if @task.inwork
+            %span Исполнитель определен
+            - if !@current_user.blank?
+              - if @current_user.id == @task.userdo_id && !@task.done
+                = link_to "Закончить выполнение работ", "#", :class => "btn mesage btn-task-done", :task_id => @task.id, :status => "done"
+                .clear
+              - if @current_user.id == @task.user_id && @task.done && !@task.finish
+                = link_to "Принять работы", "#", :class => "btn btn-green btn-task-finish", :task_id => @task.id, :status => "finish"
+                .clear
+          .clear{:style => "height:20px;"}
+          .soc-share{:style => "float:right;margin-right: 40px;"}
+            %script{:src => "//yastatic.net/es5-shims/0.0.2/es5-shims.min.js"}
+            %script{:src => "//yastatic.net/share2/share.js"}
+            .ya-share2{"data-counter" => "", "data-image" => "https://xn----7sbbpfar3bgrlnafl8l.xn--p1ai/assets/logo-dark.png", "data-services" => "vkontakte,facebook,odnoklassniki,moimir,gplus,viber,whatsapp,skype,telegram"}
+          .clear{:style => "height:20px;"}
+          - if !@current_user.blank?
+            .master-list{:style => "padding-left: 0px;margin-left: -27px;"}
+              %h3
+                Ответы на
+                %br>/
+                обращение
+              .clear
+              - order = Order.where(task_id: @task.id)
+              - if !order.blank?
+                - order.each do |o|
+                  - user = User.where(id: o.userdo_id)
+                  - messages = Message.where(order_id: o.id, task_id: @task.id).order("created_at asc")
+                  - if !user.blank?
+                    - user = user.first
+                    .master
+                      .image
+                        - if !user.image.blank?
+                          = image_tag user.image.big.url
+                        - else
+                          - if !user.photo.blank?
+                            = image_tag user.photo
+                      .text{:style => "width: 78%;"}
+                        .left
+                          .name-block
+                            %img{:src => "/assets/mozg.png"}/
+                            .name-left
+                              = link_to "/#{user.url}", :class => "name" do
+                                %b= user.name2
+                                = user.name1
+                              .who=raw user.name3
+                            .clear
+                        .right{:style => "margin-right: 48px;"}
+                          .price #{o.price.to_i}₽
+                        .clear
+                        .description
+                          =raw o.description
+                        .bottom
+                          .time Был на сайте: #{date_format_time(user.last_seen)}
+                          .connect{:style => "margin-right: 48px;"}
+                            - if messages.blank?
+                              - if o.status == "yes" || o.status == "no"
+                                - if o.status == "yes"
+                                  Назначен исполнителем
+                                - if o.status == "no"
+                                  Отказано
+                            - if !@task.inwork
+                              - if @current_user.id == o.userdo_id
+                                = link_to "Удалить свою заявку", "#", :class => "btn btn-red btn-master-task-delete", :order_id => o.id, :task_id => @task.id
+                                = link_to "Изменить свою заявку", "#", :class => "btn btn-green btn-master-task-edit", :order_id => o.id, :price => o.price, :ltime => o.ltime, :description => o.description
+                                - if @current_user.id != o.user_id
+                                  %a.btn.btn-blue.btn-answer{:href => "", :to_user => o.user_id, :from_user => @current_user.id, :order_id => o.id} Ответить
+                              - if @current_user.id == o.user_id
+                                %a.btn.btn-green.btn-order-yes{:href => "#", :order_id => o.id, :userdo_id => o.userdo_id, :task_id => @task.id} Назначить исполнителем
+                                %a.btn.cancle.btn-order-no{:href => "#", :order_id => o.id, :userdo_id => o.userdo_id, :task_id => @task.id} Отказать
+                                %a.btn.btn-blue.btn-answer{:href => "", :to_user => o.userdo_id, :from_user => @current_user.id, :order_id => o.id} Ответить
+                                .clear
+                      .clear    
+                  - if !messages.blank?
+                    - messages.each do |m|
+                      - user = User.where(id: m.from_user)
+                      - if !user.blank?
+                        - user = user.first
+                        .master
+                          .image
+                            - if !user.image.blank?
+                              = image_tag user.image.big.url
+                            - else
+                              - if !user.photo.blank?
+                                = image_tag user.photo
+                          .text{:style => "width: 78%;"}
+                            .left
+                              .name-block
+                                %img{:src => "/assets/mozg.png"}/
+                                .name-left
+                                  = link_to "/#{user.url}", :class => "name" do
+                                    %b= user.name2
+                                    = user.name1
+                                  .who=raw user.name3
+                                .clear
+                            .clear
+                            .description
+                              =raw m.description
+                            .bottom
+                              .time Был на сайте: #{date_format_time(user.last_seen)}
+                              .connect{:style => "margin-right: 48px;"}
+                                - if o.status == "yes" || o.status == "no"
+                                - else
+                                  - if @current_user.id == o.userdo_id
+                                    %a.btn.btn-blue.btn-answer{:href => "", :to_user => o.user_id, :from_user => @current_user.id, :order_id => o.id} ОТВЕТИТЬ
+                                  - if @current_user.id == o.user_id
+                                    - if @current_user.id != o.user_id
+                                      %a.btn.btn-green.btn-order-yes{:href => "#", :order_id => o.id, :userdo_id => o.userdo_id, :task_id => @task.id} НАЗНАЧИТЬ ИСПОЛНИТЕЛЕМ
+                                    - if @current_user.id != o.user_id
+                                      %a.cancle.btn-order-no{:href => "#", :order_id => o.id, :userdo_id => o.userdo_id, :task_id => @task.id} Отказать
+                                    - if @current_user.id != user.id
+                                      %a.btn.btn-blue.btn-answer{:href => "", :to_user => o.userdo_id, :from_user => @current_user.id, :order_id => o.id} ОТВЕТИТЬ
+                                    .clear
+                            .clear
+                        .clear{:style => "height: 15px;"}
+                  .clear
+      .clear
+ 

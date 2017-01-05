@@ -1,0 +1,157 @@
+%section.bread
+  .cont
+    .left
+      %a{:href => "/"} Главная
+      %span >
+      %a{:href => "/tasks"} Задания
+      %span >
+      %a{:href => "/tasks/#{@one_cat.id}"}= @one_cat.name
+      .clear
+    .clear
+%section.task.task-list
+  .cont
+    .task-left.task-left-list
+      %h4.filter Фильтр заданий
+      %form{:action => "/tasks", :method => "get"}
+        %select{:name => "city"}
+          %option{:value => ""} Все города России
+          %option Москва
+          %option Чебоксары
+          %option Санкт-Петербург
+          %option Казань
+          %option Нижний Новгород
+          %option Сочи
+          %option Ульяновск
+          %option Киров
+          %option Владимир
+          %option Владикавказ
+          %option Вологда
+          %option Сочи
+          %option Новосибирск
+        %select{:name => "cat"}
+          %option{:value => ""} Все категории заданий
+          - @cat.each do |c|
+            %option{:value => c.id}= c.name
+        %select{:name => "cat_sub"}
+          %option{:value => ""} Все подкатегории заданий
+          - @cat_sub.each do |c2|
+            %option{:value => c2.id}= c2.name
+        .clear
+        %select.small{:name => "price_1"}
+          %option{:value => ""} Бюджет ОТ
+          %option{:value => "0"} 0
+          %option{:value => "1000"} 1000
+          %option{:value => "2000"} 2000
+          %option{:value => "3000"} 3000
+        %select.small{:name => "price_2"}
+          %option{:value => ""} Бюджет ДО
+          %option{:value => "1000"} 1000
+          %option{:value => "3000"} 3000
+          %option{:value => "6000"} 6000
+          %option{:value => "10000"} 10000
+        .clear
+        %input#budjet{:name => "budjet", :type => "checkbox"}/
+        %label{:for => "budjet"} Бюджет по договоренности
+        .clear{:style => "height: 10px;"}
+        %input.btn.btn-blue{:type => "submit", :value => "Отфильтровать"}
+        .clear
+      .left-map
+        %h4.map Все задания на карте
+        %a.map-full{:href => ""} Карту на весь экран
+        .clear
+        .img
+          %script{:async => "", :charset => "utf-8", :src => "https://api-maps.yandex.ru/services/constructor/1.0/js/?sid=D2Ak5e7lxmcy9B-9Fec1xMMYMno72vcv&width=100%&height=240&lang=ru_RU&sourceType=constructor&scroll=true", :type => "text/javascript"}
+      %h4.question Частые вопросы
+      %ul
+        %li
+          %a{:href => ""} Сколько предложений я получу?
+        %li
+          %a{:href => ""} Обязательно выбирать исполнителя?
+        %li
+          %a{:href => ""} Зачем мне указывать примерный бюджет
+        %li
+          %a{:href => ""} Обязательно выбирать исполнителя?
+      %a.btn.btn-blue{:href => "/questions"} ВСЕ ВОПРОСЫ
+    .task-right.task-right-list
+      .task-list
+        %h2.task-title Последние задания
+        .sort
+          %span Сортировать по:
+          %select.blue
+            %option Дате создания
+            %option Дате создания
+            %option Дате создания
+            %option Дате создания
+          .clear
+        .clear
+        - if !@tasks.blank?
+          - @tasks.each do |t|
+            .task-item
+              .top
+                .ico.ico-fav
+                .ico.ico-alert
+                %a.name{:href => "/tasks/#{t.id}"}=raw t.description.split(".")[0]
+                .price
+                  - if !t.price_fix.blank?
+                    .price1
+                      %span от
+                      = t.price_fix.to_i
+                      %img{:src => "/assets/r-4.png"}/
+                  - else
+                    .price1
+                      %span от
+                      = t.price_1.to_i
+                      %img{:src => "/assets/r-4.png"}/
+                    .price2
+                      %span до
+                      = t.price_2.to_i
+                      %img{:src => "/assets/r-5.png"}/
+                  .clear
+                .clear
+                - if !t.city_from.blank? && !t.address_from.blank?
+                  .line-1
+                    .left
+                      %span ОТ:
+                      #{t.city_from}, #{t.address_from}, #{t.house_from}, #{t.kv_from}
+                    .right
+                      %span НАЧАТЬ:
+                      #{t.date_start}
+                    .clear
+                - if !t.city_to.blank? && !t.address_to.blank?
+                  .line-2
+                    .left
+                      %span ДО:
+                      #{t.city_to}, #{t.address_to}, #{t.house_to}, #{t.kv_to}
+                    .right
+                      %span ЗАКОНЧИТЬ:
+                      #{t.date_stop}
+                    .clear
+                .text
+                  =raw t.description
+                .status
+                  .time
+                    #{t.view.to_i} ПРОСМОТРА
+                  .answer
+                    0  ОТВЕТА
+                  .view
+                    /Создано 19 мин. назад
+                    Создано #{date_format(t.created_at)}
+                  .stat
+                    АКТУАЛЬНО #{t.date_count} суток
+                  .clear
+        - else
+          %h2 Заданий не найдено
+        
+      /
+        .pagination
+          %span.current 1
+          %a{:href => ""} 2
+          %a{:href => ""} 3
+          %a{:href => ""} 4
+          %a{:href => ""} 5
+          %a{:href => ""} 6
+          %a{:href => ""} 7
+          %span .............................
+          %a{:href => ""} 89
+          .clear
+    .clear

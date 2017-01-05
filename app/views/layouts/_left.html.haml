@@ -1,0 +1,180 @@
+.left-block-fixed-line
+.left-block-fixed
+  %a.logo{:href => "/"}
+    %img.logo-normal{:src => "/assets/logo.png"}/
+    %img.logo-dark{:src => "/assets/logo-dark.png"}/
+  - if @url[1] == "profile"
+    %h3.filter Личный<br>кабинет
+  - elsif @url[1] == "users"
+    %h3.filter Фильтр<br>специалистов
+  - else
+
+  - if @url[1] == "profile"
+    .profile-block
+      - clazz = ""
+      - clazz = "active" if @url[2].blank?
+      = link_to "/profile", :class => "select #{clazz}" do
+        %span Профиль
+        .image
+          = image_tag "profile-1.png"
+        .clear
+      - clazz = ""
+      - clazz = "active" if @url[2] == "myorders"
+      = link_to "/profile/myorders", :class => "select #{clazz}" do
+        %span Мои обращения
+        .image
+          = image_tag "profile-2.png"
+        .count
+          - if !@current_user.blank?
+            = @tasks_all.size
+        .clear
+      - clazz = ""
+      - clazz = "active" if @url[2] == "orders"
+      = link_to "/profile/orders", :class => "select #{clazz}" do
+        %span Ответы на обращения
+        .image
+          = image_tag "profile-2.png"
+        .count
+          - if !@current_user.blank?
+            = @order_top.size.to_i + @order_top_2.size.to_i
+        .clear
+      - clazz = ""
+      - clazz = "active" if @url[2] == "messages"
+      = link_to "/profile/messages", :class => "select #{clazz}" do
+        %span Текстовые сообщения
+        .image
+          = image_tag "profile-3.png"
+        .count
+          - if !@current_user.blank?
+            #{@message_top.size}
+        .clear
+      - clazz = ""
+      - clazz = "active" if @url[2] == "audiomessages"
+      = link_to "/profile/audiomessages", :class => "select #{clazz}" do
+        %span Аудио сообщения
+        .image
+          = image_tag "profile-4.png"
+        .count
+          - if !@current_user.blank?
+            #{@audio_top.size}
+        .clear
+      - clazz = ""
+      - clazz = "active" if @url[2] == "recalls"
+      = link_to "/profile/recalls", :class => "select #{clazz}" do
+        %span Отзывы
+        .count
+          - if !@recalls_all.blank?
+            = @recalls_all.size
+          - else
+            0
+        .clear
+      - clazz = ""
+      - clazz = "active" if @url[2] == "balance"
+      = link_to "/profile/balance", :class => "select #{clazz}" do
+        %span Кошелек
+        .count
+          - if !@current_user.blank?
+            = @current_user.balance.to_i
+          %b ₽
+        .clear
+      - clazz = ""
+      - clazz = "active" if @url[2] == "users-favorite"
+      = link_to "/profile/users-favorite", :class => "select #{clazz}" do
+        %span Избранные специалисты
+        .image
+          = image_tag "profile-1.png"
+        .count
+          - if !@current_user.blank?
+            = @favusers_all.size
+        .clear
+      - clazz = ""
+      - clazz = "active" if @url[2] == "tasks-favorite"
+      = link_to "/profile/tasks-favorite", :class => "select #{clazz}" do
+        %span Избранные обращения
+        .image
+          = image_tag "profile-2.png"
+        .count
+          - if !@current_user.blank?
+            = @favtasks_all.size
+        .clear
+  - else
+    - if @url[1] == "tasks"
+      %form#left-form
+        .select-block
+          .select 
+            %select{:name => "city_from"}
+              %option{:value => ""} Все города
+              - if params[:city_from] == "Москва"
+                %option{:value => "Москва", :selected => "selected"} Москва
+              - else
+                %option{:value => "Москва"} Москва
+              - if params[:city_from] == "Санкт-Петербург"
+                %option{:value => "Санкт-Петербург", :selected => "selected"} Санкт-Петербург
+              - else
+                %option{:value => "Санкт-Петербург"} Санкт-Петербург
+              - if params[:city_from] == "Казань"
+                %option{:value => "Казань", :selected => "selected"} Казань
+              - else
+                %option{:value => "Казань"} Казань
+              - if params[:city_from] == "Нижний Новгород"
+                %option{:value => "Нижний Новгород", :selected => "selected"} Нижний Новгород
+              - else
+                %option{:value => "Нижний Новгород"} Нижний Новгород
+          .select 
+            %select{:name => "cat_id"}
+              %option{:value => ""} Все специализации
+              - @all_cats.each do |c|
+                - if params[:cat_id].to_i == c.id
+                  %option{:value => c.id, :selected => "selected"}= c.name
+                - else
+                  %option{:value => c.id}= c.name
+    - if @url[1] == "users"
+      %form#left-form
+        .select-block
+          .select 
+            %select{:name => "city"}
+              %option{:value => ""} Все города
+              - if params[:city] == "Москва"
+                %option{:value => "Москва", :selected => "selected"} Москва
+              - else
+                %option{:value => "Москва"} Москва
+              - if params[:city] == "Санкт-Петербург"
+                %option{:value => "Санкт-Петербург", :selected => "selected"} Санкт-Петербург
+              - else
+                %option{:value => "Санкт-Петербург"} Санкт-Петербург
+              - if params[:city] == "Казань"
+                %option{:value => "Казань", :selected => "selected"} Казань
+              - else
+                %option{:value => "Казань"} Казань
+              - if params[:city] == "Нижний Новгород"
+                %option{:value => "Нижний Новгород", :selected => "selected"} Нижний Новгород
+              - else
+                %option{:value => "Нижний Новгород"} Нижний Новгород
+          .select 
+            %select{:name => "cats"}
+              %option{:value => ""} Все специализации
+              - @all_cats.each do |c|
+                - if params[:cats].to_i == c.id
+                  %option{:value => c.id, :selected => "selected"}= c.name
+                - else
+                  %option{:value => c.id}= c.name
+  .questions
+    %h3
+      Частые
+      = succeed "\u{412}\u{43e}\u{43f}\u{440}\u{43e}\u{441}\u{44b}" do
+        %br/
+    %a.item{:href => ""} Сколько предложений специалистов я получу?
+    %a.item{:href => ""} Как мне выделить свое обращение?
+    %a.item{:href => ""} Как мне выбрать специалиста?
+    %a.item{:href => ""} Как проверить специалиста?
+    %a.btn{:href => "/questions"} Перейти в раздел вопросы
+  .theme-change
+    %h3
+      Переключение
+      = succeed "\u{438}\u{43d}\u{442}\u{435}\u{440}\u{444}\u{435}\u{439}\u{441}\u{430}" do
+        %br/
+    .theme-block
+      %a.item{:href => "ligth-theme"} День
+      %img.dark{:src => "/assets/theme.png"}/
+      %img.dark-dark{:src => "/assets/theme-dark.png"}/
+      %a.item.active{:href => ""} Ночь

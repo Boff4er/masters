@@ -1,0 +1,146 @@
+.popup.popup-message
+  .close
+  .title Написать сообщение
+  %form{"accept-charset" => "UTF-8", :action => "/profile/message", :method => "post"}
+    %input{:name => "utf8", :type => "hidden", :value => "✓"}/
+    %input{:name => "user_id", :type => "hidden"}/
+    %input{:name => "authenticity_token", :type => "hidden", :value => "/ILmNl4uphX+FGSOk4ldoj3kIf8YKnLUl/HhazQrPmg="}
+    %textarea{:name => "description", :placeholder => "Введите текст сообщения"}
+    %input.btn{:name => "commit", :type => "submit", :value => "Отправить"}/
+
+.map-block
+  %h4
+    Все специалисты
+    %br>/
+    на карте
+  #map
+  %script{:src => "https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&key=AIzaSyCvMOV8QDlFkWZAx8N5yuMjbJ23_V-RM0M"}
+  :javascript
+    function initialize() {
+      var myLatlng = new google.maps.LatLng(52.68,37.25);
+      var mapOptions = {
+        zoom: 10,
+        center: myLatlng,
+        scrollwheel: false
+      }
+    
+      var styles = [
+        {
+          "featureType": "all",
+          "elementType": "all",
+          "stylers": [
+              {
+                  "invert_lightness": true
+              },
+              {
+                  "saturation": -80
+              },
+              {
+                  "lightness": 30
+              },
+              {
+                  "gamma": 0.5
+              },
+              {
+                  "hue": "#3d433a"
+              }
+          ]
+        }
+      ];
+    
+      var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+      map.setOptions({styles: styles});
+      var myLatlngMarker = new google.maps.LatLng(55.68852706904227,37.25675899999996);
+      var marker = new google.maps.Marker({
+          position: myLatlngMarker,
+          map: map,
+          title: '',
+          icon: '/assets/balun.png'
+      });
+    }
+    
+    google.maps.event.addDomListener(window, 'load', initialize);
+.master-list
+  %h3
+    Выбранные
+    %br>/
+    специалисты
+  .select-block
+    %span
+      Сортировать
+      %br>/
+      по:
+    .select
+      %form
+        %select{:name => "sort"}
+          %option Количеству отзывов
+          %option Количеству отзывов
+          %option Количеству отзывов
+  .clear
+  - if !@users.blank?
+    - i = 0
+    - @users.each do |t|
+      - cats = []
+      - if !t.cats.blank?
+        - cats = t.cats.split(",")
+      - if cats.include?(String(params[:cats])) || params[:cats].blank?
+        - i += 1
+        - clazz = ""
+        - clazz = "master-dark" if 1%2 == 0
+        .master{:class => clazz}
+          .image
+            - if !t.blank?
+              - if !t.image.blank?
+                = image_tag t.image.big.url
+              - elsif
+                - if !t.photo.blank?
+                  = image_tag t.photo
+              - else
+                = image_tag "noimage.png"
+          .text
+            .left
+              .name-block
+                %img{:src => "/assets/mozg.png"}/
+                .name-left
+                  = link_to "/#{t.url}", :class => "name" do
+                    %b= t.name2
+                    = t.name1
+                  .who=raw t.name3
+                .clear
+            .right
+              .stars
+                %img{:src => "/assets/stars.png"}/
+              .clear
+              .list-items
+                .item
+                  Заказов:
+                  - tasks = Task.where(userdo_id: t.id)
+                  %b #{tasks.size}
+                .item
+                  Рейтинг:
+                  %b #{t.rating.to_i}
+                .item
+                  Отзывы:
+                  %b #{t.plus.to_i}+/#{t.minus.to_i}-
+                .clear
+            .clear
+            .description
+              =raw t.description
+              .clear{:style => "height: 10px;"}
+              - if @current_user.blank?
+                %b <a href="" class="auth-small">Авторизируйтесь</a>, что бы написать специалисту.
+            .bottom
+              .time Был на сайте: #{date_format_time(t.last_seen)}
+              .connect
+                - if !@current_user.blank?
+                  - if @current_user.id != t.id
+                    - favuser = Favuser.where(user_id: t.id, profile_id: @current_user.id)
+                    - if !favuser.blank?
+                      %a.fav.btn-add-to-favuser{:href => "#", :user_id => t.id, :type => "0"} Убрать из избранного
+                    - else
+                      %a.fav.btn-add-to-favuser{:href => "#", :user_id => t.id, :type => "1"} Добавить в избранные
+                  - if @current_user.id != t.id
+                    %a.mesage.btn-master-message{:href => "#", :user_id => t.id} Связаться
+              .clear
+          .clear
+  

@@ -1,0 +1,30 @@
+.header
+  .menu
+    %a{:href => "/"} Главная
+    - clazz = ""
+    - clazz = "active" if @url[1] == "users"
+    %a{:href => "/users", :class => clazz} Специалисты
+    - clazz = ""
+    - clazz = "active" if @url[1] == "tasks"
+    %a{:href => "/tasks", :class => clazz} Обращения
+    /%a{:href => ""} Как это работает
+    /%a{:href => ""} Для специалистов
+    .clear
+  %a.btn.btn-create{:href => "#"} Создать обращение
+  .clear
+  .alert-block
+    .alert-links
+      - if @current_user.blank?
+        %a.btn-login{:href => "#"} Войти
+      - else
+        %a{:href => "/profile"} Личный кабинет
+        = link_to "Выход", destroy_user_session_path, :method => :delete
+      .clear
+    .clear
+    - if !@current_user.blank?
+      .info-block
+        %a.tasks{:href => "/profile/myorders"} #{@tasks_all.size}
+        %a.message{:href => "/profile/messages"} #{@message_top.size}
+        %a.sound{:href => "/profile/audiomessages"} #{@audio_top.size}
+        /%a.video{:href => ""} 5
+    .clear

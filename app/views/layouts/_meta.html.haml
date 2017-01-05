@@ -1,0 +1,23 @@
+%meta(charset="utf-8")
+= csrf_meta_tags
+= display_meta_tags
+%link(href="/assets/favicon.png" rel="shortcut icon" type="image/x-icon" id="favicon")
+%link(href="/assets/icons/apple-touch-icon.png" rel="apple-touch-icon")
+%link(href="/assets/icons/apple-touch-icon-72x72.png" rel="apple-touch-icon" sizes="72x72")
+%link(href="/assets/icons/apple-touch-icon-114x114.png" rel="apple-touch-icon" sizes="114x114")
+%link(href="/assets/icons/apple-touch-icon-144x144.png" rel="apple-touch-icon" sizes="144x144")
+
+%script{:src => "https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyBulkdDQB38z4ztdhb9po9D9Lcj2Be3WIc"}
+
+
+%link{:href => "https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,500,600,700&subset=cyrillic,cyrillic-ext", :rel => "stylesheet"}/
+%link{:href => "https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700&subset=cyrillic,cyrillic-ext", :rel => "stylesheet"}/
+%link{:href => "https://fonts.googleapis.com/css?family=Cormorant+Garamond:300,300i,400,500,700&subset=cyrillic", :rel => "stylesheet"}/
+
+= stylesheet_link_tag "fancybox/jquery.fancybox-buttons", :media => "all"
+= stylesheet_link_tag "fancybox/jquery.fancybox-thumbs", :media => "all"
+= stylesheet_link_tag "fancybox/jquery.fancybox", :media => "all"
+= stylesheet_link_tag "jquery-ui", :media => "all"
+= stylesheet_link_tag "select2", :media => "all"
+= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+= javascript_include_tag 'application'

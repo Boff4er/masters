@@ -1,0 +1,66 @@
+/ Content Header (Page header)
+%section.content-header
+  %h1
+    Рабочий стол
+    %small Контрольная панель
+  %ol.breadcrumb
+    %li
+      %a{:href => "/"}
+        %i.fa.fa-dashboard
+        Главная
+    %li.active Рабочий стол
+/ Main content
+%section.content
+  / Small boxes (Stat box)
+  .row
+    .col-lg-3.col-xs-6
+      / small box
+      .small-box.bg-aqua
+        .inner
+          %h3 #{@all_products.size}
+          %p Всего объявлений
+        .icon
+          %i.ion.ion-bag
+        %a.small-box-footer{:href => "/admin/products"}
+          Перейти
+          %i.fa.fa-arrow-circle-right
+    / ./col
+    .col-lg-3.col-xs-6
+      / small box
+      .small-box.bg-green
+        .inner
+          %h3 5
+          %p Всего новостей
+        .icon
+          %i.ion.ion-stats-bars
+        %a.small-box-footer{:href => "/admin/news"}
+          Перейти
+          %i.fa.fa-arrow-circle-right
+    / ./col
+    .col-lg-3.col-xs-6
+      / small box
+      .small-box.bg-yellow
+        .inner
+          %h3 6
+          %p Всего мнений экспертов
+        .icon
+          %i.ion.ion-person-add
+        %a.small-box-footer{:href => "/admin/expert"}
+          Перейти
+          %i.fa.fa-arrow-circle-right
+    / ./col
+    .col-lg-3.col-xs-6
+      / small box
+      .small-box.bg-red
+        .inner
+          %h3 6
+          %p Всего аналитик
+        .icon
+          %i.ion.ion-pie-graph
+        %a.small-box-footer{:href => "/admin/analitic"}
+          Перейти
+          %i.fa.fa-arrow-circle-right
+    / ./col
+  / /.row
+  / Main row
+  

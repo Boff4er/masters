@@ -1,0 +1,46 @@
+.recall-list
+  .left
+    %h3
+      Положительные
+      %br>/
+      отзывы
+    - if !@recalls_good.blank?
+      .list
+        - @recalls_good.each do |r|
+          .item
+            - user = User.where(id: r.from_user_id)
+            .name
+              - if !user.blank?
+                #{user.first.name2} #{user.first.name1}
+            .text=raw r.description
+            .time= date_format(r.created_at)
+    - else
+      %h4
+        %b НЕТУ
+        %br/
+        ПОЛОЖИТЕЛЬНЫХ
+        %br/
+        ОТЗЫВОВ!
+  .right
+    %h3
+      Отрицательные
+      %br>/
+      отзывы
+    - if !@recalls_nogood.blank?
+      .list
+        - @recalls_nogood.each do |r|
+          .item
+            - user = User.where(id: r.from_user_id)
+            .name
+              - if !user.blank?
+                #{user.first.name2} #{user.first.name1}
+            .text=raw r.description
+            .time= date_format(r.created_at)
+    - else
+      %h4
+        %b НЕТУ
+        %br/
+        ОТРИЦАТЕЛЬНЫХ
+        %br/
+        ОТЗЫВОВ!
+  .clear

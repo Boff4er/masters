@@ -1,0 +1,254 @@
+!!! 5
+%html(lang="ru")
+  %head
+    = render '/layouts/meta_admin' 
+  %body.skin-blue.sidebar-mini
+    .wrapper
+      - if !@current_user.blank?
+        %header.main-header
+          / Logo
+          %a.logo{:href => "/"}
+            / mini logo for sidebar mini 50x50 pixels
+            %span.logo-mini
+              %b> CRM
+            / logo for regular state and mobile devices
+            %span.logo-lg
+              %b> KOMMERZS
+              = ".RU"
+          / Header Navbar: style can be found in header.less
+          %nav.navbar.navbar-static-top{:role => "navigation"}
+            / Sidebar toggle button
+            %a.sidebar-toggle{"data-toggle" => "offcanvas", :href => "#", :role => "button"}
+              %span.sr-only Скрыть
+            .navbar-custom-menu
+              
+      - if !@current_user.blank?
+        / Left side column. contains the logo and sidebar
+        %aside.main-sidebar
+          / sidebar: style can be found in sidebar.less
+          %section.sidebar
+            / Sidebar user panel
+            .user-panel
+              .pull-left.image
+                %img.img-circle{:alt => "User Image", :src => "/assets/user2-160x160.jpg"}/
+              .pull-left.info
+                %p
+                  - if !@current_user.blank?
+                    #{@current_user.name1} #{@current_user.name2}
+                %a{:href => "#"}
+                  %i.fa.fa-circle.text-success
+                  Online
+            / search form
+            /
+              %form.sidebar-form{:action => "#", :method => "get"}
+                .input-group
+                  %input.form-control{:name => "q", :placeholder => "Поиск...", :type => "text"}/
+                  %span.input-group-btn
+                    %button#search-btn.btn.btn-flat{:name => "search", :type => "submit"}
+                      %i.fa.fa-search
+            / /.search form
+            / sidebar menu: : style can be found in sidebar.less
+            %ul.sidebar-menu
+              %li.header Главное меню
+              - clazz = ""
+              - clazz = "active" if @url[2].blank?
+              %li{:class => clazz}
+                %a{:href => "/admin"}
+                  %i.fa.fa-server
+                  %span Главная
+              - clazz = ""
+              - clazz = "active" if @url[2] == "cats"
+              %li{:class => clazz}
+                %a{:href => "/admin/cats"}
+                  %i.fa.fa-server
+                  %span Категории
+              - clazz = ""
+              - clazz = "active" if @url[2] == "products"
+              %li{:class => clazz}
+                %a{:href => "/admin/products"}
+                  %i.fa.fa-server
+                  %span Объявления
+              - clazz = ""
+              - clazz = "active" if @url[2] == "news"
+              %li{:class => clazz}
+                %a{:href => "/admin/news"}
+                  %i.fa.fa-server
+                  %span Новости
+              - clazz = ""
+              - clazz = "active" if @url[2] == "artices"
+              %li{:class => clazz}
+                %a{:href => "/admin/articles"}
+                  %i.fa.fa-server
+                  %span Статьи
+              - clazz = ""
+              - clazz = "active" if @url[2] == "experts"
+              %li{:class => clazz}
+                %a{:href => "/admin/experts"}
+                  %i.fa.fa-server
+                  %span Мнения экспертов
+              - clazz = ""
+              - clazz = "active" if @url[2] == "analitics"
+              %li{:class => clazz}
+                %a{:href => "/admin/analitics"}
+                  %i.fa.fa-server
+                  %span Аналитика
+              /
+                %li.treeview{:class => ""}
+                  %a{:href => "#"}
+                    %i.fa.fa-user
+                    %span Пользователи
+                    %i.fa.fa-angle-left.pull-right
+                  %ul.treeview-menu
+                    - clazz2 = ""
+                    - clazz2 = "active" if @url[1] == "users"
+                    %li{:class => clazz2}
+                      %a{:href => "/users"}
+                        %i.fa.fa-circle-o
+                        Все пользователи
+                    - clazz2 = ""
+                    - clazz2 = "active" if @url[1] == "organizations"
+                    %li{:class => clazz2}
+                      %a{:href => "/organizations"}
+                        %i.fa.fa-circle-o
+                        Организации
+          / /.sidebar
+      / Content Wrapper. Contains page content
+      - if !@current_user.blank?
+        .content-wrapper
+          = yield
+      - else
+        = yield
+      - if !@current_user.blank?
+        %footer.main-footer
+          .pull-right.hidden-xs
+            %b Версия
+            1.0
+          %strong
+            &copy; 2016
+            = succeed "." do
+              %a{:href => "http://mozg.pro/"} Mozg.pro
+        / Control Sidebar
+        %aside.control-sidebar.control-sidebar-dark
+          / Create the tabs
+          %ul.nav.nav-tabs.nav-justified.control-sidebar-tabs
+            %li
+              %a{"data-toggle" => "tab", :href => "#control-sidebar-home-tab"}
+                %i.fa.fa-home
+            %li
+              %a{"data-toggle" => "tab", :href => "#control-sidebar-settings-tab"}
+                %i.fa.fa-gears
+          / Tab panes
+          .tab-content
+            / Home tab content
+            #control-sidebar-home-tab.tab-pane
+              %h3.control-sidebar-heading Recent Activity
+              %ul.control-sidebar-menu
+                %li
+                  %a{:href => "javascript::;"}
+                    %i.menu-icon.fa.fa-birthday-cake.bg-red
+                    .menu-info
+                      %h4.control-sidebar-subheading Langdon's Birthday
+                      %p Will be 23 on April 24th
+                %li
+                  %a{:href => "javascript::;"}
+                    %i.menu-icon.fa.fa-user.bg-yellow
+                    .menu-info
+                      %h4.control-sidebar-subheading Frodo Updated His Profile
+                      %p New phone +1(800)555-1234
+                %li
+                  %a{:href => "javascript::;"}
+                    %i.menu-icon.fa.fa-envelope-o.bg-light-blue
+                    .menu-info
+                      %h4.control-sidebar-subheading Nora Joined Mailing List
+                      %p nora@example.com
+                %li
+                  %a{:href => "javascript::;"}
+                    %i.menu-icon.fa.fa-file-code-o.bg-green
+                    .menu-info
+                      %h4.control-sidebar-subheading Cron Job 254 Executed
+                      %p Execution time 5 seconds
+              / /.control-sidebar-menu
+              %h3.control-sidebar-heading Tasks Progress
+              %ul.control-sidebar-menu
+                %li
+                  %a{:href => "javascript::;"}
+                    %h4.control-sidebar-subheading
+                      Custom Template Design
+                      %span.label.label-danger.pull-right 70%
+                    .progress.progress-xxs
+                      .progress-bar.progress-bar-danger{:style => "width: 70%"}
+                %li
+                  %a{:href => "javascript::;"}
+                    %h4.control-sidebar-subheading
+                      Update Resume
+                      %span.label.label-success.pull-right 95%
+                    .progress.progress-xxs
+                      .progress-bar.progress-bar-success{:style => "width: 95%"}
+                %li
+                  %a{:href => "javascript::;"}
+                    %h4.control-sidebar-subheading
+                      Laravel Integration
+                      %span.label.label-warning.pull-right 50%
+                    .progress.progress-xxs
+                      .progress-bar.progress-bar-warning{:style => "width: 50%"}
+                %li
+                  %a{:href => "javascript::;"}
+                    %h4.control-sidebar-subheading
+                      Back End Framework
+                      %span.label.label-primary.pull-right 68%
+                    .progress.progress-xxs
+                      .progress-bar.progress-bar-primary{:style => "width: 68%"}
+              / /.control-sidebar-menu
+            / /.tab-pane
+            / Stats tab content
+            #control-sidebar-stats-tab.tab-pane Stats Tab Content
+            / /.tab-pane
+            / Settings tab content
+            #control-sidebar-settings-tab.tab-pane
+              %form{:method => "post"}
+                %h3.control-sidebar-heading General Settings
+                .form-group
+                  %label.control-sidebar-subheading
+                    Report panel usage
+                    %input.pull-right{:checked => "", :type => "checkbox"}/
+                  %p
+                    Some information about this general settings option
+                / /.form-group
+                .form-group
+                  %label.control-sidebar-subheading
+                    Allow mail redirect
+                    %input.pull-right{:checked => "", :type => "checkbox"}/
+                  %p
+                    Other sets of options are available
+                / /.form-group
+                .form-group
+                  %label.control-sidebar-subheading
+                    Expose author name in posts
+                    %input.pull-right{:checked => "", :type => "checkbox"}/
+                  %p
+                    Allow the user to show his name in blog posts
+                / /.form-group
+                %h3.control-sidebar-heading Chat Settings
+                .form-group
+                  %label.control-sidebar-subheading
+                    Show me as online
+                    %input.pull-right{:checked => "", :type => "checkbox"}/
+                / /.form-group
+                .form-group
+                  %label.control-sidebar-subheading
+                    Turn off notifications
+                    %input.pull-right{:type => "checkbox"}/
+                / /.form-group
+                .form-group
+                  %label.control-sidebar-subheading
+                    Delete chat history
+                    %a.text-red.pull-right{:href => "javascript::;"}
+                      %i.fa.fa-trash-o
+                / /.form-group
+            / /.tab-pane
+        / /.control-sidebar
+        /
+          Add the sidebar's background. This div must be placed
+          immediately after the control sidebar
+        .control-sidebar-bg
+  

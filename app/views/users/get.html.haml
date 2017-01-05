@@ -1,0 +1,191 @@
+.popup.popup-message
+  .close
+  .title Написать сообщение
+  %form{"accept-charset" => "UTF-8", :action => "/profile/message", :method => "post"}
+    %input{:name => "utf8", :type => "hidden", :value => "✓"}/
+    %input{:name => "user_id", :type => "hidden", :value => @user.id}/
+    %input{:name => "authenticity_token", :type => "hidden", :value => "/ILmNl4uphX+FGSOk4ldoj3kIf8YKnLUl/HhazQrPmg="}
+    %textarea{:name => "description", :placeholder => "Введите текст сообщения"}
+    %input.btn{:name => "commit", :type => "submit", :value => "Отправить"}/
+
+.popup.popup-audio
+  .close
+  .title Записать сообщение
+  %form{"accept-charset" => "UTF-8", :action => "/profile/audiomessage", :method => "post", :enctype => "multipart/form-data"}
+    %input{:name => "utf8", :type => "hidden", :value => "✓"}/
+    %input{:name => "user_id", :type => "hidden", :value => @user.id}/
+    %input{:name => "authenticity_token", :type => "hidden", :value => "/ILmNl4uphX+FGSOk4ldoj3kIf8YKnLUl/HhazQrPmg="}
+    %input{:name => "audio", :type => "file", :style => "display:none;", :value => ""}/
+    .clear
+    .record-line
+      .record-1{:onclick => "toggleRecording(this);"}
+        .image
+          = image_tag "record-1.png"
+        %span Записать
+      .record-2.disabled
+        .image
+          = image_tag "record-2.png"
+        %a#save{:href => ""} Воспроизвести сообщение
+        %audio#save-audio{:controls => "", :src => ""}
+      
+      .record-3.disabled
+        .image
+          = image_tag "record-3.png"
+        %span Удалить
+      .clear
+    .clear
+    %input.btn{:name => "commit", :type => "submit", :value => "Сохранить"}/
+
+
+.master-list
+  %h3
+    Страница
+    %br>/
+    специалиста
+  .select-block
+    
+  .clear
+  .master.master-dark
+    - user_photo = ""
+    - if !@user.blank?
+      - if !@user.image.blank?
+        - user_photo = @user.image.url
+      - else
+        - if !@user.photo.blank?
+          - user_photo = @user.photo
+    = link_to user_photo, :class => "image fancybox" do
+      - if !@user.blank?
+        - if !@user.image.blank?
+          = image_tag @user.image.big.url
+        - else
+          - if !@user.photo.blank?
+            = image_tag @user.photo
+    .text
+      .left
+        .name-block
+          %img{:src => "/assets/mozg.png"}/
+          .name-left
+            .name
+              %b= @user.name2
+              = @user.name1
+            .who=raw @user.name3
+          .clear
+      .right
+        .stars
+          %img{:src => "/assets/stars.png"}/
+        .clear
+        .list-items
+          .item
+            Заказов:
+            - tasks = Task.where(userdo_id: @user.id)
+            %b #{tasks.size}
+          .item
+            Рейтинг:
+            %b #{@user.rating.to_i}
+          .item
+            Отзывы:
+            %b #{@user.plus.to_i}+/#{@user.minus.to_i}-
+          .clear
+      .clear
+      .description
+        =raw @user.description
+      .bottom
+        .time
+        .connect
+          - if !@current_user.blank?
+            - if @current_user.id != @user.id
+              %a.mesage.mesage-to-user{:href => ""} Написать
+              %a.mesage.mesage-audio.audio-to-user{:href => ""} Отправить запись
+        .clear
+    .clear
+.profile-blocks
+  .block{:style => "border: none;"}
+    %h3
+      Последние
+      %br>/
+      записи
+    .clear
+    .article-lisst
+      - if !@uarticle.blank?
+        - @uarticle.each do |u|
+          .item
+            .time= date_format(u.created_at)
+            .text=raw u.description
+  .block
+    %h3
+      Аудио
+      %br>/
+      записи
+    .clear
+    .audio-list
+      - if !@audios.blank?
+        - @audios.each do |a|
+          .item
+            .play
+              %audio{:controls => ""}
+                %source{:src => a.file.url, :type => "audio/mp3"}
+              %img{:src => "/assets/play.png"}/
+            .audio-block
+              .time= date_format(a.created_at)
+              .text= a.name
+            .clear
+  .clear
+.photos-block
+  %h3
+    Фотографии
+    %br>/
+    специалиста
+  .clear
+  - if !@photos.blank?
+    - @photos.each do |p|
+      .photo
+        = link_to p.image.url, :class => "img fancybox", :rel => "rel" do
+          %img{:src => p.image.icon.url}/
+  .clear
+
+.recall-list
+  .left
+    %h3
+      Положительные
+      %br>/
+      отзывы
+    - if !@recalls_good.blank?
+      .list
+        - @recalls_good.each do |r|
+          .item
+            - user = User.where(id: r.from_user_id)
+            .name
+              - if !user.blank?
+                #{user.first.name2} #{user.first.name1}
+            .text=raw r.description
+            .time= date_format(r.created_at)
+    - else
+      %h4
+        %b НЕТУ
+        %br/
+        ПОЛОЖИТЕЛЬНЫХ
+        %br/
+        ОТЗЫВОВ!
+  .right
+    %h3
+      Отрицательные
+      %br>/
+      отзывы
+    - if !@recalls_nogood.blank?
+      .list
+        - @recalls_nogood.each do |r|
+          .item
+            - user = User.where(id: r.from_user_id)
+            .name
+              - if !user.blank?
+                #{user.first.name2} #{user.first.name1}
+            .text=raw r.description
+            .time= date_format(r.created_at)
+    - else
+      %h4
+        %b НЕТУ
+        %br/
+        ОТРИЦАТЕЛЬНЫХ
+        %br/
+        ОТЗЫВОВ!
+  .clear

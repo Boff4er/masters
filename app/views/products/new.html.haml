@@ -1,0 +1,148 @@
+/ Content Header (Page header)
+%section.content-header
+  %h1
+    Объвления
+    %small Создание нового объвления
+  %ol.breadcrumb
+    %li
+      %a{:href => "/admin"}
+        %i.fa.fa-dashboard
+        Главная
+    %li
+      %a{:href => "/admin/products"} Объвления
+    %li.active Новое объвление
+/ Main content
+%section.content
+  .row
+    .col-xs-12
+      .box
+        .box-header
+          %h3.box-title Введите параметры
+        / /.box-header
+        .box.box-primary
+          .box-header.with-border
+            %h3.box-title Новое объвление
+          / /.box-header
+          / form start
+          %form.rails-form{:role => "form", :model => "user", :type => "new", :action => "/admin/products/form", :enctype => "multipart/form-data", :method => "post"}
+            .box-body
+              - if !@cats.blank?
+                .form-group
+                  %label Категория
+                  %select.form-control.select{:name => "cat_id"}
+                    - @cats.each do |a|
+                      %option{:value => a.id}= a.name
+              .clearfix
+              .form-group
+                %label{:for => "exampleInputEmail1"} Название
+                %input#exampleInputEmail1.form-control{:placeholder => "Название", :type => "text", :name => "name"}
+              .form-group
+                %label{:for => "exampleInputEmail1"} Обложка
+                %input{:placeholder => "Фото", :type => "file", :name => "image"}
+              .form-group
+                %label{:for => "exampleInputEmail1"} Порядок
+                %input#exampleInputEmail1.form-control{:placeholder => "Порядок", :type => "text", :name => "ord"}
+              .form-group
+                %label{:for => "exampleInputEmail1"} Короткий текст
+                %textarea.form-control{:placeholder => "Короткий текст", :type => "text", :name => "short"}
+              .form-group
+                %label{:for => "exampleInputEmail1"} Телефон 1
+                %input.form-control{:placeholder => "Телефон 1", :type => "text", :name => "phone1"}
+              .form-group
+                %label{:for => "exampleInputEmail1"} Телефон 2
+                %input.form-control{:placeholder => "Телефон 2", :type => "text", :name => "phone2"}
+              .form-group
+                %label{:for => "exampleInputEmail1"} Стоимость
+                %input.form-control{:placeholder => "Стоимость", :type => "text", :name => "price1"}
+              .form-group
+                %label{:for => "exampleInputEmail1"} Адрес
+                %input.form-control{:placeholder => "Адрес", :type => "text", :name => "address"}
+              .form-group
+                %label{:for => "exampleInputEmail1"} Координаты
+                %input.form-control{:placeholder => "Координаты", :type => "text", :name => "coordinats"}
+              .form-group
+                %label{:for => "exampleInputEmail1"} Площадь
+                %input.form-control{:placeholder => "Площадь", :type => "text", :name => "ploshad"}
+              .form-group
+                %label{:for => "exampleInputEmail1"} Этаж
+                %input.form-control{:placeholder => "Этаж", :type => "text", :name => "etag"}
+              .form-group
+                %label{:for => "exampleInputEmail1"} Метро
+                %input.form-control{:placeholder => "Метро", :type => "text", :name => "metro"}
+              .form-group
+                %label{:for => "exampleInputEmail1"} Полный текст
+                %textarea.form-control{:placeholder => "Полный текст", :type => "text", :name => "description"}
+              .form-group
+                %label{:for => "exampleInputEmail1"} Дата
+                %input#exampleInputEmail1.form-control{:placeholder => "Дата", :type => "date", :name => "datepost"}
+              .checkbox
+                %label
+                  %input{:type => "checkbox", :name => "pspecublic"}
+                    Активна
+              .checkbox
+                %label
+                  %input{:type => "checkbox", :name => "spec"}
+                    Спецразмещение
+
+              .form-group
+                %label{:for => "exampleInputEmail1"} Фото 1
+                %input{:placeholder => "Фото", :type => "file", :name => "image1"}
+              .form-group
+                %label{:for => "exampleInputEmail1"} Фото 2
+                %input{:placeholder => "Фото", :type => "file", :name => "image2"}
+              .form-group
+                %label{:for => "exampleInputEmail1"} Фото 3
+                %input{:placeholder => "Фото", :type => "file", :name => "image3"}
+              .form-group
+                %label{:for => "exampleInputEmail1"} Фото 4
+                %input{:placeholder => "Фото", :type => "file", :name => "image4"}
+              .form-group
+                %label{:for => "exampleInputEmail1"} Фото 5
+                %input{:placeholder => "Фото", :type => "file", :name => "image5"}
+              .form-group
+                %label{:for => "exampleInputEmail1"} Фото 6
+                %input{:placeholder => "Фото", :type => "file", :name => "image6"}
+              .form-group
+                %label{:for => "exampleInputEmail1"} Фото 7
+                %input{:placeholder => "Фото", :type => "file", :name => "image7"}
+              .form-group
+                %label{:for => "exampleInputEmail1"} Фото 8
+                %input{:placeholder => "Фото", :type => "file", :name => "image8"}
+              .form-group
+                %label{:for => "exampleInputEmail1"} Фото 9
+                %input{:placeholder => "Фото", :type => "file", :name => "image9"}
+              .form-group
+                %label{:for => "exampleInputEmail1"} Фото 10
+                %input{:placeholder => "Фото", :type => "file", :name => "image10"}
+              .form-group
+                %label{:for => "exampleInputEmail1"} Фото 11
+                %input{:placeholder => "Фото", :type => "file", :name => "image11"}
+              .form-group
+                %label{:for => "exampleInputEmail1"} Фото 12
+                %input{:placeholder => "Фото", :type => "file", :name => "image12"}
+              .form-group
+                %label{:for => "exampleInputEmail1"} Фото 13
+                %input{:placeholder => "Фото", :type => "file", :name => "image13"}
+              .form-group
+                %label{:for => "exampleInputEmail1"} Фото 14
+                %input{:placeholder => "Фото", :type => "file", :name => "image14"}
+              .form-group
+                %label{:for => "exampleInputEmail1"} Фото 15
+                %input{:placeholder => "Фото", :type => "file", :name => "image15"}
+
+              .form-group
+                %label{:for => "exampleInputEmail1"} Meta title
+                %input#exampleInputEmail1.form-control{:placeholder => "Meta title", :type => "text", :name => "meta_title"}
+              .form-group
+                %label{:for => "exampleInputEmail1"} Meta keywords
+                %input#exampleInputEmail1.form-control{:placeholder => "Meta keywords", :type => "text", :name => "meta_keywords"}
+              .form-group
+                %label{:for => "exampleInputEmail1"} Meta description
+                %textarea.form-control{:placeholder => "Полный текст", :type => "text", :name => "meta_description"}
+
+            / /.box-body
+            .box-footer
+              %button.btn.btn-primary{:type => "submit"} Создать
+        / /.box-body
+      / /.box
+/ /.content

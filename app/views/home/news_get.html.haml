@@ -1,0 +1,59 @@
+%section.filter
+  .cont
+    .bread
+      %a{:href => "/"} Главная страница
+      %img{:src => "/assets/bread.png"}
+      %a{:href => "/news"} Новости
+      %img{:src => "/assets/bread.png"}
+      %span= @news.name
+    .clear
+%section.article-name
+  .cont
+    %h1= @news.name
+    .date= date_format(@news.created_at)
+    .clear
+%section.article
+  .cont
+    .description
+      =raw @news.description
+    .sub-articles
+      /
+        .article-list
+          %h3 ДРУГИЕ СТАТЬИ
+          - if !@all_articles.blank?
+            - @all_articles.each do |a|
+              .item
+                .date= date_format(a.created_at)
+                %a{:href => "/#{a.id}"}= a.name
+          %a.all{:href => "/all_articles"} СМОТЕРТЬ ВСе СТАТЬИ
+      - if !@all_news.blank?
+        .article-list
+          %h3 Новости
+          - @all_news.each do |n|
+            .item
+              .date= date_format(n.datepost)
+              %a{:href => "/news/#{n.id}"}= n.name
+          %a.all{:href => "/news"} СМОТЕРТЬ ВСе новости
+    .clear
+%section.top-sales.top-sales-product
+  .cont
+    %h3 СПЕЦИАЛЬНЫЕ ПРЕДЛОЖЕНИЯ
+    .clear
+  .cont
+    .list
+      .list-cont
+        - city_url = "moscow"
+        
+        - city_url = ((Translit.convert(city_url, :english)).gsub(' ', '').gsub('/', '')).downcase
+        - if !@all_products.blank?
+          - @all_products.each do |p|
+            .item
+              .price #{p.price1} Р
+              %a.image{:href => "/#{city_url}/products/#{p.id}"}
+                %img{:src => p.image1.icon.url}/
+              .text
+                %a{:href => "/#{city_url}/products/#{p.id}"} #{p.name} #{p.ploshad} м2
+                %span= p.address
+                .short
+                  Общая S2: #{p.ploshad} м²
+        .clear

@@ -1,0 +1,33 @@
+.popup.popup-balance
+  .close
+  .title Пополнение баланса
+  %form{"accept-charset" => "UTF-8", :action => "/profile/save", :method => "post"}
+    %input{:name => "utf8", :type => "hidden", :value => "✓"}/
+    %input{:name => "user_id", :type => "hidden", :value => @current_user.id}/
+    %input{:name => "authenticity_token", :type => "hidden", :value => "/ILmNl4uphX+FGSOk4ldoj3kIf8YKnLUl/HhazQrPmg="}
+    %input{:type => "text", :name => "balance", :placeholder => "Баланс"}
+    %input.btn{:name => "commit", :type => "submit", :value => "Сохранить"}/
+
+.money-block
+  %h3 Кошелек
+  .balance #{@current_user.balance.to_i}₽
+  %h3
+    Способы
+    %br>/
+    пополнения
+  .text Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+  %h3
+    Пополнить
+    %br>/
+    кошелек
+  .clear
+  %form{"accept-charset" => "UTF-8", :action => "/profile/save", :method => "post"}
+    %input{:name => "utf8", :type => "hidden", :value => "✓"}/
+    %input{:name => "user_id", :type => "hidden", :value => @current_user.id}/
+    %input{:name => "authenticity_token", :type => "hidden", :value => "/ILmNl4uphX+FGSOk4ldoj3kIf8YKnLUl/HhazQrPmg="}
+    .add-block{:style => "float:left;width:30%;"}
+      %input{:name => "balance", :type => "text", :value => "1000"}/
+      .r ₽
+      .clear
+    .clear
+    %input.btn.btn-add-balance{:name => "commit", :type => "submit", :value => "Пополнить кошелек"}/
